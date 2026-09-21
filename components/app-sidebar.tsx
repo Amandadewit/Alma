@@ -57,6 +57,11 @@ const dataEntryItems = [
     shortcut: "R",
   },
   {
+    title: "Excel Report Builder",
+    href: "/data-entry/report-builder-excel",
+    shortcut: "X",
+  },
+  {
     title: "Portfolio Portal",
     href: "/data-entry/lp-reporting/portfolio-portal",
     shortcut: "F",
