@@ -7,6 +7,7 @@ import { companies } from "@/lib/mock-data"
 import { Upload, FileSpreadsheet, CheckCircle2, AlertCircle, Clock, DollarSign, TrendingUp, Sparkles, FileText, Loader2 } from "lucide-react"
 import { UploadReview } from "@/components/upload-review"
 import { DocumentReview } from "@/components/document-review"
+import { MonthlyReportIntake } from "@/components/monthly-report-intake"
 
 type UploadType = "financial" | "cashflow" | "document"
 
@@ -26,7 +27,7 @@ interface UploadedFile {
   period: string
   type: UploadType
   documentType?: string
-  status: "processing" | "validated" | "error"
+  status: "processing" | "validated" | "error" | "review"
   rows?: number
   pages?: number
   uploadedAt: string
@@ -37,9 +38,13 @@ export default function UploadPage() {
   const [uploadType, setUploadType] = useState<UploadType>("financial")
   const [docType, setDocType] = useState("ic-memo")
   const [docCompany, setDocCompany] = useState(companies[0]?.name ?? "")
+  const [docPeriod, setDocPeriod] = useState("Aug 2026")
   const [reviewFile, setReviewFile] = useState<UploadedFile | null>(null)
+  const isExcelDoc = docType === "monthly-report"
 
   const recentUploads: UploadedFile[] = [
+    { id: "10", name: "Alma_Testcase_A_Lenderrapportage_2026-08.xlsx", company: "Fictus Capital Management", period: "Aug 2026", type: "document", documentType: "monthly-report", status: "review", rows: 92, uploadedAt: "5 min ago" },
+    { id: "11", name: "Alma_Testcase_B_Maandsluiting_2026-08.xlsx", company: "Nordic Health Group", period: "Aug 2026", type: "document", documentType: "monthly-report", status: "review", rows: 95, uploadedAt: "8 min ago" },
     { id: "1", name: "MedTech_Mar2026.xlsx", company: "MedTech Group", period: "Mar 2026", type: "financial", status: "validated", rows: 142, uploadedAt: "10 min ago" },
     { id: "2", name: "Sure_Cashflow_Q1.xlsx", company: "Sure Operations", period: "Q1 2026", type: "cashflow", status: "validated", rows: 36, uploadedAt: "30 min ago" },
     { id: "3", name: "Sure_Mar2026.xlsx", company: "Sure Operations", period: "Mar 2026", type: "financial", status: "validated", rows: 98, uploadedAt: "1 hour ago" },
@@ -56,6 +61,9 @@ export default function UploadPage() {
       : recentUploads.filter((f) => f.type !== "document")
 
   if (reviewFile) {
+    if (reviewFile.type === "document" && reviewFile.documentType === "monthly-report" && reviewFile.name.endsWith(".xlsx")) {
+      return <MonthlyReportIntake key={reviewFile.id} caseId={reviewFile.name.includes("Testcase_A") ? "A" : "B"} onBack={() => setReviewFile(null)} />
+    }
     if (reviewFile.type === "document") {
       return (
         <DocumentReview
@@ -65,7 +73,7 @@ export default function UploadPage() {
             company: reviewFile.company,
             period: reviewFile.period,
             documentType: reviewFile.documentType,
-            status: reviewFile.status,
+            status: reviewFile.status === "review" ? "validated" : reviewFile.status,
             pages: reviewFile.pages,
           }}
           onBack={() => setReviewFile(null)}
@@ -205,7 +213,9 @@ export default function UploadPage() {
               or click to browse from your computer
             </p>
             <p className="mt-2 text-[11px] text-[#D4C5A9]">
-              {uploadType === "document" ? "Supported: PDF, Word (.docx)" : "Supported: Excel (.xlsx, .xls), CSV"}
+              {uploadType === "document"
+                ? isExcelDoc ? "Monthly report: Excel (.xlsx) only, no PDF" : "Supported: PDF, Word (.docx)"
+                : "Supported: Excel (.xlsx, .xls), CSV"}
             </p>
             <Button className={cn(
               "mt-3",
@@ -219,7 +229,7 @@ export default function UploadPage() {
 
           {/* Document pre-classification (Document Intake only) */}
           {uploadType === "document" && (
-            <div className="mt-4 grid grid-cols-2 gap-4 rounded-[10px] border border-[#E8E6E0] bg-white p-4">
+            <div className={cn("mt-4 grid gap-4 rounded-[10px] border border-[#E8E6E0] bg-white p-4", isExcelDoc ? "grid-cols-3" : "grid-cols-2")}>
               <div>
                 <label className="text-[12px] font-medium text-[#2C2C2A]">Document type</label>
                 <select
@@ -244,6 +254,25 @@ export default function UploadPage() {
                   ))}
                 </select>
               </div>
+              {isExcelDoc && (
+                <div>
+                  <label className="text-[12px] font-medium text-[#2C2C2A]">Period</label>
+                  <select
+                    value={docPeriod}
+                    onChange={(e) => setDocPeriod(e.target.value)}
+                    className="mt-1.5 w-full rounded-lg border border-[#E8E6E0] bg-white px-3 py-2 text-[13px] text-[#2C2C2A] outline-none focus:border-[#1B4D45]"
+                  >
+                    {["Jun 2026", "Jul 2026", "Aug 2026", "Sep 2026"].map((p) => (
+                      <option key={p} value={p}>{p}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              {isExcelDoc && (
+                <p className="col-span-3 text-[11px] text-[#6B6963]">
+                  You choose type and period before uploading; the AI checks them against the file and warns on a mismatch (for example the May report uploaded as June).
+                </p>
+              )}
             </div>
           )}
 
@@ -298,6 +327,12 @@ export default function UploadPage() {
                         <CheckCircle2 className="h-4 w-4 text-[#3B6D11]" />
                       </>
                     )}
+                    {file.status === "review" && (
+                      <>
+                        <span className="text-[11px] text-[#B8975A]">{file.rows} values · needs your review</span>
+                        <AlertCircle className="h-4 w-4 text-[#B8975A]" />
+                      </>
+                    )}
                     {file.status === "processing" && (
                       <>
                         <span className="text-[11px] text-[#B8975A]">Processing…</span>
@@ -323,7 +358,28 @@ export default function UploadPage() {
 
         {/* Instructions */}
         <div className="w-80">
-          {uploadType === "document" ? (
+          {uploadType === "document" && isExcelDoc ? (
+            <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-[#1B4D45]" />
+                <h3 className="text-[13px] font-medium text-[#2C2C2A]">Monthly report from Excel</h3>
+              </div>
+              <div className="mt-3 space-y-3 text-[12px] text-[#6B6963]">
+                {[
+                  "The Excel is read directly, so no PDF and no linking to the performance sheet by the CFO",
+                  "Every row is mapped automatically to the data model, with the source cell kept per value",
+                  "Totals are recalculated and checked; costs are stored negative, income positive",
+                  "YTD is compared with the report: changed earlier months are flagged and you decide how to process them",
+                  "Nothing is stored until you confirm",
+                ].map((t, i) => (
+                  <div key={t} className="flex gap-2">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#E1F5EE] text-[10px] font-medium text-[#1B4D45]">{i + 1}</span>
+                    <span>{t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : uploadType === "document" ? (
             <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-[#1B4D45]" />
