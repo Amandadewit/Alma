@@ -7,27 +7,30 @@ interface StatusDotProps {
   className?: string
 }
 
+/** Status marker with a shape per status (■ on track, ▲ watch, ◆ alert), so status never relies on colour alone. */
 export function StatusDot({ status, size = "md", className }: StatusDotProps) {
   const sizeClasses = {
-    sm: "h-1.5 w-1.5",
+    sm: "h-[7px] w-[7px]",
     md: "h-2 w-2",
     lg: "h-2.5 w-2.5",
   }
 
   const colorClasses = {
-    "on-track": "bg-[#3B6D11]",
-    watch: "bg-[#EF9F27]",
-    alert: "bg-[#A32D2D]",
+    "on-track": "bg-ok",
+    watch: "bg-watch",
+    alert: "bg-alert",
+  }
+
+  const shapes = {
+    "on-track": undefined,
+    watch: "polygon(50% 0, 100% 100%, 0 100%)",
+    alert: "polygon(50% 0, 100% 50%, 50% 100%, 0 50%)",
   }
 
   return (
     <span
-      className={cn(
-        "inline-block shrink-0 rounded-full",
-        sizeClasses[size],
-        colorClasses[status],
-        className
-      )}
+      className={cn("inline-block shrink-0", sizeClasses[size], colorClasses[status], className)}
+      style={{ clipPath: shapes[status] }}
     />
   )
 }
@@ -41,9 +44,9 @@ interface StatusBadgeProps {
 
 export function StatusBadge({ status, label, count, className }: StatusBadgeProps) {
   const bgClasses = {
-    "on-track": "bg-[#EAF3DE] text-[#3B6D11]",
-    watch: "bg-[#FAEEDA] text-[#854F0B]",
-    alert: "bg-[#FCEBEB] text-[#A32D2D]",
+    "on-track": "bg-ok-soft text-ok",
+    watch: "bg-watch-soft text-watch",
+    alert: "bg-alert-soft text-alert",
   }
 
   const defaultLabels = {
@@ -55,7 +58,7 @@ export function StatusBadge({ status, label, count, className }: StatusBadgeProp
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium",
+        "inline-flex h-[22px] items-center gap-1.5 rounded-[2px] px-2 text-xs font-medium",
         bgClasses[status],
         className
       )}

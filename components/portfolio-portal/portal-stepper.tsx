@@ -15,9 +15,9 @@ export function PortalStepper({ current }: { current: number }) {
               <div
                 className={cn(
                   "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold transition-colors",
-                  isDone && "bg-[#1B4D45] text-white",
-                  isActive && "bg-[#1B4D45] text-white ring-4 ring-[#1B4D45]/12",
-                  !isDone && !isActive && "bg-[#E8E6E0] text-[#9A988F]",
+                  isDone && "bg-brand text-white",
+                  isActive && "bg-brand text-white ring-4 ring-brand/12",
+                  !isDone && !isActive && "bg-line text-ink-3",
                 )}
               >
                 {isDone ? <Check className="h-3.5 w-3.5" /> : i + 1}
@@ -25,9 +25,9 @@ export function PortalStepper({ current }: { current: number }) {
               <span
                 className={cn(
                   "hidden text-[13px] font-medium sm:inline",
-                  isDone && "text-[#2C2C2A]",
-                  isActive && "text-[#1B4D45]",
-                  !isDone && !isActive && "text-[#9A988F]",
+                  isDone && "text-ink",
+                  isActive && "text-brand",
+                  !isDone && !isActive && "text-ink-3",
                 )}
               >
                 {label}
@@ -37,7 +37,7 @@ export function PortalStepper({ current }: { current: number }) {
               <div
                 className={cn(
                   "mx-3 h-px w-8 lg:w-14",
-                  i < current ? "bg-[#1B4D45]" : "bg-[#E8E6E0]",
+                  i < current ? "bg-brand" : "bg-line",
                 )}
               />
             )}

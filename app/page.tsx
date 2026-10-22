@@ -90,30 +90,30 @@ export default function PerformanceOverviewPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "green": return "bg-[#22C55E]"
-      case "orange": return "bg-[#F59E0B]"
-      case "red": return "bg-[#EF4444]"
-      default: return "bg-[#9CA3AF]"
+      case "green": return "bg-ok"
+      case "orange": return "bg-watch"
+      case "red": return "bg-alert"
+      default: return "bg-ink-3"
     }
   }
 
   const getHeatmapColor = (status: string) => {
     switch (status) {
-      case "on-track": return "bg-[#D1FAE5] text-[#065F46]"
-      case "watch": return "bg-[#FEF3C7] text-[#92400E]"
-      case "alert": return "bg-[#FEE2E2] text-[#991B1B]"
-      default: return "bg-[#F3F4F6] text-[#6B7280]"
+      case "on-track": return "bg-ok-soft text-ok"
+      case "watch": return "bg-watch-soft text-watch"
+      case "alert": return "bg-alert-soft text-alert"
+      default: return "bg-surface-2 text-ink-3"
     }
   }
 
   const getStatusBadge = (status: string) => {
     return status === "Actief" 
-      ? "bg-[#D1FAE5] text-[#065F46]" 
-      : "bg-[#FEF3C7] text-[#92400E]"
+      ? "bg-ok-soft text-ok" 
+      : "bg-watch-soft text-watch"
   }
 
   const formatDelta = (value: number) => {
-    const color = value >= 0 ? "text-[#22C55E]" : "text-[#EF4444]"
+    const color = value >= 0 ? "text-ok" : "text-alert"
     const prefix = value >= 0 ? "+" : ""
     return <span className={color}>{prefix}{value}%</span>
   }
@@ -121,8 +121,8 @@ export default function PerformanceOverviewPage() {
   const formatChange = (value: number, isPositiveGood = true) => {
     const isPositive = value >= 0
     const color = isPositiveGood 
-      ? (isPositive ? "text-[#22C55E]" : "text-[#EF4444]")
-      : (isPositive ? "text-[#EF4444]" : "text-[#22C55E]")
+      ? (isPositive ? "text-ok" : "text-alert")
+      : (isPositive ? "text-alert" : "text-ok")
     const prefix = isPositive ? "+" : ""
     return <span className={color}>{prefix}{value}%</span>
   }
@@ -144,16 +144,16 @@ export default function PerformanceOverviewPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#FAFAF7] font-sans">
+    <div className="flex min-h-screen flex-col bg-surface-2 font-sans">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-[#E8E6E0] bg-white px-6 py-4">
-        <h1 className="text-xl font-medium text-[#2C2C2A]">Portfolio overzicht</h1>
+      <div className="flex items-center justify-between border-b border-line bg-white px-6 py-4">
+        <h1 className="text-xl font-medium text-ink">Portfolio overzicht</h1>
         <Select value={selectedFund} onValueChange={setSelectedFund}>
-          <SelectTrigger className="w-[220px] border-[#E8E6E0]">
+          <SelectTrigger className="w-[220px] border-line">
             <SelectValue placeholder="Select fund" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Alle fondsen</SelectItem>
+            <SelectItem value="all">All funds</SelectItem>
             {funds.map((fund) => (
               <SelectItem key={fund.id} value={fund.id}>{fund.name}</SelectItem>
             ))}
@@ -164,47 +164,47 @@ export default function PerformanceOverviewPage() {
       <div className="flex-1 space-y-6 p-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-4 gap-4">
-          <Card className="border-[#E8E6E0] bg-white">
+          <Card className="border-line bg-white">
             <CardContent className="p-5">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-[#6B6963]">{kpiData.portfolioValue.label}</p>
-              <p className="mt-1 text-3xl font-semibold text-[#2C2C2A]">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.portfolioValue.label}</p>
+              <p className="mt-1 text-3xl font-semibold text-ink">
                 {"€ "}{kpiData.portfolioValue.value}{kpiData.portfolioValue.unit}
               </p>
               <p className="mt-1 text-[12px]">
-                <span className="text-[#22C55E]">+{kpiData.portfolioValue.change}%</span>
-                <span className="text-[#9CA3AF]"> {kpiData.portfolioValue.changeLabel}</span>
+                <span className="text-ok">+{kpiData.portfolioValue.change}%</span>
+                <span className="text-ink-3"> {kpiData.portfolioValue.changeLabel}</span>
               </p>
             </CardContent>
           </Card>
-          <Card className="border-[#E8E6E0] bg-white">
+          <Card className="border-line bg-white">
             <CardContent className="p-5">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-[#6B6963]">{kpiData.weightedMOI.label}</p>
-              <p className="mt-1 text-3xl font-semibold text-[#2C2C2A]">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.weightedMOI.label}</p>
+              <p className="mt-1 text-3xl font-semibold text-ink">
                 {kpiData.weightedMOI.value}{kpiData.weightedMOI.unit}
               </p>
               <p className="mt-1 text-[12px]">
-                <span className="text-[#22C55E]">+{kpiData.weightedMOI.change}x</span>
-                <span className="text-[#9CA3AF]"> {kpiData.weightedMOI.changeLabel}</span>
+                <span className="text-ok">+{kpiData.weightedMOI.change}x</span>
+                <span className="text-ink-3"> {kpiData.weightedMOI.changeLabel}</span>
               </p>
             </CardContent>
           </Card>
-          <Card className="border-[#E8E6E0] bg-white">
+          <Card className="border-line bg-white">
             <CardContent className="p-5">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-[#6B6963]">{kpiData.totalEbitda.label}</p>
-              <p className="mt-1 text-3xl font-semibold text-[#2C2C2A]">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.totalEbitda.label}</p>
+              <p className="mt-1 text-3xl font-semibold text-ink">
                 {"€ "}{kpiData.totalEbitda.value}{kpiData.totalEbitda.unit}
               </p>
               <p className="mt-1 text-[12px]">
-                <span className="text-[#EF4444]">{kpiData.totalEbitda.change}%</span>
-                <span className="text-[#9CA3AF]"> {kpiData.totalEbitda.changeLabel}</span>
+                <span className="text-alert">{kpiData.totalEbitda.change}%</span>
+                <span className="text-ink-3"> {kpiData.totalEbitda.changeLabel}</span>
               </p>
             </CardContent>
           </Card>
-          <Card className="border-[#E8E6E0] bg-white">
+          <Card className="border-line bg-white">
             <CardContent className="p-5">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-[#6B6963]">{kpiData.companies.label}</p>
-              <p className="mt-1 text-3xl font-semibold text-[#2C2C2A]">{kpiData.companies.value}</p>
-              <p className="mt-1 text-[12px] text-[#9CA3AF]">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.companies.label}</p>
+              <p className="mt-1 text-3xl font-semibold text-ink">{kpiData.companies.value}</p>
+              <p className="mt-1 text-[12px] text-ink-3">
                 {kpiData.companies.active} actief · {kpiData.companies.exited} geëxit
               </p>
             </CardContent>
@@ -214,12 +214,12 @@ export default function PerformanceOverviewPage() {
 
 
         {/* Financial Highlights Table */}
-        <Card className="border-[#E8E6E0] bg-white">
+        <Card className="border-line bg-white">
           <CardContent className="p-0">
-            <div className="flex items-center justify-between border-b border-[#E8E6E0] px-5 py-4">
-              <h3 className="text-[14px] font-semibold text-[#2C2C2A]">Financial highlights</h3>
+            <div className="flex items-center justify-between border-b border-line px-5 py-4">
+              <h3 className="text-[14px] font-semibold text-ink">Financial highlights</h3>
               <div className="flex items-center gap-3">
-                <div className="flex items-center rounded-lg border border-[#E8E6E0]">
+                <div className="flex items-center rounded-lg border border-line">
                   {(["FY", "YTD", "Month"] as ViewMode[]).map((mode) => (
                     <button
                       key={mode}
@@ -227,8 +227,8 @@ export default function PerformanceOverviewPage() {
                       className={cn(
                         "px-3 py-1 text-[11px] font-medium transition-colors",
                         viewMode === mode
-                          ? "bg-[#1B4D45] text-white"
-                          : "text-[#6B6963] hover:bg-[#F7F6F3]",
+                          ? "bg-brand text-white"
+                          : "text-ink-2 hover:bg-bg",
                         mode === "FY" && "rounded-l-lg",
                         mode === "Month" && "rounded-r-lg"
                       )}
@@ -237,49 +237,49 @@ export default function PerformanceOverviewPage() {
                     </button>
                   ))}
                 </div>
-                <span className="text-[11px] text-[#9CA3AF]">in mEUR</span>
+                <span className="text-[11px] text-ink-3">in mEUR</span>
               </div>
             </div>
             
             <div className="overflow-x-auto">
               <table className="w-full text-[11px]">
                 <thead>
-                  <tr className="border-b border-[#E8E6E0]">
+                  <tr className="border-b border-line">
                     <th className="w-[180px] bg-white"></th>
                     <th className="w-12 bg-white"></th>
                     <th className="w-16 bg-white"></th>
-                    <th colSpan={4} className="border-l border-[#E8E6E0] bg-white py-2 text-center text-[12px] font-semibold text-[#2C2C2A]">
+                    <th colSpan={4} className="border-l border-line bg-white py-2 text-center text-[12px] font-semibold text-ink">
                       Revenue
                     </th>
-                    <th colSpan={4} className="border-l border-[#E8E6E0] bg-white py-2 text-center text-[12px] font-semibold text-[#2C2C2A]">
+                    <th colSpan={4} className="border-l border-line bg-white py-2 text-center text-[12px] font-semibold text-ink">
                       Norm. EBITDA
                     </th>
-                    <th colSpan={3} className="border-l border-[#E8E6E0] bg-white py-2 text-center text-[12px] font-semibold text-[#2C2C2A]">
+                    <th colSpan={3} className="border-l border-line bg-white py-2 text-center text-[12px] font-semibold text-ink">
                       Norm. EBITDA %
                     </th>
-                    <th colSpan={4} className="border-l border-[#E8E6E0] bg-white py-2 text-center text-[12px] font-semibold text-[#2C2C2A]">
+                    <th colSpan={4} className="border-l border-line bg-white py-2 text-center text-[12px] font-semibold text-ink">
                       Net Debt
                     </th>
                   </tr>
-                  <tr className="border-b border-[#E8E6E0] bg-[#FAFAF7] text-[10px]">
-                    <th className="px-4 py-2 text-left font-medium text-[#6B6963]">Company</th>
-                    <th className="px-2 py-2 text-center font-medium text-[#6B6963]">Status</th>
-                    <th className="px-2 py-2 text-center font-medium text-[#6B6963]">Entry</th>
-                    <th className="border-l border-[#E8E6E0] px-2 py-2 text-right font-medium text-[#6B6963]">2024A</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">LTM</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">2025LE</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">Δ LE vs B</th>
-                    <th className="border-l border-[#E8E6E0] px-2 py-2 text-right font-medium text-[#6B6963]">2024A</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">LTM</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">2025LE</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">Δ LE vs B</th>
-                    <th className="border-l border-[#E8E6E0] px-2 py-2 text-right font-medium text-[#6B6963]">2024A</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">2025LE</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">2025B</th>
-                    <th className="border-l border-[#E8E6E0] px-2 py-2 text-right font-medium text-[#6B6963]">2024A</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">2025LE</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">2025B</th>
-                    <th className="px-2 py-2 text-right font-medium text-[#6B6963]">Lev. LE</th>
+                  <tr className="border-b border-line bg-surface-2 text-[10px]">
+                    <th className="px-4 py-2 text-left font-medium text-ink-2">Company</th>
+                    <th className="px-2 py-2 text-center font-medium text-ink-2">Status</th>
+                    <th className="px-2 py-2 text-center font-medium text-ink-2">Entry</th>
+                    <th className="border-l border-line px-2 py-2 text-right font-medium text-ink-2">2024A</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">LTM</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">2025LE</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">Δ LE vs B</th>
+                    <th className="border-l border-line px-2 py-2 text-right font-medium text-ink-2">2024A</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">LTM</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">2025LE</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">Δ LE vs B</th>
+                    <th className="border-l border-line px-2 py-2 text-right font-medium text-ink-2">2024A</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">2025LE</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">2025B</th>
+                    <th className="border-l border-line px-2 py-2 text-right font-medium text-ink-2">2024A</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">2025LE</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">2025B</th>
+                    <th className="px-2 py-2 text-right font-medium text-ink-2">Lev. LE</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -289,68 +289,68 @@ export default function PerformanceOverviewPage() {
                     <Fragment key={fund.id}>
                       <tr
                         onClick={() => toggleFund(fund.id)}
-                        className="cursor-pointer border-b border-[#E8E6E0] bg-[#F7F6F3] hover:bg-[#EFEDEA]"
+                        className="cursor-pointer border-b border-line bg-bg hover:bg-line"
                       >
                         <td className="px-4 py-2.5" colSpan={18}>
                           <div className="flex items-center gap-2">
                             {expandedFunds.includes(fund.id) ? (
-                              <ChevronDown className="h-3.5 w-3.5 text-[#6B6963]" />
+                              <ChevronDown className="h-3.5 w-3.5 text-ink-2" />
                             ) : (
-                              <ChevronRight className="h-3.5 w-3.5 text-[#6B6963]" />
+                              <ChevronRight className="h-3.5 w-3.5 text-ink-2" />
                             )}
-                            <span className="text-[12px] font-semibold text-[#2C2C2A]">{fund.name}</span>
+                            <span className="text-[12px] font-semibold text-ink">{fund.name}</span>
                           </div>
                         </td>
                       </tr>
                       {expandedFunds.includes(fund.id) && (
                         <>
                           {fund.companies.map((company, idx) => (
-                            <tr key={idx} className="border-b border-[#E8E6E0] hover:bg-[#FAFAF7]">
-                              <td className="px-4 py-2 pl-8 text-[#2C2C2A]">{company.name}</td>
+                            <tr key={idx} className="border-b border-line hover:bg-surface-2">
+                              <td className="px-4 py-2 pl-8 text-ink">{company.name}</td>
                               <td className="px-2 py-2 text-center">
                                 <span className={cn("inline-block h-2.5 w-2.5 rounded-full", getStatusColor(company.status))} />
                               </td>
-                              <td className="px-2 py-2 text-center text-[#6B6963]">{company.entry}</td>
-                              <td className="border-l border-[#E8E6E0] px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.revenue.a2024.toFixed(1)}</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.revenue.ltm.toFixed(1)}</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.revenue.le2025.toFixed(1)}</td>
+                              <td className="px-2 py-2 text-center text-ink-2">{company.entry}</td>
+                              <td className="border-l border-line px-2 py-2 text-right tabular-nums text-ink">{company.revenue.a2024.toFixed(1)}</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.revenue.ltm.toFixed(1)}</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.revenue.le2025.toFixed(1)}</td>
                               <td className="px-2 py-2 text-right tabular-nums">{formatDelta(company.revenue.delta)}</td>
-                              <td className="border-l border-[#E8E6E0] px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.ebitda.a2024.toFixed(1)}</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.ebitda.ltm.toFixed(1)}</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.ebitda.le2025.toFixed(1)}</td>
+                              <td className="border-l border-line px-2 py-2 text-right tabular-nums text-ink">{company.ebitda.a2024.toFixed(1)}</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.ebitda.ltm.toFixed(1)}</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.ebitda.le2025.toFixed(1)}</td>
                               <td className="px-2 py-2 text-right tabular-nums">{formatDelta(company.ebitda.delta)}</td>
-                              <td className="border-l border-[#E8E6E0] px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.ebitdaPct.a2024}%</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.ebitdaPct.le2025}%</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.ebitdaPct.b2025}%</td>
-                              <td className="border-l border-[#E8E6E0] px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.netDebt.a2024.toFixed(1)}</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.netDebt.le2025.toFixed(1)}</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.netDebt.b2025.toFixed(1)}</td>
-                              <td className="px-2 py-2 text-right tabular-nums text-[#2C2C2A]">{company.netDebt.levLE}x</td>
+                              <td className="border-l border-line px-2 py-2 text-right tabular-nums text-ink">{company.ebitdaPct.a2024}%</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.ebitdaPct.le2025}%</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.ebitdaPct.b2025}%</td>
+                              <td className="border-l border-line px-2 py-2 text-right tabular-nums text-ink">{company.netDebt.a2024.toFixed(1)}</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.netDebt.le2025.toFixed(1)}</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.netDebt.b2025.toFixed(1)}</td>
+                              <td className="px-2 py-2 text-right tabular-nums text-ink">{company.netDebt.levLE}x</td>
                             </tr>
                           ))}
                           {/* Total Row */}
                           {(() => {
                             const totals = calculateTotals(fund.companies)
                             return (
-                              <tr className="border-b border-[#E8E6E0] bg-[#FAFAF7]">
-                                <td className="px-4 py-2 pl-8 font-medium text-[#6B6963]">Total / Wtd avg</td>
+                              <tr className="border-b border-line bg-surface-2">
+                                <td className="px-4 py-2 pl-8 font-medium text-ink-2">Total / Wtd avg</td>
                                 <td className="px-2 py-2"></td>
                                 <td className="px-2 py-2"></td>
-                                <td className="border-l border-[#E8E6E0] px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.revenue.a2024.toFixed(1)}</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.revenue.ltm.toFixed(1)}</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.revenue.le2025.toFixed(1)}</td>
+                                <td className="border-l border-line px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.revenue.a2024.toFixed(1)}</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.revenue.ltm.toFixed(1)}</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.revenue.le2025.toFixed(1)}</td>
                                 <td className="px-2 py-2 text-right tabular-nums font-medium">{formatDelta(totals.revenueDelta)}</td>
-                                <td className="border-l border-[#E8E6E0] px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.ebitda.a2024.toFixed(1)}</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.ebitda.ltm.toFixed(1)}</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.ebitda.le2025.toFixed(1)}</td>
+                                <td className="border-l border-line px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.ebitda.a2024.toFixed(1)}</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.ebitda.ltm.toFixed(1)}</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.ebitda.le2025.toFixed(1)}</td>
                                 <td className="px-2 py-2 text-right tabular-nums font-medium">{formatDelta(totals.ebitdaDelta)}</td>
-                                <td className="border-l border-[#E8E6E0] px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.avgEbitdaPct}%</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.avgEbitdaPct}%</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.avgEbitdaPct}%</td>
-                                <td className="border-l border-[#E8E6E0] px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.netDebt.a2024.toFixed(1)}</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.netDebt.le2025.toFixed(1)}</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.netDebt.b2025.toFixed(1)}</td>
-                                <td className="px-2 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{totals.avgLev}x</td>
+                                <td className="border-l border-line px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.avgEbitdaPct}%</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.avgEbitdaPct}%</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.avgEbitdaPct}%</td>
+                                <td className="border-l border-line px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.netDebt.a2024.toFixed(1)}</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.netDebt.le2025.toFixed(1)}</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.netDebt.b2025.toFixed(1)}</td>
+                                <td className="px-2 py-2 text-right tabular-nums font-medium text-ink">{totals.avgLev}x</td>
                               </tr>
                             )
                           })()}
@@ -367,13 +367,13 @@ export default function PerformanceOverviewPage() {
         {/* Heatmap and Performance Summary - Compact Row */}
         <div className="grid grid-cols-5 gap-4">
           {/* Heatmap - takes 3 columns */}
-          <Card className="col-span-3 border-[#E8E6E0] bg-white">
+          <Card className="col-span-3 border-line bg-white">
             <CardContent className="p-4">
-              <h3 className="mb-3 text-[13px] font-semibold text-[#2C2C2A]">Heatmap</h3>
+              <h3 className="mb-3 text-[13px] font-semibold text-ink">Heatmap</h3>
               <table className="w-full text-[11px]">
                 <thead>
-                  <tr className="text-[10px] text-[#6B6963]">
-                    <th className="pb-1.5 text-left font-medium">Bedrijf</th>
+                  <tr className="text-[10px] text-ink-2">
+                    <th className="pb-1.5 text-left font-medium">Company</th>
                     <th className="pb-1.5 text-center font-medium">Financieel</th>
                     <th className="pb-1.5 text-center font-medium">Management</th>
                     <th className="pb-1.5 text-center font-medium">Value Creation Plan</th>
@@ -383,7 +383,7 @@ export default function PerformanceOverviewPage() {
                 <tbody>
                   {heatmapData.map((row, idx) => (
                     <tr key={idx}>
-                      <td className="py-1 text-[#2C2C2A]">{row.company}</td>
+                      <td className="py-1 text-ink">{row.company}</td>
                       <td className="py-1 text-center">
                         <span className={cn("inline-block rounded px-2 py-0.5 text-[10px] font-medium", getHeatmapColor(row.financieel))}>
                           {row.financieel === "on-track" ? "On track" : row.financieel === "watch" ? "Watch" : "Alert"}
@@ -412,13 +412,13 @@ export default function PerformanceOverviewPage() {
           </Card>
 
           {/* Performance Summary - takes 2 columns */}
-          <Card className="col-span-2 border-[#E8E6E0] bg-white">
+          <Card className="col-span-2 border-line bg-white">
             <CardContent className="p-4">
-              <h3 className="mb-3 text-[13px] font-semibold text-[#2C2C2A]">Performance samenvatting</h3>
+              <h3 className="mb-3 text-[13px] font-semibold text-ink">Performance samenvatting</h3>
               <table className="w-full text-[11px]">
                 <thead>
-                  <tr className="text-[10px] text-[#6B6963]">
-                    <th className="pb-1.5 text-left font-medium">Bedrijf</th>
+                  <tr className="text-[10px] text-ink-2">
+                    <th className="pb-1.5 text-left font-medium">Company</th>
                     <th className="pb-1.5 text-right font-medium">Revenue LTM</th>
                     <th className="pb-1.5 text-right font-medium">EBITDA %</th>
                     <th className="pb-1.5 text-right font-medium">vs. Budget</th>
@@ -428,9 +428,9 @@ export default function PerformanceOverviewPage() {
                 <tbody>
                   {performanceSummary.map((row, idx) => (
                     <tr key={idx}>
-                      <td className="py-1 text-[#2C2C2A]">{row.company}</td>
-                      <td className="py-1 text-right tabular-nums text-[#2C2C2A]">{"€ "}{row.revenueLTM}M</td>
-                      <td className="py-1 text-right tabular-nums text-[#2C2C2A]">{row.ebitdaPct}%</td>
+                      <td className="py-1 text-ink">{row.company}</td>
+                      <td className="py-1 text-right tabular-nums text-ink">{"€ "}{row.revenueLTM}M</td>
+                      <td className="py-1 text-right tabular-nums text-ink">{row.ebitdaPct}%</td>
                       <td className="py-1 text-right tabular-nums">{formatChange(row.vsBudget)}</td>
                       <td className="py-1 text-center">
                         <span className={cn("inline-block rounded-full px-2 py-0.5 text-[9px] font-medium", getStatusBadge(row.status))}>
@@ -447,8 +447,8 @@ export default function PerformanceOverviewPage() {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-[#E8E6E0] bg-white px-6 py-3">
-        <span className="text-[11px] text-[#9CA3AF]">Last Refresh: 03/03/2026</span>
+      <div className="border-t border-line bg-white px-6 py-3">
+        <span className="text-[11px] text-ink-3">Last Refresh: 03/03/2026</span>
       </div>
     </div>
   )

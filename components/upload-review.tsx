@@ -66,18 +66,18 @@ const filterOptions: Array<"All" | RecordType> = ["All", "P&L", "Balance sheet",
 
 function deltaColor(delta: number) {
   const abs = Math.abs(delta)
-  if (abs > 15) return "text-[#A32D2D]"
-  if (abs > 8) return "text-[#B8975A]"
-  return "text-[#3B6D11]"
+  if (abs > 15) return "text-alert"
+  if (abs > 8) return "text-ai"
+  return "text-ok"
 }
 
 function StatusBadge({ status }: { status: "Mapped" | "Verify" | "Not found" | "Pass" | "Fail" }) {
   const styles: Record<string, string> = {
-    Mapped: "bg-[#E1F5EE] text-[#3B6D11]",
-    Pass: "bg-[#E1F5EE] text-[#3B6D11]",
-    Verify: "bg-[#FDF8F0] text-[#B8975A]",
-    "Not found": "bg-[#FBEAEA] text-[#A32D2D]",
-    Fail: "bg-[#FBEAEA] text-[#A32D2D]",
+    Mapped: "bg-brand-soft text-ok",
+    Pass: "bg-brand-soft text-ok",
+    Verify: "bg-ai-soft text-ai",
+    "Not found": "bg-alert-soft text-alert",
+    Fail: "bg-alert-soft text-alert",
   }
   return (
     <span className={cn("rounded px-2 py-0.5 text-[11px] font-medium", styles[status])}>
@@ -161,27 +161,27 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
   return (
     <div className="flex min-h-screen flex-col font-sans">
       {/* Topbar */}
-      <div className="border-b border-[#E8E6E0] px-6 py-4">
+      <div className="border-b border-line px-6 py-4">
         <button
           onClick={onBack}
-          className="mb-3 flex items-center gap-1.5 text-[12px] font-medium text-[#1B4D45] hover:underline"
+          className="mb-3 flex items-center gap-1.5 text-[12px] font-medium text-brand hover:underline"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Back to Upload Data
         </button>
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-xl font-medium text-[#2C2C2A]">{file.name}</h1>
-            <p className="text-[13px] text-[#6B6963]">
+            <h1 className="text-xl font-medium text-ink">{file.name}</h1>
+            <p className="text-[13px] text-ink-2">
               {file.company} · {file.period} · {currency}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <span className="flex items-center gap-1.5 rounded-md bg-[#FDF8F0] px-2.5 py-1 text-[12px] font-medium text-[#B8975A]">
+            <span className="flex items-center gap-1.5 rounded-md bg-ai-soft px-2.5 py-1 text-[12px] font-medium text-ai">
               <AlertTriangle className="h-3.5 w-3.5" />
               {warnings} warnings
             </span>
-            <span className="flex items-center gap-1.5 rounded-md bg-[#E1F5EE] px-2.5 py-1 text-[12px] font-medium text-[#3B6D11]">
+            <span className="flex items-center gap-1.5 rounded-md bg-brand-soft px-2.5 py-1 text-[12px] font-medium text-ok">
               <CheckCircle2 className="h-3.5 w-3.5" />
               {checksPassed} checks passed
             </span>
@@ -191,31 +191,31 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
 
       <div className="flex-1 p-6">
         {showBanner && (
-          <div className="mb-4 flex items-center gap-2 rounded-[10px] border border-[#3B6D11]/30 bg-[#E1F5EE] px-4 py-3 text-[13px] text-[#3B6D11]">
+          <div className="mb-4 flex items-center gap-2 rounded-[10px] border border-ok/30 bg-brand-soft px-4 py-3 text-[13px] text-ok">
             <CheckCircle2 className="h-4 w-4" />
             Data imported — portfolio overview will update within 30 seconds.
           </div>
         )}
 
-        <div className="rounded-[10px] border border-[#E8E6E0] bg-white">
+        <div className="rounded-[10px] border border-line bg-white">
           {/* SECTION 0 — Records loaded */}
-          <div className="border-b border-[#E8E6E0]">
+          <div className="border-b border-line">
             <button
               onClick={() => setRecordsExpanded((v) => !v)}
               className="flex w-full items-center justify-between px-5 py-4 text-left"
             >
               <div className="flex items-baseline gap-3">
-                <span className="text-3xl font-semibold text-[#2C2C2A]">{recordCounts.total}</span>
+                <span className="text-3xl font-semibold text-ink">{recordCounts.total}</span>
                 <div>
-                  <div className="text-[13px] text-[#2C2C2A]">
+                  <div className="text-[13px] text-ink">
                     records loaded · {file.company} · {file.period}
                   </div>
-                  <div className="text-[11px] text-[#6B6963]">
+                  <div className="text-[11px] text-ink-2">
                     P&L {recordCounts.pl} · Balance sheet {recordCounts.bs} · Cash flow {recordCounts.cf} · KPIs {recordCounts.kpis}
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 text-[12px] font-medium text-[#1B4D45]">
+              <div className="flex items-center gap-1.5 text-[12px] font-medium text-brand">
                 Click to inspect
                 {recordsExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
               </div>
@@ -232,8 +232,8 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
                       className={cn(
                         "rounded-md px-3 py-1 text-[12px] font-medium transition-colors",
                         activeFilter === opt
-                          ? "bg-[#1B4D45] text-white"
-                          : "bg-[#F7F6F3] text-[#6B6963] hover:bg-[#E8E6E0]"
+                          ? "bg-brand text-white"
+                          : "bg-bg text-ink-2 hover:bg-line"
                       )}
                     >
                       {opt}
@@ -242,10 +242,10 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
                 </div>
 
                 {/* Table */}
-                <div className="max-h-[280px] overflow-y-auto rounded-lg border border-[#E8E6E0]">
+                <div className="max-h-[280px] overflow-y-auto rounded-lg border border-line">
                   <table className="w-full border-collapse text-[12px]">
-                    <thead className="sticky top-0 bg-[#F7F6F3]">
-                      <tr className="text-left text-[11px] uppercase tracking-wide text-[#6B6963]">
+                    <thead className="sticky top-0 bg-bg">
+                      <tr className="text-left text-[11px] uppercase tracking-wide text-ink-2">
                         <th className="px-3 py-2 font-medium">Code</th>
                         <th className="px-3 py-2 font-medium">Metric</th>
                         <th className="px-3 py-2 font-medium">Type</th>
@@ -256,21 +256,21 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
                     </thead>
                     <tbody>
                       {filteredRecords.map((r) => (
-                        <tr key={r.code} className="border-t border-[#E8E6E0]">
-                          <td className="px-3 py-2 font-mono text-[11px] text-[#6B6963]">{r.code}</td>
-                          <td className="px-3 py-2 text-[#2C2C2A]">{r.metric}</td>
+                        <tr key={r.code} className="border-t border-line">
+                          <td className="px-3 py-2 font-mono text-[11px] text-ink-2">{r.code}</td>
+                          <td className="px-3 py-2 text-ink">{r.metric}</td>
                           <td className="px-3 py-2">
                             <span
                               className={cn(
                                 "rounded px-1.5 py-0.5 text-[10px] font-medium",
-                                r.calc === "Reported" ? "bg-[#E1F5EE] text-[#3B6D11]" : "bg-[#F1ECF7] text-[#7B5EA7]"
+                                r.calc === "Reported" ? "bg-brand-soft text-ok" : "bg-ai-soft text-ai-text"
                               )}
                             >
                               {r.calc}
                             </span>
                           </td>
-                          <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{r.current}</td>
-                          <td className="px-3 py-2 text-right tabular-nums text-[#6B6963]">{r.previous}</td>
+                          <td className="px-3 py-2 text-right tabular-nums text-ink">{r.current}</td>
+                          <td className="px-3 py-2 text-right tabular-nums text-ink-2">{r.previous}</td>
                           <td className={cn("px-3 py-2 text-right tabular-nums font-medium", deltaColor(r.delta))}>
                             {r.delta > 0 ? "+" : ""}
                             {r.delta.toFixed(1)}%
@@ -285,14 +285,14 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
           </div>
 
           {/* SECTION 1 — Mapping check */}
-          <div className="border-b border-[#E8E6E0] px-5 py-4">
-            <div className="mb-3 text-[11px] font-medium uppercase tracking-wide text-[#6B6963]">
+          <div className="border-b border-line px-5 py-4">
+            <div className="mb-3 text-[11px] font-medium uppercase tracking-wide text-ink-2">
               1 · Mapping check
             </div>
-            <div className="overflow-hidden rounded-lg border border-[#E8E6E0]">
+            <div className="overflow-hidden rounded-lg border border-line">
               <table className="w-full border-collapse text-[12px]">
-                <thead className="bg-[#F7F6F3]">
-                  <tr className="text-left text-[11px] uppercase tracking-wide text-[#6B6963]">
+                <thead className="bg-bg">
+                  <tr className="text-left text-[11px] uppercase tracking-wide text-ink-2">
                     <th className="px-3 py-2 font-medium">Field in file</th>
                     <th className="px-3 py-2 font-medium">Mapped to</th>
                     <th className="px-3 py-2 text-right font-medium">Latest value</th>
@@ -301,10 +301,10 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
                 </thead>
                 <tbody>
                   {mappingRows.map((m) => (
-                    <tr key={m.field} className="border-t border-[#E8E6E0]">
-                      <td className="px-3 py-2.5 text-[#2C2C2A]">{m.field}</td>
-                      <td className="px-3 py-2.5 text-[#2C2C2A]">{m.mappedTo}</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-[#2C2C2A]">{m.value}</td>
+                    <tr key={m.field} className="border-t border-line">
+                      <td className="px-3 py-2.5 text-ink">{m.field}</td>
+                      <td className="px-3 py-2.5 text-ink">{m.mappedTo}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-ink">{m.value}</td>
                       <td className="px-3 py-2.5 text-right">
                         <StatusBadge status={m.status} />
                       </td>
@@ -316,16 +316,16 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
           </div>
 
           {/* SECTION 2 — Sum checks */}
-          <div className="border-b border-[#E8E6E0] px-5 py-4">
-            <div className="mb-3 text-[11px] font-medium uppercase tracking-wide text-[#6B6963]">
+          <div className="border-b border-line px-5 py-4">
+            <div className="mb-3 text-[11px] font-medium uppercase tracking-wide text-ink-2">
               2 · Sum checks
             </div>
-            <div className="divide-y divide-[#E8E6E0] rounded-lg border border-[#E8E6E0]">
+            <div className="divide-y divide-line rounded-lg border border-line">
               {sumChecks.map((c) => (
                 <div key={c.description} className="flex items-center justify-between gap-4 px-3 py-3">
                   <div>
-                    <div className="text-[12px] text-[#2C2C2A]">{c.description}</div>
-                    <div className="text-[11px] text-[#6B6963]">{c.detail}</div>
+                    <div className="text-[12px] text-ink">{c.description}</div>
+                    <div className="text-[11px] text-ink-2">{c.detail}</div>
                   </div>
                   <StatusBadge status={c.status} />
                 </div>
@@ -334,14 +334,14 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
           </div>
 
           {/* SECTION 3 — Anomalies */}
-          <div className="border-b border-[#E8E6E0] px-5 py-4">
-            <div className="mb-3 text-[11px] font-medium uppercase tracking-wide text-[#6B6963]">
+          <div className="border-b border-line px-5 py-4">
+            <div className="mb-3 text-[11px] font-medium uppercase tracking-wide text-ink-2">
               3 · Anomalies ( &gt;15% month-over-month )
             </div>
-            <div className="overflow-hidden rounded-lg border border-[#E8E6E0]">
+            <div className="overflow-hidden rounded-lg border border-line">
               <table className="w-full border-collapse text-[12px]">
-                <thead className="bg-[#F7F6F3]">
-                  <tr className="text-left text-[11px] uppercase tracking-wide text-[#6B6963]">
+                <thead className="bg-bg">
+                  <tr className="text-left text-[11px] uppercase tracking-wide text-ink-2">
                     <th className="px-3 py-2 font-medium">Metric</th>
                     <th className="px-3 py-2 font-medium">Period</th>
                     <th className="px-3 py-2 text-right font-medium">From</th>
@@ -352,15 +352,15 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
                 </thead>
                 <tbody>
                   {anomalies.map((a, idx) => (
-                    <tr key={a.metric} className="border-t border-[#E8E6E0]">
-                      <td className="px-3 py-2.5 text-[#2C2C2A]">{a.metric}</td>
-                      <td className="px-3 py-2.5 text-[#6B6963]">{a.period}</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-[#6B6963]">{a.from}</td>
-                      <td className="px-3 py-2.5 text-right tabular-nums text-[#2C2C2A]">{a.to}</td>
+                    <tr key={a.metric} className="border-t border-line">
+                      <td className="px-3 py-2.5 text-ink">{a.metric}</td>
+                      <td className="px-3 py-2.5 text-ink-2">{a.period}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-ink-2">{a.from}</td>
+                      <td className="px-3 py-2.5 text-right tabular-nums text-ink">{a.to}</td>
                       <td
                         className={cn(
                           "px-3 py-2.5 text-right tabular-nums font-medium",
-                          Math.abs(a.delta) > 25 ? "text-[#A32D2D]" : "text-[#B8975A]"
+                          Math.abs(a.delta) > 25 ? "text-alert" : "text-ai"
                         )}
                       >
                         {a.delta > 0 ? "+" : ""}
@@ -368,7 +368,7 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
                       </td>
                       <td className="px-3 py-2.5">
                         {notes[idx] !== undefined && editingNote !== idx ? (
-                          <span className="flex items-center gap-1 text-[11px] text-[#3B6D11]">
+                          <span className="flex items-center gap-1 text-[11px] text-ok">
                             <Check className="h-3 w-3" /> Noted
                           </span>
                         ) : editingNote === idx ? (
@@ -386,12 +386,12 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
                                 setEditingNote(null)
                               }
                             }}
-                            className="w-40 rounded border border-[#1B4D45] px-2 py-1 text-[11px] outline-none"
+                            className="w-40 rounded border border-brand px-2 py-1 text-[11px] outline-none"
                           />
                         ) : (
                           <button
                             onClick={() => setEditingNote(idx)}
-                            className="flex items-center gap-1 rounded border border-dashed border-[#D4C5A9] px-2 py-1 text-[11px] text-[#6B6963] hover:border-[#1B4D45] hover:text-[#1B4D45]"
+                            className="flex items-center gap-1 rounded border border-dashed border-ai-soft px-2 py-1 text-[11px] text-ink-2 hover:border-brand hover:text-brand"
                           >
                             <Pencil className="h-3 w-3" /> Add note
                           </button>
@@ -405,12 +405,12 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
           </div>
 
           {/* APPROVE BAR */}
-          <div className="sticky bottom-0 flex items-center justify-between gap-4 rounded-b-[10px] border-t border-[#E8E6E0] bg-white px-5 py-4">
-            <span className="text-[12px] text-[#6B6963]">
+          <div className="sticky bottom-0 flex items-center justify-between gap-4 rounded-b-[10px] border-t border-line bg-white px-5 py-4">
+            <span className="text-[12px] text-ink-2">
               Resolve warnings or add notes before importing
             </span>
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="border-[#E8E6E0] text-[#2C2C2A]" disabled={imported}>
+              <Button variant="outline" className="border-line text-ink" disabled={imported}>
                 Flag for review
               </Button>
               <Button
@@ -421,8 +421,8 @@ export function UploadReview({ file, onBack }: { file: ReviewFile; onBack: () =>
                 disabled={imported}
                 className={cn(
                   imported
-                    ? "bg-[#3B6D11] text-white hover:bg-[#3B6D11]"
-                    : "bg-[#1B4D45] text-white hover:bg-[#164039]"
+                    ? "bg-ok text-white hover:bg-ok"
+                    : "bg-brand text-white hover:bg-action-hover"
                 )}
               >
                 {imported ? (

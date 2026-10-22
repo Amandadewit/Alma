@@ -180,9 +180,9 @@ export const portalSections: SectionDef[] = [
 ]
 
 export const fundContact = {
-  name: "Willem de Jong",
+  name: "Bram Hoekstra",
   role: "Investment Director, Alma Capital Fund IV",
-  email: "w.dejong@almacapital.com",
+  email: "b.hoekstra@almacapital.com",
 }
 
 export type ReportStatus = "due" | "overdue" | "submitted"
@@ -207,19 +207,6 @@ export interface PendingReport {
 }
 
 export const pendingReports: PendingReport[] = [
-  {
-    id: "performance-may-2026",
-    title: "Performance Sheet — May 2026",
-    kind: "performance",
-    group: "monthly",
-    cadence: "Monthly reporting",
-    description: "P&L, balance sheet, cash flow and operating KPIs for May 2026.",
-    deadline: "10 Jun 2026",
-    daysLeft: 4,
-    status: "due",
-    template: "Alma_Performance_Template_v4.xlsx",
-    accepts: "Excel (.xlsx, .xls) or CSV",
-  },
   {
     id: "performance-jun-2026",
     title: "Performance Sheet — June 2026",

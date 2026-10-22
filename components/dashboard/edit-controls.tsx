@@ -18,8 +18,8 @@ export function EditToggle({ editing, onToggle }: { editing: boolean; onToggle: 
       className={cn(
         "flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-[12px] font-medium transition-colors",
         editing
-          ? "border-[#1B4D45] bg-[#1B4D45] text-white"
-          : "border-[#E8E6E0] bg-white text-[#2C2C2A] hover:bg-[#F7F6F3]",
+          ? "border-brand bg-brand text-white"
+          : "border-line bg-white text-ink hover:bg-bg",
       )}
     >
       {editing ? <Check className="h-3.5 w-3.5" /> : <Pencil className="h-3.5 w-3.5" />}
@@ -47,7 +47,7 @@ export function EditableTitle({
         value={value ?? defaultValue}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "rounded border border-dashed border-[#1B4D45]/40 bg-[#F7F6F3] px-1.5 py-0.5 text-[12px] font-medium text-[#2C2C2A] outline-none focus:border-[#1B4D45]",
+          "rounded border border-dashed border-brand/40 bg-bg px-1.5 py-0.5 text-[12px] font-medium text-ink outline-none focus:border-brand",
           className,
         )}
       />
@@ -65,14 +65,14 @@ export function AddRowInline({
   const [accumulation, setAccumulation] = useState<AccumulationCode>(ACCUMULATIONS[0].code)
 
   return (
-    <div className="flex flex-wrap items-center gap-2 border-t border-dashed border-[#E8E6E0] bg-[#FBFAF7] px-3 py-2">
-      <span className="text-[10px] font-medium uppercase tracking-wide text-[#6B6963]">Add row</span>
-      <label className="flex items-center gap-1 text-[10px] text-[#6B6963]">
+    <div className="flex flex-wrap items-center gap-2 border-t border-dashed border-line bg-surface-2 px-3 py-2">
+      <span className="text-[10px] font-medium uppercase tracking-wide text-ink-2">Add row</span>
+      <label className="flex items-center gap-1 text-[10px] text-ink-2">
         Metric code
         <select
           value={metric}
           onChange={(e) => setMetric(e.target.value as MetricCode)}
-          className="rounded border border-[#E8E6E0] bg-white px-1.5 py-0.5 text-[10px] text-[#2C2C2A]"
+          className="rounded border border-line bg-white px-1.5 py-0.5 text-[10px] text-ink"
         >
           {METRIC_CODES.map((m) => (
             <option key={m.code} value={m.code}>
@@ -81,12 +81,12 @@ export function AddRowInline({
           ))}
         </select>
       </label>
-      <label className="flex items-center gap-1 text-[10px] text-[#6B6963]">
+      <label className="flex items-center gap-1 text-[10px] text-ink-2">
         Accumulation
         <select
           value={accumulation}
           onChange={(e) => setAccumulation(e.target.value as AccumulationCode)}
-          className="rounded border border-[#E8E6E0] bg-white px-1.5 py-0.5 text-[10px] text-[#2C2C2A]"
+          className="rounded border border-line bg-white px-1.5 py-0.5 text-[10px] text-ink"
         >
           {ACCUMULATIONS.map((a) => (
             <option key={a.code} value={a.code}>
@@ -97,7 +97,7 @@ export function AddRowInline({
       </label>
       <button
         onClick={() => onAdd(metric, accumulation)}
-        className="flex items-center gap-1 rounded bg-[#1B4D45] px-2 py-1 text-[10px] font-medium text-white hover:bg-[#153c36]"
+        className="flex items-center gap-1 rounded bg-brand px-2 py-1 text-[10px] font-medium text-white hover:bg-action-hover"
       >
         <Plus className="h-3 w-3" />
         Add
@@ -109,13 +109,13 @@ export function AddRowInline({
 export function AddColumnInline({ onAdd }: { onAdd: (label: string) => void }) {
   const [label, setLabel] = useState("")
   return (
-    <div className="flex items-center gap-2 border-t border-dashed border-[#E8E6E0] bg-[#FBFAF7] px-3 py-2">
-      <span className="text-[10px] font-medium uppercase tracking-wide text-[#6B6963]">Add column</span>
+    <div className="flex items-center gap-2 border-t border-dashed border-line bg-surface-2 px-3 py-2">
+      <span className="text-[10px] font-medium uppercase tracking-wide text-ink-2">Add column</span>
       <input
         value={label}
         onChange={(e) => setLabel(e.target.value)}
         placeholder="Column label"
-        className="rounded border border-[#E8E6E0] bg-white px-1.5 py-0.5 text-[10px] text-[#2C2C2A] outline-none focus:border-[#1B4D45]"
+        className="rounded border border-line bg-white px-1.5 py-0.5 text-[10px] text-ink outline-none focus:border-brand"
       />
       <button
         onClick={() => {
@@ -124,7 +124,7 @@ export function AddColumnInline({ onAdd }: { onAdd: (label: string) => void }) {
             setLabel("")
           }
         }}
-        className="flex items-center gap-1 rounded bg-[#1B4D45] px-2 py-1 text-[10px] font-medium text-white hover:bg-[#153c36]"
+        className="flex items-center gap-1 rounded bg-brand px-2 py-1 text-[10px] font-medium text-white hover:bg-action-hover"
       >
         <Plus className="h-3 w-3" />
         Add
@@ -147,12 +147,12 @@ export function BlockNotes({
   const [text, setText] = useState("")
   if (!editing && notes.length === 0) return null
   return (
-    <div className="flex flex-col gap-1.5 border-t border-[#E8E6E0] px-4 py-2.5">
+    <div className="flex flex-col gap-1.5 border-t border-line px-4 py-2.5">
       {notes.map((n) => (
-        <div key={n.id} className="flex items-center justify-between gap-2 text-[11px] text-[#2C2C2A]">
+        <div key={n.id} className="flex items-center justify-between gap-2 text-[11px] text-ink">
           <span>{n.text}</span>
           {editing && (
-            <button onClick={() => onRemove(n.id)} className="text-[#A32D2D] hover:opacity-70">
+            <button onClick={() => onRemove(n.id)} className="text-alert hover:opacity-70">
               <X className="h-3 w-3" />
             </button>
           )}
@@ -164,7 +164,7 @@ export function BlockNotes({
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Add datapoint or note"
-            className="flex-1 rounded border border-[#E8E6E0] bg-white px-1.5 py-0.5 text-[10px] text-[#2C2C2A] outline-none focus:border-[#1B4D45]"
+            className="flex-1 rounded border border-line bg-white px-1.5 py-0.5 text-[10px] text-ink outline-none focus:border-brand"
           />
           <button
             onClick={() => {
@@ -173,7 +173,7 @@ export function BlockNotes({
                 setText("")
               }
             }}
-            className="flex items-center gap-1 rounded bg-[#1B4D45] px-2 py-1 text-[10px] font-medium text-white hover:bg-[#153c36]"
+            className="flex items-center gap-1 rounded bg-brand px-2 py-1 text-[10px] font-medium text-white hover:bg-action-hover"
           >
             <Plus className="h-3 w-3" />
             Add
@@ -188,7 +188,7 @@ export function RemoveRowButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="ml-1 inline-flex items-center text-[#A32D2D] hover:opacity-70"
+      className="ml-1 inline-flex items-center text-alert hover:opacity-70"
       aria-label="Remove row"
     >
       <X className="h-3 w-3" />

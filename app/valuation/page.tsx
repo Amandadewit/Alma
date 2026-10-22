@@ -58,7 +58,7 @@ export default function FundValuationPage() {
     { name: "Dry Powder", amount: fundAllocation.dryPowder },
   ]
 
-  const COLORS = ["#1B4D45", "#B8975A", "#9CA3AF", "#E8E6E0"]
+  const COLORS = ["var(--brand)", "var(--ai)", "var(--ink-3)", "var(--line)"]
 
   // Get companies for selected fund
   const fundCompanies = selectedFund
@@ -181,10 +181,10 @@ export default function FundValuationPage() {
   return (
     <div className="flex min-h-screen flex-col font-sans">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-[#E8E6E0] px-6 py-4">
+      <div className="flex items-center justify-between border-b border-line px-6 py-4">
         <div>
-          <h1 className="text-xl font-medium text-[#2C2C2A]">Fund Valuation</h1>
-          <p className="text-[13px] text-[#6B6963]">Overview of all funds and valuations</p>
+          <h1 className="text-xl font-medium text-ink">Fund Valuation</h1>
+          <p className="text-[13px] text-ink-2">Overview of all funds and valuations</p>
         </div>
       </div>
 
@@ -193,21 +193,21 @@ export default function FundValuationPage() {
         {/* Main Content Area */}
         <div className="space-y-4">
           {/* Funds Table */}
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white">
-            <div className="border-b border-[#E8E6E0] px-4 py-3">
-              <h2 className="text-[13px] font-medium text-[#2C2C2A]">All Funds</h2>
+          <div className="rounded-[10px] border border-line bg-white">
+            <div className="border-b border-line px-4 py-3">
+              <h2 className="text-[13px] font-medium text-ink">All Funds</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-[12px]">
                 <thead>
-                  <tr className="border-b border-[#E8E6E0] bg-[#F7F6F3]">
+                  <tr className="border-b border-line bg-bg">
                     <th className="w-8 px-2 py-3"></th>
-                    <th className="px-4 py-3 text-left font-medium text-[#6B6963]">Name</th>
-                    <th className="px-4 py-3 text-right font-medium text-[#6B6963]">Total Fund Size</th>
-                    <th className="px-4 py-3 text-right font-medium text-[#6B6963]">Invested Capital</th>
-                    <th className="px-4 py-3 text-center font-medium text-[#6B6963]">Vintage Year</th>
-                    <th className="px-4 py-3 text-right font-medium text-[#6B6963]">MOI Current</th>
-                    <th className="px-4 py-3 text-right font-medium text-[#6B6963]">MOI Exit Outlook</th>
+                    <th className="px-4 py-3 text-left font-medium text-ink-2">Name</th>
+                    <th className="px-4 py-3 text-right font-medium text-ink-2">Total Fund Size</th>
+                    <th className="px-4 py-3 text-right font-medium text-ink-2">Invested Capital</th>
+                    <th className="px-4 py-3 text-center font-medium text-ink-2">Vintage Year</th>
+                    <th className="px-4 py-3 text-right font-medium text-ink-2">MOI Current</th>
+                    <th className="px-4 py-3 text-right font-medium text-ink-2">MOI Exit Outlook</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -216,49 +216,49 @@ export default function FundValuationPage() {
                       key={fund.id}
                       onClick={() => handleFundClick(fund.id)}
                       className={cn(
-                        "cursor-pointer border-b border-[#E8E6E0] transition-colors",
-                        selectedFundId === fund.id ? "bg-[#F7F6F3]" : "hover:bg-[#FAFAF7]"
+                        "cursor-pointer border-b border-line transition-colors",
+                        selectedFundId === fund.id ? "bg-bg" : "hover:bg-surface-2"
                       )}
                     >
                       <td className="px-2 py-4">
                         {selectedFundId === fund.id ? (
-                          <ChevronDown className="h-4 w-4 text-[#1B4D45]" />
+                          <ChevronDown className="h-4 w-4 text-brand" />
                         ) : (
-                          <ChevronRight className="h-4 w-4 text-[#6B6963]" />
+                          <ChevronRight className="h-4 w-4 text-ink-2" />
                         )}
                       </td>
-                      <td className="px-4 py-4 font-medium text-[#2C2C2A]">{fund.name}</td>
-                      <td className="px-4 py-4 text-right tabular-nums text-[#2C2C2A]">
+                      <td className="px-4 py-4 font-medium text-ink">{fund.name}</td>
+                      <td className="px-4 py-4 text-right tabular-nums text-ink">
                         € {fund.committedCapital}M
                       </td>
-                      <td className="px-4 py-4 text-right tabular-nums text-[#2C2C2A]">
+                      <td className="px-4 py-4 text-right tabular-nums text-ink">
                         € {fund.invested}M
                       </td>
-                      <td className="px-4 py-4 text-center text-[#2C2C2A]">{fund.vintageYear}</td>
-                      <td className="px-4 py-4 text-right tabular-nums font-medium text-[#1B4D45]">
+                      <td className="px-4 py-4 text-center text-ink">{fund.vintageYear}</td>
+                      <td className="px-4 py-4 text-right tabular-nums font-medium text-brand">
                         {fund.grossMOI.toFixed(2)}x
                       </td>
-                      <td className="px-4 py-4 text-right tabular-nums font-medium text-[#B8975A]">
+                      <td className="px-4 py-4 text-right tabular-nums font-medium text-ai">
                         {getMoiExitOutlook(fund)}x
                       </td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr className="bg-[#F7F6F3]">
+                  <tr className="bg-bg">
                     <td></td>
-                    <td className="px-4 py-3 font-semibold text-[#2C2C2A]">Total</td>
-                    <td className="px-4 py-3 text-right tabular-nums font-semibold text-[#2C2C2A]">
+                    <td className="px-4 py-3 font-semibold text-ink">Total</td>
+                    <td className="px-4 py-3 text-right tabular-nums font-semibold text-ink">
                       € {totals.totalFundSize}M
                     </td>
-                    <td className="px-4 py-3 text-right tabular-nums font-semibold text-[#2C2C2A]">
+                    <td className="px-4 py-3 text-right tabular-nums font-semibold text-ink">
                       € {totals.investedCapital}M
                     </td>
-                    <td className="px-4 py-3 text-center text-[#6B6963]">—</td>
-                    <td className="px-4 py-3 text-right tabular-nums font-semibold text-[#1B4D45]">
+                    <td className="px-4 py-3 text-center text-ink-2">—</td>
+                    <td className="px-4 py-3 text-right tabular-nums font-semibold text-brand">
                       {totals.avgMOICurrent.toFixed(2)}x
                     </td>
-                    <td className="px-4 py-3 text-right tabular-nums font-semibold text-[#B8975A]">
+                    <td className="px-4 py-3 text-right tabular-nums font-semibold text-ai">
                       {totals.avgMOIExit.toFixed(2)}x
                     </td>
                   </tr>
@@ -269,56 +269,56 @@ export default function FundValuationPage() {
 
           {/* Inline Fund Details - Shows when a fund is selected */}
           {selectedFund && (
-            <div className="space-y-4 rounded-[10px] border border-[#1B4D45]/20 bg-[#FAFAF7] p-4">
+            <div className="space-y-4 rounded-[10px] border border-brand/20 bg-surface-2 p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-[15px] font-medium text-[#2C2C2A]">{selectedFund.name}</h3>
-                  <p className="text-[12px] text-[#6B6963]">Portfolio valuation and exit outlook</p>
+                  <h3 className="text-[15px] font-medium text-ink">{selectedFund.name}</h3>
+                  <p className="text-[12px] text-ink-2">Portfolio valuation and exit outlook</p>
                 </div>
                 <button
                   onClick={() => setSelectedFundId(null)}
-                  className="rounded-lg p-1 hover:bg-[#E8E6E0]"
+                  className="rounded-lg p-1 hover:bg-line"
                 >
-                  <X className="h-4 w-4 text-[#6B6963]" />
+                  <X className="h-4 w-4 text-ink-2" />
                 </button>
               </div>
 
               {/* Charts Row */}
               <div className="grid grid-cols-4 gap-4">
                 {/* Portfolio Valuation Chart */}
-                <div className="col-span-3 rounded-[10px] border border-[#E8E6E0] bg-white p-4">
+                <div className="col-span-3 rounded-[10px] border border-line bg-white p-4">
                   <div className="mb-3 flex items-center justify-between">
-                    <h4 className="text-[13px] font-medium text-[#2C2C2A]">Portfolio Valuation</h4>
+                    <h4 className="text-[13px] font-medium text-ink">Portfolio Valuation</h4>
                     <div className="flex items-center gap-4 text-[10px]">
                       <div className="flex items-center gap-1.5">
-                        <div className="h-2.5 w-2.5 rounded-sm bg-[#C4B5D8]" />
-                        <span className="text-[#6B6963]">Investment</span>
+                        <div className="h-2.5 w-2.5 rounded-sm bg-ai-soft" />
+                        <span className="text-ink-2">Investment</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <div className="h-2.5 w-2.5 rounded-sm bg-[#4B3D8F]" />
-                        <span className="text-[#6B6963]">Fair Value</span>
+                        <div className="h-2.5 w-2.5 rounded-sm bg-ai-text" />
+                        <span className="text-ink-2">Fair Value</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <div className="h-2.5 w-2.5 rounded-sm bg-[#B8E8C8]" />
-                        <span className="text-[#6B6963]">Total (expected) proceeds</span>
+                        <div className="h-2.5 w-2.5 rounded-sm bg-ok-soft" />
+                        <span className="text-ink-2">Total (expected) proceeds</span>
                       </div>
                     </div>
                   </div>
                   <div className="h-[180px]">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={portfolioChartData} barGap={4} barCategoryGap="25%">
-                        <CartesianGrid strokeDasharray="3 3" stroke="#E8E6E0" vertical={false} />
-                        <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#6B6963" }} axisLine={false} tickLine={false} />
-                        <YAxis tick={{ fontSize: 10, fill: "#6B6963" }} axisLine={false} tickLine={false} tickFormatter={(v) => `${v}M`} />
-                        <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8, border: "1px solid #E8E6E0" }} formatter={(v: number) => [`${v}M`, ""]} />
-                        <Bar dataKey="Investment" fill="#C4B5D8" radius={[2, 2, 0, 0]} maxBarSize={35}>
-                          <LabelList dataKey="Investment" position="top" fontSize={10} fill="#6B6963" formatter={(v: number) => `${v}M`} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" vertical={false} />
+                        <XAxis dataKey="name" tick={{ fontSize: 11, fill: "var(--ink-2)" }} axisLine={false} tickLine={false} />
+                        <YAxis tick={{ fontSize: 10, fill: "var(--ink-2)" }} axisLine={false} tickLine={false} tickFormatter={(v) => `${v}M`} />
+                        <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8, border: "1px solid var(--line)" }} formatter={(v: number) => [`${v}M`, ""]} />
+                        <Bar dataKey="Investment" fill="var(--ai-soft)" radius={[2, 2, 0, 0]} maxBarSize={35}>
+                          <LabelList dataKey="Investment" position="top" fontSize={10} fill="var(--ink-2)" formatter={(v: number) => `${v}M`} />
                         </Bar>
-                        <Bar dataKey="Fair Value" fill="#4B3D8F" radius={[2, 2, 0, 0]} maxBarSize={35}>
-                          <LabelList dataKey="Fair Value" position="top" fontSize={10} fill="#6B6963" formatter={(v: number) => `${v}M`} />
+                        <Bar dataKey="Fair Value" fill="var(--ai-text)" radius={[2, 2, 0, 0]} maxBarSize={35}>
+                          <LabelList dataKey="Fair Value" position="top" fontSize={10} fill="var(--ink-2)" formatter={(v: number) => `${v}M`} />
                         </Bar>
-                        <Bar dataKey="Total (expected) proceeds" fill="#B8E8C8" radius={[2, 2, 0, 0]} maxBarSize={35}>
-                          <LabelList dataKey="Total (expected) proceeds" position="top" fontSize={10} fill="#6B6963" formatter={(v: number) => `${v}M`} />
+                        <Bar dataKey="Total (expected) proceeds" fill="var(--ok-soft)" radius={[2, 2, 0, 0]} maxBarSize={35}>
+                          <LabelList dataKey="Total (expected) proceeds" position="top" fontSize={10} fill="var(--ink-2)" formatter={(v: number) => `${v}M`} />
                         </Bar>
                       </BarChart>
                     </ResponsiveContainer>
@@ -326,8 +326,8 @@ export default function FundValuationPage() {
                 </div>
 
                 {/* Fund Allocation Pie Chart */}
-                <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
-                  <h4 className="mb-2 text-[13px] font-medium text-[#2C2C2A]">Fund Allocation</h4>
+                <div className="rounded-[10px] border border-line bg-white p-4">
+                  <h4 className="mb-2 text-[13px] font-medium text-ink">Fund Allocation</h4>
                   <div 
                     className="flex cursor-pointer justify-center transition-opacity hover:opacity-80"
                     onClick={() => setShowAllocationDetails(true)}
@@ -349,7 +349,7 @@ export default function FundValuationPage() {
                             ))}
                           </Pie>
                           <Tooltip
-                            contentStyle={{ fontSize: 10, borderRadius: 8, border: "1px solid #E8E6E0" }}
+                            contentStyle={{ fontSize: 10, borderRadius: 8, border: "1px solid var(--line)" }}
                             formatter={(value: number) => [`€ ${value}M`, ""]}
                           />
                         </PieChart>
@@ -361,15 +361,15 @@ export default function FundValuationPage() {
                       <div key={item.name} className="flex items-center justify-between text-[10px]">
                         <div className="flex items-center gap-1.5">
                           <div className="h-2 w-2 rounded-sm" style={{ backgroundColor: COLORS[index] }} />
-                          <span className="text-[#6B6963]">{item.name}</span>
+                          <span className="text-ink-2">{item.name}</span>
                         </div>
-                        <span className="tabular-nums font-medium text-[#2C2C2A]">€ {item.amount}M</span>
+                        <span className="tabular-nums font-medium text-ink">€ {item.amount}M</span>
                       </div>
                     ))}
                   </div>
                   <button
                     onClick={() => setShowAllocationDetails(true)}
-                    className="mt-2 w-full text-center text-[10px] font-medium text-[#1B4D45] hover:underline"
+                    className="mt-2 w-full text-center text-[10px] font-medium text-brand hover:underline"
                   >
                     View details
                   </button>
@@ -380,151 +380,151 @@ export default function FundValuationPage() {
               <ValueProgressionChart periods={valueProgression} />
 
               {/* Combined Current + Exit Table */}
-              <div className="rounded-[10px] border border-[#E8E6E0] bg-white">
-                <div className="border-b border-[#E8E6E0] px-4 py-3">
-                  <h2 className="text-[13px] font-medium text-[#2C2C2A]">Portfolio performance</h2>
+              <div className="rounded-[10px] border border-line bg-white">
+                <div className="border-b border-line px-4 py-3">
+                  <h2 className="text-[13px] font-medium text-ink">Portfolio performance</h2>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-[11px]">
                     <thead>
-                      <tr className="border-b border-[#E8E6E0]">
-                        <th colSpan={4} className="border-r border-[#E8E6E0] bg-white px-3 py-1.5"></th>
-                        <th colSpan={5} className="border-r border-[#E8E6E0] bg-[#F7F6F3] px-3 py-1.5 text-center text-[11px] font-semibold text-[#2C2C2A]">
+                      <tr className="border-b border-line">
+                        <th colSpan={4} className="border-r border-line bg-white px-3 py-1.5"></th>
+                        <th colSpan={5} className="border-r border-line bg-bg px-3 py-1.5 text-center text-[11px] font-semibold text-ink">
                           Current
                         </th>
-                        <th colSpan={4} className="bg-[#F7F6F3] px-3 py-1.5 text-center text-[11px] font-semibold text-[#2C2C2A]">
+                        <th colSpan={4} className="bg-bg px-3 py-1.5 text-center text-[11px] font-semibold text-ink">
                           Exit
                         </th>
                       </tr>
-                      <tr className="border-b border-[#E8E6E0] bg-[#FAFAF7] text-[10px]">
-                        <th className="px-3 py-1.5 text-left font-medium text-[#6B6963]">Company</th>
-                        <th className="px-2 py-1.5 text-center font-medium text-[#6B6963]">Status</th>
-                        <th className="px-3 py-1.5 text-left font-medium text-[#6B6963]">Entry</th>
-                        <th className="border-r border-[#E8E6E0] px-3 py-1.5 text-right font-medium text-[#6B6963]">Holding</th>
-                        <th className="px-3 py-1.5 text-right font-medium text-[#6B6963]">Invested</th>
-                        <th className="px-3 py-1.5 text-right font-medium text-[#6B6963]">Realised</th>
-                        <th className="px-3 py-1.5 text-right font-medium text-[#6B6963]">Fair Value</th>
-                        <th className="px-3 py-1.5 text-right font-medium text-[#6B6963]">MOI</th>
-                        <th className="border-r border-[#E8E6E0] px-3 py-1.5 text-right font-medium text-[#6B6963]">IRR</th>
-                        <th className="px-3 py-1.5 text-center font-medium text-[#6B6963]">Exit</th>
-                        <th className="px-3 py-1.5 text-right font-medium text-[#6B6963]">Invested</th>
-                        <th className="px-3 py-1.5 text-right font-medium text-[#6B6963]">Proceeds</th>
-                        <th className="px-3 py-1.5 text-right font-medium text-[#6B6963]">MOI</th>
+                      <tr className="border-b border-line bg-surface-2 text-[10px]">
+                        <th className="px-3 py-1.5 text-left font-medium text-ink-2">Company</th>
+                        <th className="px-2 py-1.5 text-center font-medium text-ink-2">Status</th>
+                        <th className="px-3 py-1.5 text-left font-medium text-ink-2">Entry</th>
+                        <th className="border-r border-line px-3 py-1.5 text-right font-medium text-ink-2">Holding</th>
+                        <th className="px-3 py-1.5 text-right font-medium text-ink-2">Invested</th>
+                        <th className="px-3 py-1.5 text-right font-medium text-ink-2">Realised</th>
+                        <th className="px-3 py-1.5 text-right font-medium text-ink-2">Fair Value</th>
+                        <th className="px-3 py-1.5 text-right font-medium text-ink-2">MOI</th>
+                        <th className="border-r border-line px-3 py-1.5 text-right font-medium text-ink-2">IRR</th>
+                        <th className="px-3 py-1.5 text-center font-medium text-ink-2">Exit</th>
+                        <th className="px-3 py-1.5 text-right font-medium text-ink-2">Invested</th>
+                        <th className="px-3 py-1.5 text-right font-medium text-ink-2">Proceeds</th>
+                        <th className="px-3 py-1.5 text-right font-medium text-ink-2">MOI</th>
                       </tr>
                     </thead>
                     <tbody>
                       {/* Unrealised group */}
-                      <tr className="border-b border-[#E8E6E0] bg-[#F2F1EC]">
-                        <td colSpan={13} className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#6B6963]">
+                      <tr className="border-b border-line bg-surface-2">
+                        <td colSpan={13} className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink-2">
                           Unrealised
                         </td>
                       </tr>
                       {unrealisedRows.map(({ company, idx }) => {
                         const f = rowFigures({ company, idx })
                         return (
-                          <tr key={company.id} className="border-b border-[#E8E6E0] hover:bg-[#FAFAF7]">
-                            <td className="px-3 py-2 font-medium text-[#2C2C2A]">{company.name}</td>
+                          <tr key={company.id} className="border-b border-line hover:bg-surface-2">
+                            <td className="px-3 py-2 font-medium text-ink">{company.name}</td>
                             <td className="px-2 py-2 text-center">
                               <span className={cn(
                                 "inline-block w-5 text-[10px] font-medium",
-                                company.status === "on-track" ? "text-[#1B4D45]" : company.status === "watch" ? "text-[#B8975A]" : "text-[#A32D2D]"
+                                company.status === "on-track" ? "text-brand" : company.status === "watch" ? "text-ai" : "text-alert"
                               )}>
                                 {company.status === "on-track" ? "P" : company.status === "watch" ? "W" : "X"}
                               </span>
                             </td>
-                            <td className="px-3 py-2 text-[#6B6963]">{company.entryDate}</td>
-                            <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums text-[#6B6963]">{f.holding.toFixed(1)} yrs</td>
-                            <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{f.invested.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{f.realisedReturn > 0 ? `${f.realisedReturn.toFixed(1)}M` : "—"}</td>
-                            <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{f.fairValue.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{f.moi.toFixed(2)}x</td>
-                            <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{f.irr.toFixed(1)}%</td>
-                            <td className="px-3 py-2 text-center tabular-nums text-[#6B6963]">{company.valuation.exit.year}</td>
-                            <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{company.valuation.exit.investedValue.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{company.valuation.exit.fairValue.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{company.valuation.exit.moi.toFixed(2)}x</td>
+                            <td className="px-3 py-2 text-ink-2">{company.entryDate}</td>
+                            <td className="border-r border-line px-3 py-2 text-right tabular-nums text-ink-2">{f.holding.toFixed(1)} yrs</td>
+                            <td className="px-3 py-2 text-right tabular-nums text-ink">{f.invested.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums text-ink">{f.realisedReturn > 0 ? `${f.realisedReturn.toFixed(1)}M` : "—"}</td>
+                            <td className="px-3 py-2 text-right tabular-nums text-ink">{f.fairValue.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-medium text-ink">{f.moi.toFixed(2)}x</td>
+                            <td className="border-r border-line px-3 py-2 text-right tabular-nums font-medium text-ink">{f.irr.toFixed(1)}%</td>
+                            <td className="px-3 py-2 text-center tabular-nums text-ink-2">{company.valuation.exit.year}</td>
+                            <td className="px-3 py-2 text-right tabular-nums text-ink">{company.valuation.exit.investedValue.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums text-ink">{company.valuation.exit.fairValue.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-medium text-ink">{company.valuation.exit.moi.toFixed(2)}x</td>
                           </tr>
                         )
                       })}
-                      <tr className="border-b-2 border-[#E8E6E0] bg-[#FAFAF7]">
-                        <td className="px-3 py-2 font-semibold text-[#2C2C2A]">Total unrealised</td>
+                      <tr className="border-b-2 border-line bg-surface-2">
+                        <td className="px-3 py-2 font-semibold text-ink">Total unrealised</td>
                         <td></td>
                         <td></td>
-                        <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.holding.toFixed(1)} yrs</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.invested.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.realisedReturn > 0 ? `${unrealisedTotals.realisedReturn.toFixed(1)}M` : "—"}</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.fairValue.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.moi.toFixed(2)}x</td>
-                        <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.irr.toFixed(1)}%</td>
+                        <td className="border-r border-line px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.holding.toFixed(1)} yrs</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.invested.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.realisedReturn > 0 ? `${unrealisedTotals.realisedReturn.toFixed(1)}M` : "—"}</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.fairValue.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.moi.toFixed(2)}x</td>
+                        <td className="border-r border-line px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.irr.toFixed(1)}%</td>
                         <td></td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.exitInvestment.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.exitProceeds.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{unrealisedTotals.exitInvestment > 0 ? (unrealisedTotals.exitProceeds / unrealisedTotals.exitInvestment).toFixed(2) : "0.00"}x</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.exitInvestment.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.exitProceeds.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{unrealisedTotals.exitInvestment > 0 ? (unrealisedTotals.exitProceeds / unrealisedTotals.exitInvestment).toFixed(2) : "0.00"}x</td>
                       </tr>
 
                       {/* Realised group */}
                       {realisedRows.length > 0 && (
                         <>
-                          <tr className="border-b border-[#E8E6E0] bg-[#F2F1EC]">
-                            <td colSpan={13} className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#6B6963]">
+                          <tr className="border-b border-line bg-surface-2">
+                            <td colSpan={13} className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink-2">
                               Realised
                             </td>
                           </tr>
                           {realisedRows.map(({ company, idx }) => {
                             const f = rowFigures({ company, idx })
                             return (
-                              <tr key={company.id} className="border-b border-[#E8E6E0] hover:bg-[#FAFAF7]">
-                                <td className="px-3 py-2 font-medium text-[#2C2C2A]">{company.name}</td>
+                              <tr key={company.id} className="border-b border-line hover:bg-surface-2">
+                                <td className="px-3 py-2 font-medium text-ink">{company.name}</td>
                                 <td className="px-2 py-2 text-center">
-                                  <span className="inline-block w-5 text-[10px] font-medium text-[#6B6963]">R</span>
+                                  <span className="inline-block w-5 text-[10px] font-medium text-ink-2">R</span>
                                 </td>
-                                <td className="px-3 py-2 text-[#6B6963]">{company.entryDate}</td>
-                                <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums text-[#6B6963]">{f.holding.toFixed(1)} yrs</td>
-                                <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{f.invested.toFixed(1)}M</td>
-                                <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{f.realisedReturn.toFixed(1)}M</td>
-                                <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{f.fairValue.toFixed(1)}M</td>
-                                <td className="px-3 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{f.moi.toFixed(2)}x</td>
-                                <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{f.irr.toFixed(1)}%</td>
-                                <td className="px-3 py-2 text-center tabular-nums text-[#6B6963]">{company.valuation.exit.year}</td>
-                                <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{company.valuation.exit.investedValue.toFixed(1)}M</td>
-                                <td className="px-3 py-2 text-right tabular-nums text-[#2C2C2A]">{company.valuation.exit.fairValue.toFixed(1)}M</td>
-                                <td className="px-3 py-2 text-right tabular-nums font-medium text-[#2C2C2A]">{company.valuation.exit.moi.toFixed(2)}x</td>
+                                <td className="px-3 py-2 text-ink-2">{company.entryDate}</td>
+                                <td className="border-r border-line px-3 py-2 text-right tabular-nums text-ink-2">{f.holding.toFixed(1)} yrs</td>
+                                <td className="px-3 py-2 text-right tabular-nums text-ink">{f.invested.toFixed(1)}M</td>
+                                <td className="px-3 py-2 text-right tabular-nums text-ink">{f.realisedReturn.toFixed(1)}M</td>
+                                <td className="px-3 py-2 text-right tabular-nums text-ink">{f.fairValue.toFixed(1)}M</td>
+                                <td className="px-3 py-2 text-right tabular-nums font-medium text-ink">{f.moi.toFixed(2)}x</td>
+                                <td className="border-r border-line px-3 py-2 text-right tabular-nums font-medium text-ink">{f.irr.toFixed(1)}%</td>
+                                <td className="px-3 py-2 text-center tabular-nums text-ink-2">{company.valuation.exit.year}</td>
+                                <td className="px-3 py-2 text-right tabular-nums text-ink">{company.valuation.exit.investedValue.toFixed(1)}M</td>
+                                <td className="px-3 py-2 text-right tabular-nums text-ink">{company.valuation.exit.fairValue.toFixed(1)}M</td>
+                                <td className="px-3 py-2 text-right tabular-nums font-medium text-ink">{company.valuation.exit.moi.toFixed(2)}x</td>
                               </tr>
                             )
                           })}
-                          <tr className="border-b-2 border-[#E8E6E0] bg-[#FAFAF7]">
-                            <td className="px-3 py-2 font-semibold text-[#2C2C2A]">Total realised</td>
+                          <tr className="border-b-2 border-line bg-surface-2">
+                            <td className="px-3 py-2 font-semibold text-ink">Total realised</td>
                             <td></td>
                             <td></td>
-                            <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.holding.toFixed(1)} yrs</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.invested.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.realisedReturn.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.fairValue.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.moi.toFixed(2)}x</td>
-                            <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.irr.toFixed(1)}%</td>
+                            <td className="border-r border-line px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.holding.toFixed(1)} yrs</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.invested.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.realisedReturn.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.fairValue.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.moi.toFixed(2)}x</td>
+                            <td className="border-r border-line px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.irr.toFixed(1)}%</td>
                             <td></td>
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.exitInvestment.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.exitProceeds.toFixed(1)}M</td>
-                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#2C2C2A]">{realisedTotals.exitInvestment > 0 ? (realisedTotals.exitProceeds / realisedTotals.exitInvestment).toFixed(2) : "0.00"}x</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.exitInvestment.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.exitProceeds.toFixed(1)}M</td>
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-ink">{realisedTotals.exitInvestment > 0 ? (realisedTotals.exitProceeds / realisedTotals.exitInvestment).toFixed(2) : "0.00"}x</td>
                           </tr>
                         </>
                       )}
                     </tbody>
                     <tfoot>
-                      <tr className="bg-[#F2F1EC]">
-                        <td className="px-3 py-2 font-semibold text-[#B8975A]">Total portfolio</td>
+                      <tr className="bg-surface-2">
+                        <td className="px-3 py-2 font-semibold text-ai">Total portfolio</td>
                         <td></td>
                         <td></td>
-                        <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">{portfolioTotals.holding.toFixed(1)} yrs</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">{portfolioTotals.invested.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">{portfolioTotals.realisedReturn.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">{portfolioTotals.fairValue.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">{portfolioMoi.toFixed(2)}x</td>
-                        <td className="border-r border-[#E8E6E0] px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">{calcIRR(portfolioMoi, portfolioTotals.holding).toFixed(1)}%</td>
-                        <td className="px-3 py-2 text-center tabular-nums font-semibold text-[#B8975A]">2028</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">{portfolioTotals.exitInvestment.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">{portfolioTotals.exitProceeds.toFixed(1)}M</td>
-                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-[#B8975A]">
+                        <td className="border-r border-line px-3 py-2 text-right tabular-nums font-semibold text-ai">{portfolioTotals.holding.toFixed(1)} yrs</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ai">{portfolioTotals.invested.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ai">{portfolioTotals.realisedReturn.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ai">{portfolioTotals.fairValue.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ai">{portfolioMoi.toFixed(2)}x</td>
+                        <td className="border-r border-line px-3 py-2 text-right tabular-nums font-semibold text-ai">{calcIRR(portfolioMoi, portfolioTotals.holding).toFixed(1)}%</td>
+                        <td className="px-3 py-2 text-center tabular-nums font-semibold text-ai">2028</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ai">{portfolioTotals.exitInvestment.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ai">{portfolioTotals.exitProceeds.toFixed(1)}M</td>
+                        <td className="px-3 py-2 text-right tabular-nums font-semibold text-ai">
                           {portfolioTotals.exitInvestment > 0 ? (portfolioTotals.exitProceeds / portfolioTotals.exitInvestment).toFixed(2) : "0.00"}x
                         </td>
                       </tr>
@@ -534,83 +534,83 @@ export default function FundValuationPage() {
               </div>
 
               {/* Fund Allocation Details - Inline */}
-              <div className="rounded-[10px] border border-[#E8E6E0] bg-white">
-                <div className="border-b border-[#E8E6E0] px-4 py-3">
-                  <h4 className="text-[13px] font-medium text-[#2C2C2A]">Fund Allocation</h4>
+              <div className="rounded-[10px] border border-line bg-white">
+                <div className="border-b border-line px-4 py-3">
+                  <h4 className="text-[13px] font-medium text-ink">Fund Allocation</h4>
                 </div>
                 <div className="grid grid-cols-4 gap-4 p-4">
                   {/* Invested */}
-                  <div className="rounded-lg border border-[#E8E6E0] p-3">
+                  <div className="rounded-lg border border-line p-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="h-2.5 w-2.5 rounded-sm bg-[#1B4D45]" />
-                        <span className="text-[11px] font-medium text-[#2C2C2A]">Invested</span>
+                        <div className="h-2.5 w-2.5 rounded-sm bg-brand" />
+                        <span className="text-[11px] font-medium text-ink">Invested</span>
                       </div>
-                      <span className="text-[11px] tabular-nums font-semibold text-[#2C2C2A]">€ {fundAllocation.invested.total}M</span>
+                      <span className="text-[11px] tabular-nums font-semibold text-ink">€ {fundAllocation.invested.total}M</span>
                     </div>
                     <div className="mt-2 space-y-1 pl-4">
                       {fundAllocation.invested.companies.slice(0, 4).map((c, i) => (
                         <div key={i} className="flex justify-between text-[10px]">
-                          <span className="text-[#6B6963] truncate max-w-[100px]">{c.name}</span>
-                          <span className="tabular-nums text-[#2C2C2A]">€ {c.amount}M</span>
+                          <span className="text-ink-2 truncate max-w-[100px]">{c.name}</span>
+                          <span className="tabular-nums text-ink">€ {c.amount}M</span>
                         </div>
                       ))}
                       {fundAllocation.invested.companies.length > 4 && (
-                        <div className="text-[10px] text-[#6B6963]">+ {fundAllocation.invested.companies.length - 4} more</div>
+                        <div className="text-[10px] text-ink-2">+ {fundAllocation.invested.companies.length - 4} more</div>
                       )}
                     </div>
                   </div>
 
                   {/* Reserved for Add-ons */}
-                  <div className="rounded-lg border border-[#E8E6E0] p-3">
+                  <div className="rounded-lg border border-line p-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="h-2.5 w-2.5 rounded-sm bg-[#B8975A]" />
-                        <span className="text-[11px] font-medium text-[#2C2C2A]">Reserved Add-ons</span>
+                        <div className="h-2.5 w-2.5 rounded-sm bg-ai" />
+                        <span className="text-[11px] font-medium text-ink">Reserved Add-ons</span>
                       </div>
-                      <span className="text-[11px] tabular-nums font-semibold text-[#2C2C2A]">€ {fundAllocation.reservedAddOns.total}M</span>
+                      <span className="text-[11px] tabular-nums font-semibold text-ink">€ {fundAllocation.reservedAddOns.total}M</span>
                     </div>
                     <div className="mt-2 space-y-1 pl-4">
                       {fundAllocation.reservedAddOns.items.map((item, i) => (
                         <div key={i} className="flex justify-between text-[10px]">
-                          <span className="text-[#6B6963] truncate max-w-[100px]">{item.name}</span>
-                          <span className="tabular-nums text-[#2C2C2A]">€ {item.amount}M</span>
+                          <span className="text-ink-2 truncate max-w-[100px]">{item.name}</span>
+                          <span className="tabular-nums text-ink">€ {item.amount}M</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   {/* Fees & Costs */}
-                  <div className="rounded-lg border border-[#E8E6E0] p-3">
+                  <div className="rounded-lg border border-line p-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="h-2.5 w-2.5 rounded-sm bg-[#9CA3AF]" />
-                        <span className="text-[11px] font-medium text-[#2C2C2A]">Current & Future Fees</span>
+                        <div className="h-2.5 w-2.5 rounded-sm bg-ink-3" />
+                        <span className="text-[11px] font-medium text-ink">Current & Future Fees</span>
                       </div>
-                      <span className="text-[11px] tabular-nums font-semibold text-[#2C2C2A]">€ {fundAllocation.feesCosts.total}M</span>
+                      <span className="text-[11px] tabular-nums font-semibold text-ink">€ {fundAllocation.feesCosts.total}M</span>
                     </div>
                     <div className="mt-2 space-y-1 pl-4">
                       <div className="flex justify-between text-[10px]">
-                        <span className="text-[#6B6963]">Management Fee</span>
-                        <span className="tabular-nums text-[#2C2C2A]">€ {fundAllocation.feesCosts.managementFee}M</span>
+                        <span className="text-ink-2">Management Fee</span>
+                        <span className="tabular-nums text-ink">€ {fundAllocation.feesCosts.managementFee}M</span>
                       </div>
                       <div className="flex justify-between text-[10px]">
-                        <span className="text-[#6B6963]">Est. Future Costs</span>
-                        <span className="tabular-nums text-[#2C2C2A]">€ {fundAllocation.feesCosts.estFutureCosts}M</span>
+                        <span className="text-ink-2">Est. Future Costs</span>
+                        <span className="tabular-nums text-ink">€ {fundAllocation.feesCosts.estFutureCosts}M</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Open Commitment */}
-                  <div className="rounded-lg border border-[#E8E6E0] p-3">
+                  <div className="rounded-lg border border-line p-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="h-2.5 w-2.5 rounded-sm bg-[#E8E6E0]" />
-                        <span className="text-[11px] font-medium text-[#2C2C2A]">Open Commitment</span>
+                        <div className="h-2.5 w-2.5 rounded-sm bg-line" />
+                        <span className="text-[11px] font-medium text-ink">Open Commitment</span>
                       </div>
-                      <span className="text-[11px] tabular-nums font-semibold text-[#2C2C2A]">€ {fundAllocation.dryPowder}M</span>
+                      <span className="text-[11px] tabular-nums font-semibold text-ink">€ {fundAllocation.dryPowder}M</span>
                     </div>
-                    <div className="mt-2 pl-4 text-[10px] text-[#6B6963]">
+                    <div className="mt-2 pl-4 text-[10px] text-ink-2">
                       Available for new investments (Dry Powder)
                     </div>
                   </div>
@@ -618,7 +618,7 @@ export default function FundValuationPage() {
               </div>
 
               {/* Last Refresh */}
-              <div className="text-[11px] text-[#6B6963]">
+              <div className="text-[11px] text-ink-2">
                 Last Refresh: 16/12/2025
               </div>
             </div>
@@ -630,86 +630,86 @@ export default function FundValuationPage() {
       {showAllocationDetails && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="w-full max-w-lg rounded-[10px] bg-white shadow-xl">
-            <div className="flex items-center justify-between border-b border-[#E8E6E0] px-6 py-4">
-              <h2 className="text-lg font-medium text-[#2C2C2A]">Fund Allocation Details</h2>
+            <div className="flex items-center justify-between border-b border-line px-6 py-4">
+              <h2 className="text-lg font-medium text-ink">Fund Allocation Details</h2>
               <button
                 onClick={() => setShowAllocationDetails(false)}
-                className="rounded-lg p-1 hover:bg-[#F7F6F3]"
+                className="rounded-lg p-1 hover:bg-bg"
               >
-                <X className="h-5 w-5 text-[#6B6963]" />
+                <X className="h-5 w-5 text-ink-2" />
               </button>
             </div>
             
             <div className="space-y-4 p-6">
               {/* Invested */}
-              <div className="rounded-lg border border-[#E8E6E0] p-4">
+              <div className="rounded-lg border border-line p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-sm bg-[#1B4D45]" />
-                    <span className="text-[13px] font-medium text-[#2C2C2A]">Invested</span>
+                    <div className="h-3 w-3 rounded-sm bg-brand" />
+                    <span className="text-[13px] font-medium text-ink">Invested</span>
                   </div>
-                  <span className="text-[13px] tabular-nums font-semibold text-[#2C2C2A]">€ {fundAllocation.invested.total}M</span>
+                  <span className="text-[13px] tabular-nums font-semibold text-ink">€ {fundAllocation.invested.total}M</span>
                 </div>
                 <div className="mt-3 space-y-1.5 pl-5">
                   {fundAllocation.invested.companies.map((c, i) => (
                     <div key={i} className="flex justify-between text-[11px]">
-                      <span className="text-[#6B6963]">{c.name}</span>
-                      <span className="tabular-nums text-[#2C2C2A]">€ {c.amount}M</span>
+                      <span className="text-ink-2">{c.name}</span>
+                      <span className="tabular-nums text-ink">€ {c.amount}M</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Reserved for Add-ons */}
-              <div className="rounded-lg border border-[#E8E6E0] p-4">
+              <div className="rounded-lg border border-line p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-sm bg-[#B8975A]" />
-                    <span className="text-[13px] font-medium text-[#2C2C2A]">Reserved for Add-ons</span>
+                    <div className="h-3 w-3 rounded-sm bg-ai" />
+                    <span className="text-[13px] font-medium text-ink">Reserved for Add-ons</span>
                   </div>
-                  <span className="text-[13px] tabular-nums font-semibold text-[#2C2C2A]">€ {fundAllocation.reservedAddOns.total}M</span>
+                  <span className="text-[13px] tabular-nums font-semibold text-ink">€ {fundAllocation.reservedAddOns.total}M</span>
                 </div>
                 <div className="mt-3 space-y-1.5 pl-5">
                   {fundAllocation.reservedAddOns.items.map((item, i) => (
                     <div key={i} className="flex justify-between text-[11px]">
-                      <span className="text-[#6B6963]">{item.name}</span>
-                      <span className="tabular-nums text-[#2C2C2A]">€ {item.amount}M</span>
+                      <span className="text-ink-2">{item.name}</span>
+                      <span className="tabular-nums text-ink">€ {item.amount}M</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Fees & Costs */}
-              <div className="rounded-lg border border-[#E8E6E0] p-4">
+              <div className="rounded-lg border border-line p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-sm bg-[#9CA3AF]" />
-                    <span className="text-[13px] font-medium text-[#2C2C2A]">Current & Future Fees</span>
+                    <div className="h-3 w-3 rounded-sm bg-ink-3" />
+                    <span className="text-[13px] font-medium text-ink">Current & Future Fees</span>
                   </div>
-                  <span className="text-[13px] tabular-nums font-semibold text-[#2C2C2A]">€ {fundAllocation.feesCosts.total}M</span>
+                  <span className="text-[13px] tabular-nums font-semibold text-ink">€ {fundAllocation.feesCosts.total}M</span>
                 </div>
                 <div className="mt-3 space-y-1.5 pl-5">
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-[#6B6963]">Management Fee</span>
-                    <span className="tabular-nums text-[#2C2C2A]">€ {fundAllocation.feesCosts.managementFee}M</span>
+                    <span className="text-ink-2">Management Fee</span>
+                    <span className="tabular-nums text-ink">€ {fundAllocation.feesCosts.managementFee}M</span>
                   </div>
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-[#6B6963]">Est. Future Costs</span>
-                    <span className="tabular-nums text-[#2C2C2A]">€ {fundAllocation.feesCosts.estFutureCosts}M</span>
+                    <span className="text-ink-2">Est. Future Costs</span>
+                    <span className="tabular-nums text-ink">€ {fundAllocation.feesCosts.estFutureCosts}M</span>
                   </div>
                 </div>
               </div>
 
               {/* Open Commitment */}
-              <div className="rounded-lg border border-[#E8E6E0] p-4">
+              <div className="rounded-lg border border-line p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-sm bg-[#E8E6E0]" />
-                    <span className="text-[13px] font-medium text-[#2C2C2A]">Open Commitment / Dry Powder</span>
+                    <div className="h-3 w-3 rounded-sm bg-line" />
+                    <span className="text-[13px] font-medium text-ink">Open Commitment / Dry Powder</span>
                   </div>
-                  <span className="text-[13px] tabular-nums font-semibold text-[#2C2C2A]">€ {fundAllocation.dryPowder}M</span>
+                  <span className="text-[13px] tabular-nums font-semibold text-ink">€ {fundAllocation.dryPowder}M</span>
                 </div>
-                <div className="mt-2 pl-5 text-[11px] text-[#6B6963]">
+                <div className="mt-2 pl-5 text-[11px] text-ink-2">
                   Available for new investments
                 </div>
               </div>

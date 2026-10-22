@@ -41,9 +41,9 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
   return (
     <div className="flex flex-col gap-3.5">
       {/* Summary Bar */}
-      <div className="flex items-center gap-5 rounded-[10px] border border-[#E8E6E0] bg-white px-4 py-3">
-        <div className="text-xs text-[#6B6963]">
-          Total priorities: <span className="font-medium text-[#2C2C2A]">{company.priorities.length}</span>
+      <div className="flex items-center gap-5 rounded-[10px] border border-line bg-white px-4 py-3">
+        <div className="text-xs text-ink-2">
+          Total priorities: <span className="font-medium text-ink">{company.priorities.length}</span>
         </div>
         <StatusBadge status="on-track" count={statusCounts["on-track"]} label="on track" />
         <StatusBadge status="watch" count={statusCounts.watch} label="watch" />
@@ -52,7 +52,7 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="rounded-md border border-[#E8E6E0] bg-white px-2.5 py-1.5 text-[11px] text-[#2C2C2A]"
+          className="rounded-md border border-line bg-white px-2.5 py-1.5 text-[11px] text-ink"
         >
           <option value="all">All categories</option>
           {categories.map((cat) => (
@@ -64,7 +64,7 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
         <select
           value={selectedPeriod}
           onChange={(e) => setSelectedPeriod(e.target.value)}
-          className="rounded-md border border-[#E8E6E0] bg-white px-2.5 py-1.5 text-[11px] text-[#2C2C2A]"
+          className="rounded-md border border-line bg-white px-2.5 py-1.5 text-[11px] text-ink"
         >
           <option>May 2025</option>
           <option>Apr 2025</option>
@@ -78,10 +78,10 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
           {prioritiesByCategory
             .filter((cat) => selectedCategory === "all" || cat.id === selectedCategory)
             .map((category) => (
-              <div key={category.id} className="overflow-hidden rounded-[10px] border border-[#E8E6E0] bg-white">
+              <div key={category.id} className="overflow-hidden rounded-[10px] border border-line bg-white">
                 <div className="flex items-center justify-between px-4 py-3">
-                  <h3 className="text-[13px] font-medium text-[#2C2C2A]">{category.label}</h3>
-                  <span className="rounded-full bg-[#F7F6F3] px-2 py-0.5 text-[11px] text-[#6B6963]">
+                  <h3 className="text-[13px] font-medium text-ink">{category.label}</h3>
+                  <span className="rounded-full bg-bg px-2 py-0.5 text-[11px] text-ink-2">
                     {category.priorities.length} items
                   </span>
                 </div>
@@ -90,20 +90,20 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
                     category.priorities.map((priority) => (
                       <div
                         key={priority.id}
-                        className="group flex items-center gap-2.5 rounded-lg bg-[#F7F6F3] px-3 py-2.5"
+                        className="group flex items-center gap-2.5 rounded-lg bg-bg px-3 py-2.5"
                       >
                         <StatusDot status={priority.status} size="lg" />
-                        <span className="flex-1 text-xs leading-relaxed text-[#2C2C2A]">
+                        <span className="flex-1 text-xs leading-relaxed text-ink">
                           {priority.text}
                         </span>
-                        <span className="shrink-0 text-[10px] text-[#6B6963]">{priority.period}</span>
-                        <button className="text-[11px] text-[#6B6963] opacity-0 transition-opacity hover:text-[#2C2C2A] group-hover:opacity-100">
+                        <span className="shrink-0 text-[10px] text-ink-2">{priority.period}</span>
+                        <button className="text-[11px] text-ink-2 opacity-0 transition-opacity hover:text-ink group-hover:opacity-100">
                           edit
                         </button>
                       </div>
                     ))
                   ) : (
-                    <div className="py-4 text-center text-xs italic text-[#E8E6E0]">
+                    <div className="py-4 text-center text-xs italic text-line">
                       No priorities in this category
                     </div>
                   )}
@@ -115,8 +115,8 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
         {/* Right Panel */}
         <div className="flex flex-col gap-3">
           {/* Add Priority Form */}
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
-            <h3 className="mb-3.5 text-[13px] font-medium text-[#2C2C2A]">Add priority</h3>
+          <div className="rounded-[10px] border border-line bg-white p-4">
+            <h3 className="mb-3.5 text-[13px] font-medium text-ink">Add priority</h3>
 
             {/* Mode Buttons */}
             <div className="mb-4 flex gap-1.5">
@@ -127,8 +127,8 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
                   className={cn(
                     "rounded-md border px-3.5 py-1.5 text-[11px] transition-colors",
                     formMode === mode
-                      ? "border-[#1B4D45] bg-[#1B4D45] text-white"
-                      : "border-[#E8E6E0] bg-white text-[#6B6963] hover:text-[#2C2C2A]"
+                      ? "border-brand bg-brand text-white"
+                      : "border-line bg-white text-ink-2 hover:text-ink"
                   )}
                 >
                   {mode}
@@ -138,13 +138,13 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
 
             {/* Step 1 */}
             <div className="mb-3.5">
-              <div className="mb-0.5 text-[10px] font-medium uppercase tracking-wide text-[#1B4D45]">Step 1</div>
-              <div className="mb-1.5 text-[11px] text-[#6B6963]">Select period and category</div>
+              <div className="mb-0.5 text-[10px] font-medium uppercase tracking-wide text-brand">Step 1</div>
+              <div className="mb-1.5 text-[11px] text-ink-2">Select period and category</div>
               <div className="flex gap-2">
                 <select
                   value={selectedPeriod}
                   onChange={(e) => setSelectedPeriod(e.target.value)}
-                  className="flex-1 rounded-md border border-[#E8E6E0] bg-white px-2.5 py-2 text-xs text-[#2C2C2A]"
+                  className="flex-1 rounded-md border border-line bg-white px-2.5 py-2 text-xs text-ink"
                 >
                   <option>May 2025</option>
                   <option>Apr 2025</option>
@@ -152,7 +152,7 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
                 <select
                   value={newPriorityCategory}
                   onChange={(e) => setNewPriorityCategory(e.target.value)}
-                  className="flex-1 rounded-md border border-[#E8E6E0] bg-white px-2.5 py-2 text-xs text-[#2C2C2A]"
+                  className="flex-1 rounded-md border border-line bg-white px-2.5 py-2 text-xs text-ink"
                 >
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.id}>
@@ -165,25 +165,25 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
 
             {/* Step 2 */}
             <div className="mb-3.5">
-              <div className="mb-0.5 text-[10px] font-medium uppercase tracking-wide text-[#1B4D45]">Step 2</div>
-              <div className="mb-1.5 text-[11px] text-[#6B6963]">Type the priority</div>
+              <div className="mb-0.5 text-[10px] font-medium uppercase tracking-wide text-brand">Step 2</div>
+              <div className="mb-1.5 text-[11px] text-ink-2">Type the priority</div>
               <input
                 type="text"
                 value={newPriorityText}
                 onChange={(e) => setNewPriorityText(e.target.value)}
                 placeholder="Describe the priority..."
-                className="w-full rounded-md border border-[#E8E6E0] bg-white px-2.5 py-2 text-xs text-[#2C2C2A] placeholder:text-[#6B6963]"
+                className="w-full rounded-md border border-line bg-white px-2.5 py-2 text-xs text-ink placeholder:text-ink-2"
               />
             </div>
 
             {/* Step 3 */}
             <div className="mb-4">
-              <div className="mb-0.5 text-[10px] font-medium uppercase tracking-wide text-[#1B4D45]">Step 3</div>
-              <div className="mb-1.5 text-[11px] text-[#6B6963]">Select status</div>
+              <div className="mb-0.5 text-[10px] font-medium uppercase tracking-wide text-brand">Step 3</div>
+              <div className="mb-1.5 text-[11px] text-ink-2">Select status</div>
               <select
                 value={newPriorityStatus}
                 onChange={(e) => setNewPriorityStatus(e.target.value as StatusType)}
-                className="w-full rounded-md border border-[#E8E6E0] bg-white px-2.5 py-2 text-xs text-[#2C2C2A]"
+                className="w-full rounded-md border border-line bg-white px-2.5 py-2 text-xs text-ink"
               >
                 <option value="on-track">On track</option>
                 <option value="watch">Watch</option>
@@ -191,27 +191,27 @@ export function ValueCreationTab({ company }: ValueCreationTabProps) {
               </select>
             </div>
 
-            <button className="w-full rounded-md bg-[#1B4D45] py-2 text-xs font-medium text-white hover:bg-[#163d38]">
+            <button className="w-full rounded-md bg-brand py-2 text-xs font-medium text-white hover:bg-action-hover">
               Submit priority
             </button>
           </div>
 
           {/* Recent Changes */}
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
-            <h4 className="mb-2.5 text-xs font-medium text-[#2C2C2A]">Recent changes</h4>
+          <div className="rounded-[10px] border border-line bg-white p-4">
+            <h4 className="mb-2.5 text-xs font-medium text-ink">Recent changes</h4>
             <div className="flex flex-col">
               {recentChanges.map((change) => (
                 <div
                   key={change.id}
-                  className="flex gap-2 border-b border-[#E8E6E0] py-1.5 last:border-b-0"
+                  className="flex gap-2 border-b border-line py-1.5 last:border-b-0"
                 >
                   <StatusDot
                     status={change.toStatus as StatusType}
                     size="sm"
                     className="mt-1.5 shrink-0"
                   />
-                  <div className="text-[11px] leading-relaxed text-[#6B6963]">
-                    <span className="font-medium text-[#2C2C2A]">{change.priority}</span>{" "}
+                  <div className="text-[11px] leading-relaxed text-ink-2">
+                    <span className="font-medium text-ink">{change.priority}</span>{" "}
                     {change.fromStatus ? (
                       <>
                         changed from {change.fromStatus.replace("-", " ")} → {change.toStatus.replace("-", " ")}

@@ -14,6 +14,28 @@ export interface Fund {
   grossIRR: number
 }
 
+export interface AddOn {
+  id: string
+  name: string
+  description: string
+  status: 'Closed' | 'Signed' | 'Pipeline'
+  /** Closing date, or the expected closing for signed and pipeline deals. */
+  date: string
+  /** Enterprise value paid, €m. */
+  ev: number
+  /** Equity the fund puts in for this add-on, €m. */
+  equity: number
+  revenue: number
+  ebitda: number
+}
+
+export interface ManagementMember {
+  name: string
+  role: string
+  /** Deal team's view: strong, watch or replace. */
+  rating: 'strong' | 'watch' | 'replace'
+}
+
 export interface Company {
   id: string
   name: string
@@ -25,6 +47,8 @@ export interface Company {
   exited?: boolean
   bank: string
   investmentTeam: string[]
+  addOns?: AddOn[]
+  management?: ManagementMember[]
   financials: CompanyFinancials
   valuation: CompanyValuation
   kpis: CompanyKPIs
@@ -96,6 +120,10 @@ export interface Comment {
   period: string
   text: string
   createdAt: string
+  /** Reporting month the comment is about (0 = Jan 2026). */
+  month?: number
+  /** Who wrote it: the deal team of the fund or the CFO of the portfolio company. */
+  role?: 'deal-team' | 'cfo'
 }
 
 export interface Priority {
@@ -301,29 +329,30 @@ const makeCompany = (s: CompanySpec): Company => {
 // including older names that have already been exited (realised).
 const generatedCompanies: Company[] = [
   // --- Fund III (older 2017 vintage — several exits) ---
-  makeCompany({ id: 'nordic-payments', name: 'Nordic Payments', fundId: 'fund-iii', entryDate: '05-2018', holdingPeriod: 5.2, status: 'on-track', bank: 'Nordea', team: ['Willem de Jong', 'Sophie Klein'], revenueLTM: 62, ebitdaMargin: 0.31, leverage: 2.4, invested: 14, fairValue: 41, realised: 6, evEbitda: 11.5, currentYear: 2024, exitInvested: 14, exitProceeds: 58, exitEvEbitda: 13, exitShare: 64, exitYear: 2026, fte: 320, enps: 48, comment: 'Payment volumes up 22% YoY; preparing for a 2026 exit process.', priority: 'Scale enterprise sales team across the Nordics' }),
-  makeCompany({ id: 'greenbox-logistics', name: 'GreenBox Logistics', fundId: 'fund-iii', entryDate: '09-2018', holdingPeriod: 4.8, status: 'watch', bank: 'ING', team: ['Ewout Verschuur', 'Mark de Vries'], revenueLTM: 88, ebitdaMargin: 0.14, leverage: 3.2, invested: 18, fairValue: 24, realised: 4, evEbitda: 7, currentYear: 2024, exitInvested: 18, exitProceeds: 39, exitEvEbitda: 8, exitShare: 52, exitYear: 2027, fte: 540, enps: 30, comment: 'Margin recovery underway after fuel-cost normalisation.', priority: 'Roll out route-optimisation software to all depots' }),
-  makeCompany({ id: 'medisupply', name: 'MediSupply', fundId: 'fund-iii', entryDate: '02-2017', holdingPeriod: 6.5, status: 'on-track', bank: 'ABN AMRO', team: ['Lisa van der Berg', 'Willem de Jong'], revenueLTM: 45, ebitdaMargin: 0.24, leverage: 1.8, invested: 11, fairValue: 0, realised: 34, evEbitda: 10, currentYear: 2023, exitInvested: 11, exitProceeds: 34, exitEvEbitda: 10.5, exitShare: 60, exitYear: 2023, fte: 210, enps: 45, comment: 'Exited to strategic buyer at 3.1x in 2023 — strong realised return.', priority: 'Transition support to acquirer completed', exited: true }),
-  makeCompany({ id: 'aquatech', name: 'AquaTech Systems', fundId: 'fund-iii', entryDate: '07-2017', holdingPeriod: 5.0, status: 'on-track', bank: 'Rabobank', team: ['Semme Jonkers', 'Eva Bakker'], revenueLTM: 33, ebitdaMargin: 0.27, leverage: 2.0, invested: 9, fairValue: 0, realised: 24, evEbitda: 9, currentYear: 2022, exitInvested: 9, exitProceeds: 24, exitEvEbitda: 9.5, exitShare: 58, exitYear: 2022, fte: 140, enps: 50, comment: 'Realised via secondary buyout at 2.7x in 2022.', priority: 'Deal closed — no further actions', exited: true }),
-  makeCompany({ id: 'printwave', name: 'PrintWave', fundId: 'fund-iii', entryDate: '11-2017', holdingPeriod: 4.4, status: 'alert', bank: 'Deutsche Bank', team: ['Ewout Verschuur', 'Sophie Klein'], revenueLTM: 27, ebitdaMargin: 0.09, leverage: 4.1, invested: 12, fairValue: 0, realised: 7, evEbitda: 4, currentYear: 2022, exitInvested: 12, exitProceeds: 7, exitEvEbitda: 4.5, exitShare: 30, exitYear: 2022, fte: 95, enps: 12, comment: 'Written down and exited below cost at 0.6x — structural print decline.', priority: 'Wind-down completed', exited: true }),
+  makeCompany({ id: 'nordic-payments', name: 'Nordic Payments', fundId: 'fund-iii', entryDate: '05-2018', holdingPeriod: 5.2, status: 'on-track', bank: 'Nordea', team: ['Bram Hoekstra', 'Sophie Klein'], revenueLTM: 62, ebitdaMargin: 0.31, leverage: 2.4, invested: 14, fairValue: 41, realised: 6, evEbitda: 11.5, currentYear: 2024, exitInvested: 14, exitProceeds: 58, exitEvEbitda: 13, exitShare: 64, exitYear: 2026, fte: 320, enps: 48, comment: 'Payment volumes up 22% YoY; preparing for a 2026 exit process.', priority: 'Scale enterprise sales team across the Nordics' }),
+  makeCompany({ id: 'greenbox-logistics', name: 'GreenBox Logistics', fundId: 'fund-iii', entryDate: '09-2018', holdingPeriod: 4.8, status: 'watch', bank: 'ING', team: ['Joost Mulder', 'Mark de Vries'], revenueLTM: 88, ebitdaMargin: 0.14, leverage: 3.2, invested: 18, fairValue: 24, realised: 4, evEbitda: 7, currentYear: 2024, exitInvested: 18, exitProceeds: 39, exitEvEbitda: 8, exitShare: 52, exitYear: 2027, fte: 540, enps: 30, comment: 'Margin recovery underway after fuel-cost normalisation.', priority: 'Roll out route-optimisation software to all depots' }),
+  makeCompany({ id: 'medisupply', name: 'MediSupply', fundId: 'fund-iii', entryDate: '02-2017', holdingPeriod: 6.5, status: 'on-track', bank: 'ABN AMRO', team: ['Lisa van der Berg', 'Bram Hoekstra'], revenueLTM: 45, ebitdaMargin: 0.24, leverage: 1.8, invested: 11, fairValue: 0, realised: 34, evEbitda: 10, currentYear: 2023, exitInvested: 11, exitProceeds: 34, exitEvEbitda: 10.5, exitShare: 60, exitYear: 2023, fte: 210, enps: 45, comment: 'Exited to strategic buyer at 3.1x in 2023 — strong realised return.', priority: 'Transition support to acquirer completed', exited: true }),
+  makeCompany({ id: 'aquatech', name: 'AquaTech Systems', fundId: 'fund-iii', entryDate: '07-2017', holdingPeriod: 5.0, status: 'on-track', bank: 'Rabobank', team: ['Daan Visser', 'Eva Bakker'], revenueLTM: 33, ebitdaMargin: 0.27, leverage: 2.0, invested: 9, fairValue: 0, realised: 24, evEbitda: 9, currentYear: 2022, exitInvested: 9, exitProceeds: 24, exitEvEbitda: 9.5, exitShare: 58, exitYear: 2022, fte: 140, enps: 50, comment: 'Realised via secondary buyout at 2.7x in 2022.', priority: 'Deal closed — no further actions', exited: true }),
+  makeCompany({ id: 'printwave', name: 'PrintWave', fundId: 'fund-iii', entryDate: '11-2017', holdingPeriod: 4.4, status: 'alert', bank: 'Deutsche Bank', team: ['Joost Mulder', 'Sophie Klein'], revenueLTM: 27, ebitdaMargin: 0.09, leverage: 4.1, invested: 12, fairValue: 0, realised: 7, evEbitda: 4, currentYear: 2022, exitInvested: 12, exitProceeds: 7, exitEvEbitda: 4.5, exitShare: 30, exitYear: 2022, fte: 95, enps: 12, comment: 'Written down and exited below cost at 0.6x — structural print decline.', priority: 'Wind-down completed', exited: true }),
   makeCompany({ id: 'urban-mobility', name: 'Urban Mobility', fundId: 'fund-iii', entryDate: '03-2019', holdingPeriod: 4.1, status: 'on-track', bank: 'BNG Bank', team: ['Jim Pfennings', 'Jannet Diepenbroek'], revenueLTM: 54, ebitdaMargin: 0.19, leverage: 2.6, invested: 15, fairValue: 33, realised: 3, evEbitda: 8.5, currentYear: 2025, exitInvested: 15, exitProceeds: 46, exitEvEbitda: 9.5, exitShare: 56, exitYear: 2027, fte: 380, enps: 38, comment: 'Fleet electrification ahead of plan; subscription revenue growing.', priority: 'Expand into two new metropolitan regions' }),
   makeCompany({ id: 'foodlab', name: 'FoodLab', fundId: 'fund-iii', entryDate: '06-2019', holdingPeriod: 3.9, status: 'watch', bank: 'ABN AMRO', team: ['Lisa van der Berg', 'Mark de Vries'], revenueLTM: 39, ebitdaMargin: 0.16, leverage: 3.0, invested: 13, fairValue: 21, realised: 2, evEbitda: 7.5, currentYear: 2025, exitInvested: 13, exitProceeds: 34, exitEvEbitda: 8.5, exitShare: 50, exitYear: 2028, fte: 260, enps: 34, comment: 'Retail listings expanding but input costs pressuring margin.', priority: 'Launch private-label range with two major retailers' }),
 
   // --- Impact Fund I (2020 vintage, impact focus, 2 exits) ---
-  makeCompany({ id: 'solarroof', name: 'SolarRoof', fundId: 'fund-impact-i', entryDate: '04-2020', holdingPeriod: 4.0, status: 'on-track', bank: 'Triodos Bank', team: ['Semme Jonkers', 'Eva Bakker'], revenueLTM: 71, ebitdaMargin: 0.22, leverage: 2.2, invested: 16, fairValue: 38, realised: 5, evEbitda: 10, currentYear: 2025, exitInvested: 16, exitProceeds: 52, exitEvEbitda: 11, exitShare: 60, exitYear: 2027, fte: 410, enps: 55, comment: 'Residential solar installs up 35%; strong impact KPIs on CO2 avoided.', priority: 'Scale installer network to meet demand backlog' }),
+  makeCompany({ id: 'solarroof', name: 'SolarRoof', fundId: 'fund-impact-i', entryDate: '04-2020', holdingPeriod: 4.0, status: 'on-track', bank: 'Triodos Bank', team: ['Daan Visser', 'Eva Bakker'], revenueLTM: 71, ebitdaMargin: 0.22, leverage: 2.2, invested: 16, fairValue: 38, realised: 5, evEbitda: 10, currentYear: 2025, exitInvested: 16, exitProceeds: 52, exitEvEbitda: 11, exitShare: 60, exitYear: 2027, fte: 410, enps: 55, comment: 'Residential solar installs up 35%; strong impact KPIs on CO2 avoided.', priority: 'Scale installer network to meet demand backlog' }),
   makeCompany({ id: 'purewater', name: 'PureWater', fundId: 'fund-impact-i', entryDate: '08-2020', holdingPeriod: 3.7, status: 'on-track', bank: 'Rabobank', team: ['Eva Bakker', 'Sophie Klein'], revenueLTM: 29, ebitdaMargin: 0.26, leverage: 1.6, invested: 10, fairValue: 22, realised: 2, evEbitda: 9.5, currentYear: 2025, exitInvested: 10, exitProceeds: 28, exitEvEbitda: 10.5, exitShare: 58, exitYear: 2028, fte: 130, enps: 60, comment: 'Water-purification units deployed in 12 new municipalities.', priority: 'Secure framework contract with national utility' }),
   makeCompany({ id: 'circular-textiles', name: 'Circular Textiles', fundId: 'fund-impact-i', entryDate: '01-2021', holdingPeriod: 3.2, status: 'watch', bank: 'ASN Bank', team: ['Jannet Diepenbroek', 'Mark de Vries'], revenueLTM: 24, ebitdaMargin: 0.12, leverage: 2.8, invested: 9, fairValue: 12, realised: 1, evEbitda: 6.5, currentYear: 2025, exitInvested: 9, exitProceeds: 19, exitEvEbitda: 8, exitShare: 46, exitYear: 2029, fte: 170, enps: 40, comment: 'Recycling volumes growing but automation capex weighing on EBITDA.', priority: 'Commission second fibre-recycling line' }),
   makeCompany({ id: 'edugrow', name: 'EduGrow', fundId: 'fund-impact-i', entryDate: '05-2021', holdingPeriod: 2.9, status: 'on-track', bank: 'Triodos Bank', team: ['Lisa van der Berg', 'Jim Pfennings'], revenueLTM: 18, ebitdaMargin: 0.20, leverage: 1.2, invested: 7, fairValue: 15, realised: 0, evEbitda: 9, currentYear: 2025, exitInvested: 7, exitProceeds: 21, exitEvEbitda: 10, exitShare: 62, exitYear: 2029, fte: 90, enps: 58, comment: 'EdTech platform reached 500k learners; net retention above 120%.', priority: 'Expand B2B channel to vocational institutions' }),
-  makeCompany({ id: 'agriloop', name: 'AgriLoop', fundId: 'fund-impact-i', entryDate: '03-2020', holdingPeriod: 4.2, status: 'on-track', bank: 'Rabobank', team: ['Semme Jonkers', 'Jannet Diepenbroek'], revenueLTM: 42, ebitdaMargin: 0.23, leverage: 2.1, invested: 12, fairValue: 0, realised: 31, evEbitda: 10, currentYear: 2024, exitInvested: 12, exitProceeds: 31, exitEvEbitda: 10.5, exitShare: 60, exitYear: 2024, fte: 220, enps: 52, comment: 'Exited to strategic agri-group at 2.6x in 2024.', priority: 'Post-close earn-out tracking on target', exited: true }),
-  makeCompany({ id: 'windpeak', name: 'WindPeak', fundId: 'fund-impact-i', entryDate: '06-2020', holdingPeriod: 3.5, status: 'watch', bank: 'ABN AMRO', team: ['Eva Bakker', 'Ewout Verschuur'], revenueLTM: 36, ebitdaMargin: 0.18, leverage: 3.3, invested: 14, fairValue: 0, realised: 18, evEbitda: 7, currentYear: 2023, exitInvested: 14, exitProceeds: 18, exitEvEbitda: 7.5, exitShare: 44, exitYear: 2023, fte: 160, enps: 36, comment: 'Exited at 1.3x in 2023 after permitting delays capped upside.', priority: 'Handover to acquirer finalised', exited: true }),
+  makeCompany({ id: 'agriloop', name: 'AgriLoop', fundId: 'fund-impact-i', entryDate: '03-2020', holdingPeriod: 4.2, status: 'on-track', bank: 'Rabobank', team: ['Daan Visser', 'Jannet Diepenbroek'], revenueLTM: 42, ebitdaMargin: 0.23, leverage: 2.1, invested: 12, fairValue: 0, realised: 31, evEbitda: 10, currentYear: 2024, exitInvested: 12, exitProceeds: 31, exitEvEbitda: 10.5, exitShare: 60, exitYear: 2024, fte: 220, enps: 52, comment: 'Exited to strategic agri-group at 2.6x in 2024.', priority: 'Post-close earn-out tracking on target', exited: true }),
+  makeCompany({ id: 'windpeak', name: 'WindPeak', fundId: 'fund-impact-i', entryDate: '06-2020', holdingPeriod: 3.5, status: 'watch', bank: 'ABN AMRO', team: ['Eva Bakker', 'Joost Mulder'], revenueLTM: 36, ebitdaMargin: 0.18, leverage: 3.3, invested: 14, fairValue: 0, realised: 18, evEbitda: 7, currentYear: 2023, exitInvested: 14, exitProceeds: 18, exitEvEbitda: 7.5, exitShare: 44, exitYear: 2023, fte: 160, enps: 36, comment: 'Exited at 1.3x in 2023 after permitting delays capped upside.', priority: 'Handover to acquirer finalised', exited: true }),
 
   // --- Fund IV (two more current holdings) ---
-  makeCompany({ id: 'cyberguard', name: 'CyberGuard', fundId: 'fund-iv', entryDate: '02-2023', holdingPeriod: 3.2, status: 'on-track', bank: 'ING', team: ['Sophie Klein', 'Willem de Jong'], revenueLTM: 31, ebitdaMargin: 0.28, leverage: 1.9, invested: 13, fairValue: 24, realised: 0, evEbitda: 11, currentYear: 2025, exitInvested: 13, exitProceeds: 39, exitEvEbitda: 12.5, exitShare: 63, exitYear: 2028, fte: 150, enps: 54, comment: 'ARR growth of 41%; strong pipeline in mid-market security.', priority: 'Launch managed detection & response offering' }),
+  makeCompany({ id: 'cyberguard', name: 'CyberGuard', fundId: 'fund-iv', entryDate: '02-2023', holdingPeriod: 3.2, status: 'on-track', bank: 'ING', team: ['Sophie Klein', 'Bram Hoekstra'], revenueLTM: 31, ebitdaMargin: 0.28, leverage: 1.9, invested: 13, fairValue: 24, realised: 0, evEbitda: 11, currentYear: 2025, exitInvested: 13, exitProceeds: 39, exitEvEbitda: 12.5, exitShare: 63, exitYear: 2028, fte: 150, enps: 54, comment: 'ARR growth of 41%; strong pipeline in mid-market security.', priority: 'Launch managed detection & response offering' }),
   makeCompany({ id: 'brightcare', name: 'BrightCare', fundId: 'fund-iv', entryDate: '10-2023', holdingPeriod: 2.5, status: 'watch', bank: 'ABN AMRO', team: ['Lisa van der Berg', 'Mark de Vries'], revenueLTM: 48, ebitdaMargin: 0.15, leverage: 3.0, invested: 16, fairValue: 19, realised: 0, evEbitda: 7.5, currentYear: 2025, exitInvested: 16, exitProceeds: 34, exitEvEbitda: 9, exitShare: 50, exitYear: 2029, fte: 620, enps: 33, comment: 'Staffing cost inflation being offset by rate increases with payers.', priority: 'Standardise care model across acquired clinics' }),
+  makeCompany({ id: 'fictus-capital', name: 'Fictus Capital Management', fundId: 'fund-iv', entryDate: '06-2023', holdingPeriod: 3.1, status: 'on-track', bank: 'ING', team: ['Bram Hoekstra', 'Lisa van der Berg'], revenueLTM: 13.6, ebitdaMargin: 0.12, leverage: 1.6, invested: 6, fairValue: 9, realised: 0, evEbitda: 8, currentYear: 2026, exitInvested: 6, exitProceeds: 14, exitEvEbitda: 9, exitShare: 60, exitYear: 2029, fte: 70, enps: 35, comment: 'Compliance and BI propositions in build-out; churn in SaaS compensated by CaaS volume.', priority: 'Convert the Compliance and BI pipeline into ARR' }),
 ]
 
 // Mock Companies
-export const companies: Company[] = [
+const baseCompanies: Company[] = [
   {
     id: 'medtech-group',
     name: 'MedTech Group',
@@ -332,7 +361,7 @@ export const companies: Company[] = [
     status: 'on-track',
     holdingPeriod: 3.4,
     bank: 'ABN AMRO',
-    investmentTeam: ['Willem de Jong', 'Lisa van der Berg'],
+    investmentTeam: ['Bram Hoekstra', 'Lisa van der Berg'],
     financials: {
       revenue: {
         ytd: { actual: 7.5, budget: 7.2, ly: 6.8, deltaAvsB: 0.3 },
@@ -382,7 +411,7 @@ export const companies: Company[] = [
       ],
     },
     comments: [
-      { id: '1', author: 'Willem', period: 'Q1 2026', text: 'Strong start to the year with new product launch driving growth. Pipeline looks healthy for H2.', createdAt: '2026-04-15' },
+      { id: '1', author: 'Bram', period: 'Q1 2026', text: 'Strong start to the year with new product launch driving growth. Pipeline looks healthy for H2.', createdAt: '2026-04-15' },
       { id: '2', author: 'Lisa', period: 'Q4 2025', text: 'Exceeded targets in Q4. US expansion proceeding as planned.', createdAt: '2026-01-20' },
     ],
     priorities: [
@@ -475,7 +504,7 @@ export const companies: Company[] = [
     status: 'on-track',
     holdingPeriod: 2.7,
     bank: 'Rabobank',
-    investmentTeam: ['Semme Jonkers', 'Eva Bakker'],
+    investmentTeam: ['Daan Visser', 'Eva Bakker'],
     financials: {
       revenue: {
         ytd: { actual: 6.2, budget: 5.8, ly: 5.4, deltaAvsB: 0.4 },
@@ -523,7 +552,7 @@ export const companies: Company[] = [
       customKPIs: [],
     },
     comments: [
-      { id: '1', author: 'Semme', period: 'Q1 2026', text: 'EBITDA margin expanded to 24%, highest in portfolio. New sustainability certification driving customer wins.', createdAt: '2026-04-18' },
+      { id: '1', author: 'Daan', period: 'Q1 2026', text: 'EBITDA margin expanded to 24%, highest in portfolio. New sustainability certification driving customer wins.', createdAt: '2026-04-18' },
     ],
     priorities: [
       { id: '1', category: 'go-to-market', text: 'Sustainability certification for premium pricing', status: 'on-track', period: 'May 2025' },
@@ -538,7 +567,7 @@ export const companies: Company[] = [
     status: 'watch',
     holdingPeriod: 1.9,
     bank: 'ING',
-    investmentTeam: ['Ewout Verschuur', 'Mark de Vries'],
+    investmentTeam: ['Joost Mulder', 'Mark de Vries'],
     financials: {
       revenue: {
         ytd: { actual: 4.5, budget: 5.0, ly: 5.2, deltaAvsB: -0.5 },
@@ -586,7 +615,7 @@ export const companies: Company[] = [
       customKPIs: [],
     },
     comments: [
-      { id: '1', author: 'Ewout', period: 'Q1 2026', text: 'Revenue declined 4% below budget for 3rd consecutive month. Customer churn increasing in SMB segment. Initiating cost reduction program.', createdAt: '2026-04-22' },
+      { id: '1', author: 'Joost', period: 'Q1 2026', text: 'Revenue declined 4% below budget for 3rd consecutive month. Customer churn increasing in SMB segment. Initiating cost reduction program.', createdAt: '2026-04-22' },
     ],
     priorities: [
       { id: '1', category: 'operations', text: 'Cost reduction program - target €1.2M savings', status: 'watch', period: 'May 2025' },
@@ -601,7 +630,7 @@ export const companies: Company[] = [
     status: 'alert',
     holdingPeriod: 1.3,
     bank: 'Deutsche Bank',
-    investmentTeam: ['Ewout Verschuur', 'Sophie Klein'],
+    investmentTeam: ['Joost Mulder', 'Sophie Klein'],
     financials: {
       revenue: {
         ytd: { actual: 1.8, budget: 2.2, ly: 2.4, deltaAvsB: -0.4 },
@@ -649,7 +678,7 @@ export const companies: Company[] = [
       customKPIs: [],
     },
     comments: [
-      { id: '1', author: 'Ewout', period: 'Q1 2026', text: 'Leverage at 4.2x approaching covenant threshold of 4.5x. Urgent turnaround plan in progress. New CEO starting May 1st.', createdAt: '2026-04-25' },
+      { id: '1', author: 'Joost', period: 'Q1 2026', text: 'Leverage at 4.2x approaching covenant threshold of 4.5x. Urgent turnaround plan in progress. New CEO starting May 1st.', createdAt: '2026-04-25' },
     ],
     priorities: [
       { id: '1', category: 'operations', text: 'Turnaround plan execution', status: 'alert', period: 'May 2025' },
@@ -664,7 +693,7 @@ export const companies: Company[] = [
     status: 'watch',
     holdingPeriod: 1.0,
     bank: 'ABN AMRO',
-    investmentTeam: ['Willem de Jong', 'Mark de Vries'],
+    investmentTeam: ['Bram Hoekstra', 'Mark de Vries'],
     financials: {
       revenue: {
         ytd: { actual: 2.6, budget: 2.9, ly: 3.2, deltaAvsB: -0.3 },
@@ -712,7 +741,7 @@ export const companies: Company[] = [
       customKPIs: [],
     },
     comments: [
-      { id: '1', author: 'Willem', period: 'Q1 2026', text: 'Retail headwinds continuing. Store optimization program launched. Focus on online channel acceleration.', createdAt: '2026-04-20' },
+      { id: '1', author: 'Bram', period: 'Q1 2026', text: 'Retail headwinds continuing. Store optimization program launched. Focus on online channel acceleration.', createdAt: '2026-04-20' },
     ],
     priorities: [
       { id: '1', category: 'go-to-market', text: 'Online channel acceleration - 30% revenue target', status: 'watch', period: 'May 2025' },
@@ -721,6 +750,83 @@ export const companies: Company[] = [
   },
   ...generatedCompanies,
 ]
+
+// Operating KPIs every company reports in the monthly performance sheet (demo series, scaled per company)
+const hashStr = (str: string) => {
+  let h = 2166136261
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i)
+    h = Math.imul(h, 16777619)
+  }
+  return (h >>> 0) / 4294967296
+}
+const pick = <T,>(arr: T[], key: string) => arr[Math.floor(hashStr(key) * arr.length) % arr.length]
+
+const ADD_ON_NAMES = ['Datacore Solutions', 'BrightPath Software', 'Nordlicht Analytics', 'Veritas Compliance', 'Cloudbridge', 'Pixel & Co', 'Kappa Systems', 'Orion Tech', 'Helix Services', 'GreenGrid', 'Atlas Digital', 'SecureLayer', 'Fenix Payments', 'LumiCare', 'Tidal Data', 'Vantage Labs', 'Meridian Group', 'Coral Systems']
+const ADD_ON_WHY = ['Complementary product module', 'Geographic expansion into DACH', 'Customer base consolidation', 'Technology and talent acquisition', 'New vertical, shared platform', 'Cross-sell to existing customers']
+const CEOS = ['Jan Kuiper', 'Anna Lindqvist', 'Marc Dubois', 'Sofia Rossi', 'Thomas Becker', 'Elise Vermeer', 'Lars Nielsen', 'Priya Raman', 'Pieter de Haan']
+const CFOS = ['Marijke Bakker', 'Daniel Roth', 'Lisa Chen', 'Tomás Herrera', 'Anke Visser', 'Priya Nair', 'Erik Sørensen', 'Nina Jacobs']
+const THIRD: [string, string[]][] = [['COO', ['Mark Willems', 'Sanne Bos', 'Oliver Grant', 'Eva Martens']], ['CTO', ['Rafael Costa', 'Ingrid Holm', 'Wouter Smit', 'Yara Haddad']], ['CCO', ['Femke Jansen', 'Luca Bianchi', 'Karin Dekker', 'Noah Fischer']]]
+
+const demoAddOns = (c: Company): AddOn[] => {
+  const rev = c.financials.revenue.fy.ltm
+  const names = [...ADD_ON_NAMES].sort((x, y) => hashStr(c.id + x) - hashStr(c.id + y)).slice(0, 3)
+  const mk = (i: number, status: AddOn['status'], date: string, share: number): AddOn => {
+    const ev = Math.max(0.6, Number((rev * share * (0.85 + hashStr(c.id + i) * 0.3)).toFixed(1)))
+    const revenue = Number((ev / 1.7).toFixed(1))
+    return {
+      id: `${c.id}-addon-${i}`, name: names[i], description: pick(ADD_ON_WHY, c.id + 'w' + i), status, date,
+      ev, equity: Number((ev * 0.55).toFixed(1)), revenue, ebitda: Number((revenue * 0.16).toFixed(1)),
+    }
+  }
+  const list = [mk(0, 'Closed', hashStr(c.id) > 0.5 ? 'Mar 2025' : 'Oct 2024', 0.22), mk(1, 'Signed', 'Q4 2026', 0.16)]
+  if (hashStr(c.id + 'p') > 0.35) list.push(mk(2, 'Pipeline', 'H1 2027', 0.14))
+  return list
+}
+
+const demoManagement = (c: Company): ManagementMember[] => {
+  const [role3, pool3] = pick(THIRD, c.id + 'r')
+  const flagged = c.status === 'alert' ? 'replace' : 'watch'
+  const rate = (i: number): ManagementMember['rating'] =>
+    c.status !== 'on-track' && i === (c.status === 'alert' ? 0 : 2) ? flagged : hashStr(c.id + 'm' + i) > 0.82 ? 'watch' : 'strong'
+  return [
+    { name: pick(CEOS, c.id + 'ceo'), role: 'CEO', rating: rate(0) },
+    { name: pick(CFOS, c.id + 'cfo'), role: 'CFO', rating: rate(1) },
+    { name: pick(pool3, c.id + 'x'), role: role3, rating: rate(2) },
+  ]
+}
+
+const withOperatingKPIs = (c: Company): Company => {
+  const seed = c.id.length
+  const w = (i: number, amp: number) => Math.sin(i * 2.1 + seed) * amp
+  const scale = c.financials.revenue.fy.ltm
+  const series = (base: number, grow: number, budGrow: number, amp: number, round = 1) => ({
+    actual: Array.from({ length: 12 }, (_, i) => Number((base * (1 + grow * i + w(i, amp))).toFixed(round))),
+    budget: Array.from({ length: 12 }, (_, i) => Number((base * (1.02 + budGrow * i)).toFixed(round))),
+  })
+  const pipeline = series(scale * 0.45, 0.022, 0.02, 0.02, 1)
+  const licences = series(Math.max(60, Math.round(scale * 40)), 0.012, 0.014, 0.008, 0)
+  const bill = {
+    actual: Array.from({ length: 12 }, (_, i) => Number((71 + i * 0.45 + w(i, 1.2)).toFixed(1))),
+    budget: Array.from({ length: 12 }, () => 76),
+  }
+  return {
+    ...c,
+    addOns: demoAddOns(c),
+    management: demoManagement(c),
+    kpis: {
+      ...c.kpis,
+      customKPIs: [
+        ...c.kpis.customKPIs,
+        { name: 'Pipeline (€m)', ...pipeline },
+        { name: '# Licences', ...licences },
+        { name: 'Billability (%)', ...bill },
+      ],
+    },
+  }
+}
+
+export const companies: Company[] = baseCompanies.map(withOperatingKPIs)
 
 // Fund allocation data
 export const fundAllocation: FundAllocation = {
@@ -863,9 +969,9 @@ export const users: User[] = [
   currentUser,
   { id: 'user-2', name: 'Edo Pfennings', initials: 'EP', email: 'edo@hollandcapital.com', role: 'partner' },
   { id: 'user-3', name: 'Femke Diepenbroek', initials: 'FD', email: 'femke@hollandcapital.com', role: 'deal-team' },
-  { id: 'user-4', name: 'Willem de Jong', initials: 'WJ', email: 'willem@hollandcapital.com', role: 'partner' },
-  { id: 'user-5', name: 'Ewout Verschuur', initials: 'EV', email: 'ewout@hollandcapital.com', role: 'deal-team' },
-  { id: 'user-6', name: 'Semme Jonkers', initials: 'SJ', email: 'semme@hollandcapital.com', role: 'deal-team' },
+  { id: 'user-4', name: 'Bram Hoekstra', initials: 'BH', email: 'bram@hollandcapital.com', role: 'partner' },
+  { id: 'user-5', name: 'Joost Mulder', initials: 'JM', email: 'joost@hollandcapital.com', role: 'deal-team' },
+  { id: 'user-6', name: 'Daan Visser', initials: 'DV', email: 'daan@hollandcapital.com', role: 'deal-team' },
 ]
 
 // AI Analysis mock data

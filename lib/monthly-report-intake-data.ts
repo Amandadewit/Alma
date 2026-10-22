@@ -21,7 +21,7 @@ export interface IntakeRow {
   calc?: number[] // components that make up this total (negative code = subtract)
   pct?: number[] // [numerator code, denominator code]: margin, recalculated and not stored
   flip?: "cost" | "credit" | "activated" // stored with the opposite sign
-  isNew?: 1 // record not recognised by the saved mapping
+  isNew?: 1 // record that is not part of the standard performance sheet
   alias?: string // metric name in the data model when it differs from the sheet
   alma?: Record<string, number> // what Alma already holds for earlier months where it differs from the file
 }
@@ -52,16 +52,16 @@ export interface RawCase {
   board?: string
 }
 
-export const MONTHS = ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug"]
+export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]
 export const CURRENT = 7
 
 export const SECTION_LABEL: Record<Section, string> = {
   IS: "Income statement", BS: "Balance sheet", CF: "Cash flow", KPI: "Company KPIs", HR: "HR KPIs",
 }
 
-export const nl = (v: number, d = 0) =>
-  v.toLocaleString("nl-NL", { minimumFractionDigits: d, maximumFractionDigits: d }).replace("-", "−")
-export const fmtAmt = (v: number) => nl(v, Math.abs(v) < 100 && v !== 0 ? 1 : 0)
+export const num = (v: number, d = 0) =>
+  v.toLocaleString("en-GB", { minimumFractionDigits: d, maximumFractionDigits: d }).replace("-", "−")
+export const fmtAmt = (v: number) => num(v, Math.abs(v) < 100 && v !== 0 ? 1 : 0)
 
 export function buildCase(raw: RawCase) {
   const ROWS = raw.rows
@@ -129,13 +129,13 @@ export function buildCase(raw: RawCase) {
 
   const fmtVal = (r: IntakeRow, v: number | null): string => {
     if (v === null) return ""
-    if (isPct(r)) return nl(v, 1) + "%"
+    if (isPct(r)) return num(v, 1) + "%"
     if (raw.id === "B") {
-      if (r.code === 4000003 || r.code === 4100003) return nl(v * 100, 1) + "%"
-      if (r.code === 4100004 || r.code === 4100005) return nl(v, 1) + "%"
-      if (r.code === 4100002) return nl(v, 2)
-      if (r.code === 4100001) return nl(v, 0)
-      if (r.sec === "HR") return nl(v, 1)
+      if (r.code === 4000003 || r.code === 4100003) return num(v * 100, 1) + "%"
+      if (r.code === 4100004 || r.code === 4100005) return num(v, 1) + "%"
+      if (r.code === 4100002) return num(v, 2)
+      if (r.code === 4100001) return num(v, 0)
+      if (r.sec === "HR") return num(v, 1)
     }
     return fmtAmt(v)
   }

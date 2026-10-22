@@ -73,21 +73,21 @@ export function PortalReportUpload({
   return (
     <div className="min-h-screen font-sans">
       {/* Sub-header */}
-      <div className="border-b border-[#E8E6E0] bg-white px-8 py-4">
+      <div className="border-b border-line bg-white px-8 py-4">
         <button
           onClick={onBack}
-          className="mb-3 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#6B6963] transition-colors hover:text-[#1B4D45]"
+          className="mb-3 inline-flex items-center gap-1.5 text-[12px] font-medium text-ink-2 transition-colors hover:text-brand"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Back to Portfolio Portal
         </button>
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#1B4D45]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand">
             <Icon className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="text-[16px] font-semibold text-[#2C2C2A]">{report.title}</h1>
-            <p className="text-[12px] text-[#6B6963]">
+            <h1 className="text-[16px] font-semibold text-ink">{report.title}</h1>
+            <p className="text-[12px] text-ink-2">
               {report.cadence} · Due {report.deadline}
             </p>
           </div>
@@ -110,20 +110,20 @@ export function PortalReportUpload({
               }}
               className={cn(
                 "flex h-64 flex-col items-center justify-center rounded-[10px] border-2 border-dashed transition-colors",
-                dragActive ? "border-[#1B4D45] bg-[#E1F5EE]" : "border-[#E8E6E0] bg-white",
+                dragActive ? "border-brand bg-brand-soft" : "border-line bg-white",
               )}
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E1F5EE]">
-                <Upload className="h-5 w-5 text-[#1B4D45]" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-soft">
+                <Upload className="h-5 w-5 text-brand" />
               </div>
-              <h3 className="mt-3 text-[14px] font-medium text-[#2C2C2A]">Drop your {report.title.toLowerCase()} here</h3>
-              <p className="mt-1 text-[12px] text-[#6B6963]">or click to browse from your computer</p>
-              <p className="mt-1 text-[11px] text-[#9A988F]">Supported: {report.accepts}</p>
+              <h3 className="mt-3 text-[14px] font-medium text-ink">Drop your {report.title.toLowerCase()} here</h3>
+              <p className="mt-1 text-[12px] text-ink-2">or click to browse from your computer</p>
+              <p className="mt-1 text-[11px] text-ink-3">Supported: {report.accepts}</p>
               <button
                 onClick={() => {
                   inputRef.current?.click()
                 }}
-                className="mt-4 rounded-lg bg-[#1B4D45] px-5 py-2 text-[13px] font-medium text-white transition-colors hover:bg-[#164039]"
+                className="mt-4 rounded-lg bg-brand px-5 py-2 text-[13px] font-medium text-white transition-colors hover:bg-action-hover"
               >
                 Browse Files
               </button>
@@ -135,32 +135,32 @@ export function PortalReportUpload({
               />
             </div>
           ) : (
-            <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-5">
+            <div className="rounded-[10px] border border-line bg-white p-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E1F5EE]">
-                  <FileSpreadsheet className="h-5 w-5 text-[#1B4D45]" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-soft">
+                  <FileSpreadsheet className="h-5 w-5 text-brand" />
                 </div>
                 <div className="flex-1">
-                  <div className="text-[13px] font-medium text-[#2C2C2A]">{file.name}</div>
-                  <div className="text-[11px] text-[#6B6963]">
+                  <div className="text-[13px] font-medium text-ink">{file.name}</div>
+                  <div className="text-[11px] text-ink-2">
                     {file.size}
                     {file.rows > 0 && ` · ${file.rows} rows`}
                   </div>
                 </div>
                 {validating ? (
-                  <span className="inline-flex items-center gap-1.5 text-[12px] text-[#6B6963]">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] text-ink-2">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Validating…
                   </span>
                 ) : validated ? (
-                  <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#3B6D11]">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ok">
                     <CheckCircle2 className="h-4 w-4" />
                     {file.rows > 0 ? `${file.rows} rows validated` : "Validated"}
                   </span>
                 ) : null}
                 <button
                   onClick={removeFile}
-                  className="ml-1 flex h-7 w-7 items-center justify-center rounded-md text-[#9A988F] transition-colors hover:bg-[#F2F1ED] hover:text-[#A32D2D]"
+                  className="ml-1 flex h-7 w-7 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-surface-2 hover:text-alert"
                   aria-label="Remove file"
                 >
                   <X className="h-4 w-4" />
@@ -168,12 +168,12 @@ export function PortalReportUpload({
               </div>
 
               {validated && (
-                <div className="mt-4 rounded-lg bg-[#F3F8EC] px-4 py-3">
-                  <div className="flex items-center gap-2 text-[12px] font-medium text-[#3B6D11]">
+                <div className="mt-4 rounded-lg bg-surface-2 px-4 py-3">
+                  <div className="flex items-center gap-2 text-[12px] font-medium text-ok">
                     <CheckCircle2 className="h-4 w-4" />
                     File parsed and mapped successfully
                   </div>
-                  <p className="mt-1 text-[11px] leading-relaxed text-[#5A6B3E]">
+                  <p className="mt-1 text-[11px] leading-relaxed text-ok">
                     All required metrics were found and matched to the {report.title.toLowerCase()} schema. Review and
                     submit to send this to Alma Capital.
                   </p>
@@ -183,8 +183,8 @@ export function PortalReportUpload({
           )}
 
           {/* Submit bar */}
-          <div className="mt-6 flex flex-col gap-3 rounded-[10px] border border-[#E8E6E0] bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="text-[12px] text-[#6B6963]">
+          <div className="mt-6 flex flex-col gap-3 rounded-[10px] border border-line bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-[12px] text-ink-2">
               {validated
                 ? "Validated and ready to submit to Alma Capital."
                 : "Upload your file to run validation before submitting."}
@@ -196,8 +196,8 @@ export function PortalReportUpload({
               className={cn(
                 "inline-flex shrink-0 items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-[13px] font-medium transition-colors",
                 validated
-                  ? "bg-[#1B4D45] text-white hover:bg-[#164039]"
-                  : "cursor-not-allowed bg-[#E8E6E0] text-[#9A988F]",
+                  ? "bg-brand text-white hover:bg-action-hover"
+                  : "cursor-not-allowed bg-line text-ink-3",
               )}
             >
               <Send className="h-4 w-4" />
@@ -208,8 +208,8 @@ export function PortalReportUpload({
 
         {/* Instructions sidebar */}
         <aside className="lg:sticky lg:top-6 lg:self-start">
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-5">
-            <h3 className="text-[13px] font-semibold text-[#2C2C2A]">Upload instructions</h3>
+          <div className="rounded-[10px] border border-line bg-white p-5">
+            <h3 className="text-[13px] font-semibold text-ink">Upload instructions</h3>
             <ol className="mt-3 flex flex-col gap-3">
               {[
                 "Use the standard template provided by Alma Capital.",
@@ -220,17 +220,17 @@ export function PortalReportUpload({
                 "Resolve any flags, then submit for verification.",
               ].map((step, i) => (
                 <li key={i} className="flex gap-2.5">
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#EAF1EF] text-[11px] font-medium text-[#1B4D45]">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-soft text-[11px] font-medium text-brand">
                     {i + 1}
                   </span>
-                  <span className="text-[12px] leading-relaxed text-[#6B6963]">{step}</span>
+                  <span className="text-[12px] leading-relaxed text-ink-2">{step}</span>
                 </li>
               ))}
             </ol>
 
             {report.template && (
-              <button className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg border border-[#E8E6E0] px-4 py-2.5 text-[12px] font-medium text-[#2C2C2A] transition-colors hover:bg-[#F7F6F3]">
-                <Download className="h-4 w-4 text-[#1B4D45]" />
+              <button className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg border border-line px-4 py-2.5 text-[12px] font-medium text-ink transition-colors hover:bg-bg">
+                <Download className="h-4 w-4 text-brand" />
                 Download Template
               </button>
             )}

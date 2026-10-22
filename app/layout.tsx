@@ -33,11 +33,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-[#F7F6F3]">
+    // Alma Refresh: "kobalt-light" (default), "volt-light" or "goud-light"
+    <html lang="en" data-theme="goud-light" className="bg-bg">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400..800&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400..700&display=swap"
+        />
+      </head>
       <body className="font-sans antialiased">
         <ViewModeProvider>
           <AppSidebar />
-          <main className="ml-[220px] min-h-screen bg-[#F7F6F3]">
+          <main className="ml-[64px] min-h-screen bg-bg">
             {children}
           </main>
         </ViewModeProvider>

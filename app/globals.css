@@ -3,76 +3,216 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Alma Insights Design System */
+/* Alma Refresh: tokens from the "Alma Refresh" design system.
+   Three light directions; Kobalt is the default. Switch with <html data-theme="volt-light"> or "goud-light".
+   The design system's "accent" family is called "ai" here (--ai, --ai-soft, --ai-text, --on-ai),
+   because shadcn already uses --accent for neutral hover states. */
+:root, [data-theme="kobalt-light"] {
+  --bg: #f6f8fd;
+  --surface: #ffffff;
+  --surface-2: #ebeff8;
+  --line: #dce2ef;
+  --line-strong: #7a84a3;
+  --ink: #0a1030;
+  --ink-2: #4a5274;
+  --ink-3: #6e7795;
+  --action: #1f45ff;
+  --on-action: #ffffff;
+  --action-hover: #1736d9;
+  --brand: #1f45ff;
+  --on-brand: #ffffff;
+  --brand-soft: #e4e9ff;
+  --brand-text: #1f45ff;
+  --ai: #f25c05;
+  --on-ai: #0a1030;
+  --ai-soft: #ffeadc;
+  --ai-text: #b54100;
+  --mark: #f25c05;
+  --nav-bg: #0a1030;
+  --nav-ink: #f3f5ff;
+  --nav-ink-2: #9aa4cf;
+  --nav-active-bg: rgba(255,255,255,0.10);
+  --nav-active-ink: #ffffff;
+  --nav-line: rgba(255,255,255,0.09);
+  --nav-mark: #f25c05;
+  --data-1: #1f45ff;
+  --data-2: #f25c05;
+  --data-3: #0b8fd1;
+  --data-4: #6e7795;
+  --data-5: #b87d00;
+  --data-fill: #1f45ff;
+  --data-grid: #e3e8f3;
+  --ok: #0b7a54;
+  --ok-soft: #ddf4e9;
+  --watch: #9a5800;
+  --watch-soft: #fff0d4;
+  --alert: #c8283a;
+  --alert-soft: #fde3e6;
+  --focus: #3355ff;
+  --glow: rgba(31,69,255,0.14);
+  --shadow-card: 0 1px 2px rgba(10,16,48,0.06), 0 6px 20px rgba(10,16,48,0.05);
+  --shadow-pop: 0 2px 6px rgba(10,16,48,0.08), 0 16px 40px rgba(10,16,48,0.14);
+  --shadow-glow: 0 10px 30px rgba(31,69,255,0.28);
+}
+
+[data-theme="volt-light"] {
+  --bg: #f6f7f2;
+  --surface: #ffffff;
+  --surface-2: #eceee5;
+  --line: #dfe2d6;
+  --line-strong: #7f8476;
+  --ink: #0c0e09;
+  --ink-2: #4d5246;
+  --ink-3: #727767;
+  --action: #0c0e09;
+  --on-action: #d7ff3b;
+  --action-hover: #262a20;
+  --brand: #d7ff3b;
+  --on-brand: #0c0e09;
+  --brand-soft: #f0fdc2;
+  --brand-text: #4a6800;
+  --ai: #36d6f2;
+  --on-ai: #0c0e09;
+  --ai-soft: #ddf7fc;
+  --ai-text: #006e87;
+  --mark: #0c0e09;
+  --nav-bg: #0c0e09;
+  --nav-ink: #f4f6ec;
+  --nav-ink-2: #a3a894;
+  --nav-active-bg: rgba(215,255,59,0.14);
+  --nav-active-ink: #d7ff3b;
+  --nav-line: rgba(255,255,255,0.09);
+  --nav-mark: #d7ff3b;
+  --data-1: #0c0e09;
+  --data-2: #0096b4;
+  --data-3: #6f8a00;
+  --data-4: #8a8f80;
+  --data-5: #d2541c;
+  --data-fill: #d7ff3b;
+  --data-grid: #e6e8df;
+  --ok: #0b7a54;
+  --ok-soft: #e0f4e6;
+  --watch: #9a5800;
+  --watch-soft: #fff0d4;
+  --alert: #c8283a;
+  --alert-soft: #fde3e6;
+  --focus: #006e87;
+  --glow: rgba(150,190,0,0.20);
+  --shadow-card: 0 1px 2px rgba(12,14,9,0.06), 0 6px 20px rgba(12,14,9,0.05);
+  --shadow-pop: 0 2px 6px rgba(12,14,9,0.08), 0 16px 40px rgba(12,14,9,0.14);
+  --shadow-glow: 0 10px 30px rgba(110,140,0,0.25);
+}
+
+[data-theme="goud-light"] {
+  --bg: #f6f7fa;
+  --surface: #ffffff;
+  --surface-2: #eceef3;
+  --line: #dee1e8;
+  --line-strong: #7e8697;
+  --ink: #0d1424;
+  --ink-2: #4a5266;
+  --ink-3: #707889;
+  --action: #0d1424;
+  --on-action: #ffffff;
+  --action-hover: #1f2a42;
+  --brand: #c09f5f;
+  --on-brand: #0d1424;
+  --brand-soft: #f6eedd;
+  --brand-text: #7a5c1e;
+  --ai: #9dbdff;
+  --on-ai: #0d1424;
+  --ai-soft: #e5edff;
+  --ai-text: #2a54c4;
+  --mark: #c09f5f;
+  --nav-bg: #0d1424;
+  --nav-ink: #f4f6fb;
+  --nav-ink-2: #9aa3b8;
+  --nav-active-bg: rgba(192,159,95,0.16);
+  --nav-active-ink: #e6c98a;
+  --nav-line: rgba(255,255,255,0.08);
+  --nav-mark: #c09f5f;
+  --data-1: #9c7a2e;
+  --data-2: #2a54c4;
+  --data-3: #0d1424;
+  --data-4: #828a9b;
+  --data-5: #c2553f;
+  --data-fill: #c09f5f;
+  --data-grid: #e5e8ee;
+  --ok: #0b7a54;
+  --ok-soft: #dff3e8;
+  --watch: #9a5800;
+  --watch-soft: #fff0d4;
+  --alert: #c8283a;
+  --alert-soft: #fce3e6;
+  --focus: #3f6be0;
+  --glow: rgba(192,159,95,0.20);
+  --shadow-card: 0 1px 2px rgba(13,20,36,0.06), 0 6px 20px rgba(13,20,36,0.05);
+  --shadow-pop: 0 2px 6px rgba(13,20,36,0.08), 0 16px 40px rgba(13,20,36,0.14);
+  --shadow-glow: 0 10px 30px rgba(140,110,40,0.24);
+}
+
 :root {
-  /* Brand Colors */
-  --alma-teal: #1B4D45;
-  --alma-teal-light: #9FE1CB;
-  --alma-teal-dark: #085041;
-  --alma-gold: #B8975A;
-  --alma-gold-light: #D4C5A9;
-  
-  /* Text Colors */
-  --alma-dark: #2C2C2A;
-  --alma-muted: #6B6963;
-  
-  /* Background Colors */
-  --alma-bg: #F7F6F3;
-  --alma-card: #FFFFFF;
-  --alma-border: #E8E6E0;
-  
-  /* Status Colors */
-  --alma-green: #3B6D11;
-  --alma-green-bg: #EAF3DE;
-  --alma-amber: #854F0B;
-  --alma-amber-bg: #FAEEDA;
-  --alma-red: #A32D2D;
-  --alma-red-bg: #FCEBEB;
-  
-  /* Semantic tokens */
-  --background: var(--alma-bg);
-  --foreground: var(--alma-dark);
-  --card: var(--alma-card);
-  --card-foreground: var(--alma-dark);
-  --popover: var(--alma-card);
-  --popover-foreground: var(--alma-dark);
-  --primary: var(--alma-teal);
-  --primary-foreground: #FFFFFF;
-  --secondary: var(--alma-bg);
-  --secondary-foreground: var(--alma-dark);
-  --muted: var(--alma-bg);
-  --muted-foreground: var(--alma-muted);
-  --accent: var(--alma-gold);
-  --accent-foreground: var(--alma-dark);
-  --destructive: var(--alma-red);
-  --destructive-foreground: #FFFFFF;
-  --border: var(--alma-border);
-  --input: var(--alma-border);
-  --ring: var(--alma-teal);
-  
-  /* Chart colors */
-  --chart-1: var(--alma-teal);
-  --chart-2: var(--alma-teal-light);
-  --chart-3: var(--alma-gold);
-  --chart-4: var(--alma-gold-light);
-  --chart-5: var(--alma-teal-dark);
-  
-  --radius: 10px;
-  
-  /* Sidebar */
-  --sidebar: var(--alma-teal);
-  --sidebar-foreground: rgba(255, 255, 255, 0.55);
-  --sidebar-primary: #FFFFFF;
-  --sidebar-primary-foreground: var(--alma-teal);
-  --sidebar-accent: rgba(255, 255, 255, 0.12);
-  --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: rgba(255, 255, 255, 0.2);
+  /* shadcn semantic tokens, mapped onto Alma Refresh */
+  --background: var(--bg);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--action);
+  --primary-foreground: var(--on-action);
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--ink-2);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--ink);
+  --destructive: var(--alert);
+  --destructive-foreground: #ffffff;
+  --border: var(--line);
+  --input: var(--line-strong);
+  --ring: var(--focus);
+
+  --chart-1: var(--data-1);
+  --chart-2: var(--data-2);
+  --chart-3: var(--data-3);
+  --chart-4: var(--data-4);
+  --chart-5: var(--data-5);
+
+  --radius: 8px;
+
+  --sidebar: var(--nav-bg);
+  --sidebar-foreground: var(--nav-ink-2);
+  --sidebar-primary: var(--nav-active-bg);
+  --sidebar-primary-foreground: var(--nav-active-ink);
+  --sidebar-accent: var(--nav-line);
+  --sidebar-accent-foreground: var(--nav-ink);
+  --sidebar-border: var(--nav-line);
+  --sidebar-ring: var(--focus);
+
+  /* Legacy names, kept so older code keeps working */
+  --alma-teal: var(--brand);
+  --alma-teal-light: var(--brand-soft);
+  --alma-teal-dark: var(--action-hover);
+  --alma-gold: var(--ai);
+  --alma-gold-light: var(--ai-soft);
+  --alma-dark: var(--ink);
+  --alma-muted: var(--ink-2);
+  --alma-bg: var(--bg);
+  --alma-card: var(--surface);
+  --alma-border: var(--line);
+  --alma-green: var(--ok);
+  --alma-green-bg: var(--ok-soft);
+  --alma-amber: var(--watch);
+  --alma-amber-bg: var(--watch-soft);
+  --alma-red: var(--alert);
+  --alma-red-bg: var(--alert-soft);
 }
 
 @theme inline {
-  --font-sans: -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'SF Mono', 'Monaco', monospace;
+  --font-sans: 'Funnel Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Funnel Display', 'Funnel Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -97,10 +237,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: 4px;
+  --radius-md: 6px;
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: 12px;
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -109,8 +249,51 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  
-  /* Alma brand colors */
+
+  /* Alma Refresh colours as utilities: bg-brand, text-ink-2, border-line, bg-ok-soft … */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-action: var(--action);
+  --color-on-action: var(--on-action);
+  --color-action-hover: var(--action-hover);
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-text: var(--brand-text);
+  --color-ai: var(--ai);
+  --color-on-ai: var(--on-ai);
+  --color-ai-soft: var(--ai-soft);
+  --color-ai-text: var(--ai-text);
+  --color-mark: var(--mark);
+  --color-nav-bg: var(--nav-bg);
+  --color-nav-ink: var(--nav-ink);
+  --color-nav-ink-2: var(--nav-ink-2);
+  --color-nav-active-bg: var(--nav-active-bg);
+  --color-nav-active-ink: var(--nav-active-ink);
+  --color-nav-line: var(--nav-line);
+  --color-nav-mark: var(--nav-mark);
+  --color-data-1: var(--data-1);
+  --color-data-2: var(--data-2);
+  --color-data-3: var(--data-3);
+  --color-data-4: var(--data-4);
+  --color-data-5: var(--data-5);
+  --color-data-fill: var(--data-fill);
+  --color-data-grid: var(--data-grid);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-watch: var(--watch);
+  --color-watch-soft: var(--watch-soft);
+  --color-alert: var(--alert);
+  --color-alert-soft: var(--alert-soft);
+  --color-focus: var(--focus);
+
+  /* Legacy utilities */
   --color-alma-teal: var(--alma-teal);
   --color-alma-teal-light: var(--alma-teal-light);
   --color-alma-teal-dark: var(--alma-teal-dark);
@@ -136,11 +319,31 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1, h2 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
 }
 
 /* Utility classes for tabular numbers */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
+}
+
+/* Section labels and KPI labels: mono, uppercase */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Lucide icons, sharpened: square caps and mitred joins */
+.ico-sharp {
+  stroke-linecap: square;
+  stroke-linejoin: miter;
 }
 
 /* Custom scrollbar styling */
@@ -153,10 +356,10 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--alma-border);
+  background: var(--line);
   border-radius: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--alma-muted);
+  background: var(--ink-3);
 }

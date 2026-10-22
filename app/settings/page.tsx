@@ -25,15 +25,15 @@ export default function SettingsPage() {
   return (
     <div className="flex min-h-screen flex-col font-sans">
       {/* Header */}
-      <div className="border-b border-[#E8E6E0] px-6 py-4">
-        <h1 className="text-xl font-medium text-[#2C2C2A]">Settings</h1>
-        <p className="text-[13px] text-[#6B6963]">Manage your account and preferences</p>
+      <div className="border-b border-line px-6 py-4">
+        <h1 className="text-xl font-medium text-ink">Settings</h1>
+        <p className="text-[13px] text-ink-2">Manage your account and preferences</p>
       </div>
 
       {/* Content */}
       <div className="flex flex-1">
         {/* Sidebar */}
-        <div className="w-56 border-r border-[#E8E6E0] bg-white p-4">
+        <div className="w-56 border-r border-line bg-white p-4">
           <nav className="space-y-1">
             {tabs.map((tab) => (
               <button
@@ -42,8 +42,8 @@ export default function SettingsPage() {
                 className={cn(
                   "flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] transition-colors",
                   activeTab === tab.id
-                    ? "bg-[#F7F6F3] font-medium text-[#2C2C2A]"
-                    : "text-[#6B6963] hover:bg-[#F7F6F3] hover:text-[#2C2C2A]"
+                    ? "bg-bg font-medium text-ink"
+                    : "text-ink-2 hover:bg-bg hover:text-ink"
                 )}
               >
                 <tab.icon className="h-4 w-4" />
@@ -58,17 +58,17 @@ export default function SettingsPage() {
           {activeTab === "profile" && (
             <div className="max-w-xl space-y-6">
               <div>
-                <h2 className="text-[15px] font-medium text-[#2C2C2A]">Profile Settings</h2>
-                <p className="mt-1 text-[12px] text-[#6B6963]">Update your personal information</p>
+                <h2 className="text-[15px] font-medium text-ink">Profile Settings</h2>
+                <p className="mt-1 text-[12px] text-ink-2">Update your personal information</p>
               </div>
 
-              <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-5">
+              <div className="rounded-[10px] border border-line bg-white p-5">
                 <div className="flex items-center gap-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#B8975A] text-lg font-medium text-white">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-ai text-lg font-medium text-on-ai">
                     {currentUser.initials}
                   </div>
                   <div>
-                    <Button variant="outline" size="sm" className="border-[#E8E6E0]">
+                    <Button variant="outline" size="sm" className="border-line">
                       Change Photo
                     </Button>
                   </div>
@@ -77,26 +77,26 @@ export default function SettingsPage() {
                 <div className="mt-6 grid gap-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="mb-1.5 block text-[11px] font-medium text-[#6B6963]">First Name</label>
-                      <Input defaultValue={currentUser.name.split(" ")[0]} className="border-[#E8E6E0]" />
+                      <label className="mb-1.5 block text-[11px] font-medium text-ink-2">First Name</label>
+                      <Input defaultValue={currentUser.name.split(" ")[0]} className="border-line" />
                     </div>
                     <div>
-                      <label className="mb-1.5 block text-[11px] font-medium text-[#6B6963]">Last Name</label>
-                      <Input defaultValue={currentUser.name.split(" ").slice(1).join(" ")} className="border-[#E8E6E0]" />
+                      <label className="mb-1.5 block text-[11px] font-medium text-ink-2">Last Name</label>
+                      <Input defaultValue={currentUser.name.split(" ").slice(1).join(" ")} className="border-line" />
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-[11px] font-medium text-[#6B6963]">Email</label>
-                    <Input defaultValue={currentUser.email} className="border-[#E8E6E0]" />
+                    <label className="mb-1.5 block text-[11px] font-medium text-ink-2">Email</label>
+                    <Input defaultValue={currentUser.email} className="border-line" />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-[11px] font-medium text-[#6B6963]">Role</label>
-                    <Input defaultValue={currentUser.role} disabled className="border-[#E8E6E0] bg-[#F7F6F3]" />
+                    <label className="mb-1.5 block text-[11px] font-medium text-ink-2">Role</label>
+                    <Input defaultValue={currentUser.role} disabled className="border-line bg-bg" />
                   </div>
                 </div>
 
                 <div className="mt-6 flex justify-end">
-                  <Button className="bg-[#1B4D45] text-white hover:bg-[#164039]">
+                  <Button className="bg-brand text-white hover:bg-action-hover">
                     Save Changes
                   </Button>
                 </div>
@@ -107,19 +107,19 @@ export default function SettingsPage() {
           {activeTab === "funds" && (
             <div className="max-w-xl space-y-6">
               <div>
-                <h2 className="text-[15px] font-medium text-[#2C2C2A]">Fund Configuration</h2>
-                <p className="mt-1 text-[12px] text-[#6B6963]">Manage fund settings and access</p>
+                <h2 className="text-[15px] font-medium text-ink">Fund Configuration</h2>
+                <p className="mt-1 text-[12px] text-ink-2">Manage fund settings and access</p>
               </div>
 
               <div className="space-y-3">
                 {funds.map((fund) => (
-                  <div key={fund.id} className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
+                  <div key={fund.id} className="rounded-[10px] border border-line bg-white p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-[13px] font-medium text-[#2C2C2A]">{fund.name}</h3>
-                        <p className="mt-0.5 text-[11px] text-[#6B6963]">Vintage {fund.vintageYear} · €{fund.committedCapital}M committed</p>
+                        <h3 className="text-[13px] font-medium text-ink">{fund.name}</h3>
+                        <p className="mt-0.5 text-[11px] text-ink-2">Vintage {fund.vintageYear} · €{fund.committedCapital}M committed</p>
                       </div>
-                      <Button variant="outline" size="sm" className="border-[#E8E6E0]">
+                      <Button variant="outline" size="sm" className="border-line">
                         Configure
                       </Button>
                     </div>
@@ -132,11 +132,11 @@ export default function SettingsPage() {
           {activeTab === "notifications" && (
             <div className="max-w-xl space-y-6">
               <div>
-                <h2 className="text-[15px] font-medium text-[#2C2C2A]">Notification Preferences</h2>
-                <p className="mt-1 text-[12px] text-[#6B6963]">Choose how you want to be notified</p>
+                <h2 className="text-[15px] font-medium text-ink">Notification Preferences</h2>
+                <p className="mt-1 text-[12px] text-ink-2">Choose how you want to be notified</p>
               </div>
 
-              <div className="rounded-[10px] border border-[#E8E6E0] bg-white divide-y divide-[#E8E6E0]">
+              <div className="rounded-[10px] border border-line bg-white divide-y divide-line">
                 {[
                   { label: "Data upload confirmations", description: "Get notified when data is processed" },
                   { label: "Alert status changes", description: "When a company status changes to Alert" },
@@ -146,8 +146,8 @@ export default function SettingsPage() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between px-5 py-4">
                     <div>
-                      <div className="text-[13px] font-medium text-[#2C2C2A]">{item.label}</div>
-                      <div className="text-[11px] text-[#6B6963]">{item.description}</div>
+                      <div className="text-[13px] font-medium text-ink">{item.label}</div>
+                      <div className="text-[11px] text-ink-2">{item.description}</div>
                     </div>
                     <Switch defaultChecked={i < 3} />
                   </div>
@@ -159,29 +159,29 @@ export default function SettingsPage() {
           {activeTab === "security" && (
             <div className="max-w-xl space-y-6">
               <div>
-                <h2 className="text-[15px] font-medium text-[#2C2C2A]">Security Settings</h2>
-                <p className="mt-1 text-[12px] text-[#6B6963]">Manage your account security</p>
+                <h2 className="text-[15px] font-medium text-ink">Security Settings</h2>
+                <p className="mt-1 text-[12px] text-ink-2">Manage your account security</p>
               </div>
 
-              <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-5 space-y-4">
+              <div className="rounded-[10px] border border-line bg-white p-5 space-y-4">
                 <div>
-                  <h3 className="text-[13px] font-medium text-[#2C2C2A]">Change Password</h3>
+                  <h3 className="text-[13px] font-medium text-ink">Change Password</h3>
                   <div className="mt-3 grid gap-3">
-                    <Input type="password" placeholder="Current password" className="border-[#E8E6E0]" />
-                    <Input type="password" placeholder="New password" className="border-[#E8E6E0]" />
-                    <Input type="password" placeholder="Confirm new password" className="border-[#E8E6E0]" />
+                    <Input type="password" placeholder="Current password" className="border-line" />
+                    <Input type="password" placeholder="New password" className="border-line" />
+                    <Input type="password" placeholder="Confirm new password" className="border-line" />
                   </div>
-                  <Button className="mt-4 bg-[#1B4D45] text-white hover:bg-[#164039]">
+                  <Button className="mt-4 bg-brand text-white hover:bg-action-hover">
                     Update Password
                   </Button>
                 </div>
               </div>
 
-              <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-5">
+              <div className="rounded-[10px] border border-line bg-white p-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-[13px] font-medium text-[#2C2C2A]">Two-Factor Authentication</h3>
-                    <p className="mt-0.5 text-[11px] text-[#6B6963]">Add an extra layer of security</p>
+                    <h3 className="text-[13px] font-medium text-ink">Two-Factor Authentication</h3>
+                    <p className="mt-0.5 text-[11px] text-ink-2">Add an extra layer of security</p>
                   </div>
                   <Switch />
                 </div>
@@ -192,12 +192,12 @@ export default function SettingsPage() {
           {activeTab === "appearance" && (
             <div className="max-w-xl space-y-6">
               <div>
-                <h2 className="text-[15px] font-medium text-[#2C2C2A]">Appearance</h2>
-                <p className="mt-1 text-[12px] text-[#6B6963]">Customize the look and feel</p>
+                <h2 className="text-[15px] font-medium text-ink">Appearance</h2>
+                <p className="mt-1 text-[12px] text-ink-2">Customize the look and feel</p>
               </div>
 
-              <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-5">
-                <h3 className="text-[13px] font-medium text-[#2C2C2A]">Theme</h3>
+              <div className="rounded-[10px] border border-line bg-white p-5">
+                <h3 className="text-[13px] font-medium text-ink">Theme</h3>
                 <div className="mt-3 flex gap-3">
                   {["Light", "Dark", "System"].map((theme) => (
                     <button
@@ -205,8 +205,8 @@ export default function SettingsPage() {
                       className={cn(
                         "rounded-lg border px-4 py-2 text-[12px] font-medium transition-colors",
                         theme === "Light"
-                          ? "border-[#1B4D45] bg-[#E1F5EE] text-[#1B4D45]"
-                          : "border-[#E8E6E0] text-[#6B6963] hover:border-[#D4C5A9]"
+                          ? "border-brand bg-brand-soft text-brand"
+                          : "border-line text-ink-2 hover:border-ai-soft"
                       )}
                     >
                       {theme}
@@ -220,8 +220,8 @@ export default function SettingsPage() {
           {activeTab === "integrations" && (
             <div className="max-w-xl space-y-6">
               <div>
-                <h2 className="text-[15px] font-medium text-[#2C2C2A]">Integrations</h2>
-                <p className="mt-1 text-[12px] text-[#6B6963]">Connect external services</p>
+                <h2 className="text-[15px] font-medium text-ink">Integrations</h2>
+                <p className="mt-1 text-[12px] text-ink-2">Connect external services</p>
               </div>
 
               <div className="space-y-3">
@@ -230,19 +230,19 @@ export default function SettingsPage() {
                   { name: "Google Drive", status: "Not connected", description: "Sync files from Google Drive" },
                   { name: "Slack", status: "Not connected", description: "Send notifications to Slack" },
                 ].map((integration, i) => (
-                  <div key={i} className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
+                  <div key={i} className="rounded-[10px] border border-line bg-white p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-[13px] font-medium text-[#2C2C2A]">{integration.name}</h3>
-                        <p className="mt-0.5 text-[11px] text-[#6B6963]">{integration.description}</p>
+                        <h3 className="text-[13px] font-medium text-ink">{integration.name}</h3>
+                        <p className="mt-0.5 text-[11px] text-ink-2">{integration.description}</p>
                       </div>
                       <Button
                         variant={integration.status === "Connected" ? "outline" : "default"}
                         size="sm"
                         className={cn(
                           integration.status === "Connected"
-                            ? "border-[#E8E6E0]"
-                            : "bg-[#1B4D45] text-white hover:bg-[#164039]"
+                            ? "border-line"
+                            : "bg-brand text-white hover:bg-action-hover"
                         )}
                       >
                         {integration.status === "Connected" ? "Disconnect" : "Connect"}

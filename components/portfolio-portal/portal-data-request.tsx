@@ -88,20 +88,20 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
 
   if (sent) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7F6F3] px-6 font-sans">
-        <div className="w-full max-w-md rounded-[14px] border border-[#E8E6E0] bg-white p-8 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF3DE]">
-            <CheckCircle2 className="h-7 w-7 text-[#3B6D11]" />
+      <div className="flex min-h-screen items-center justify-center bg-bg px-6 font-sans">
+        <div className="w-full max-w-md rounded-[14px] border border-line bg-white p-8 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-ok-soft">
+            <CheckCircle2 className="h-7 w-7 text-ok" />
           </div>
-          <h2 className="mt-5 text-[18px] font-semibold text-[#2C2C2A]">Data request sent</h2>
-          <p className="mt-2 text-[13px] leading-relaxed text-[#6B6963]">
+          <h2 className="mt-5 text-[18px] font-semibold text-ink">Data request sent</h2>
+          <p className="mt-2 text-[13px] leading-relaxed text-ink-2">
             &ldquo;{title}&rdquo; has been sent to {recipients.length}{" "}
             {recipients.length === 1 ? "company" : "companies"}. They&apos;ll see it as an outstanding
             reporting in their Portfolio Portal.
           </p>
           <button
             onClick={onBack}
-            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#1B4D45] px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-[#164039]"
+            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-action-hover"
           >
             Back to administration
           </button>
@@ -111,26 +111,26 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F6F3] font-sans">
-      <header className="border-b border-[#E8E6E0] bg-white px-8 py-5">
+    <div className="min-h-screen bg-bg font-sans">
+      <header className="border-b border-line bg-white px-8 py-5">
         <button
           onClick={onBack}
-          className="mb-3 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#6B6963] transition-colors hover:text-[#1B4D45]"
+          className="mb-3 inline-flex items-center gap-1.5 text-[12px] font-medium text-ink-2 transition-colors hover:text-brand"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Back to administration
         </button>
-        <h1 className="text-[18px] font-semibold text-[#2C2C2A]">Create data request</h1>
-        <p className="text-[13px] text-[#6B6963]">Ask portfolio companies for an ad-hoc or recurring data submission</p>
+        <h1 className="text-[18px] font-semibold text-ink">Create data request</h1>
+        <p className="text-[13px] text-ink-2">Ask portfolio companies for an ad-hoc or recurring data submission</p>
       </header>
 
       <main className="mx-auto grid max-w-5xl grid-cols-1 gap-6 px-8 py-6 lg:grid-cols-3">
         {/* Form */}
         <div className="lg:col-span-2">
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-6">
+          <div className="rounded-[10px] border border-line bg-white p-6">
             {/* Standard reports */}
-            <span className="text-[13px] font-medium text-[#2C2C2A]">Standard reports</span>
-            <p className="text-[12px] text-[#6B6963]">Pick a pre-configured report or build a custom one.</p>
+            <span className="text-[13px] font-medium text-ink">Standard reports</span>
+            <p className="text-[12px] text-ink-2">Pick a pre-configured report or build a custom one.</p>
             <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
               {standardReports.map((report) => {
                 const Icon = report.icon
@@ -142,26 +142,26 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
                     className={cn(
                       "flex items-start gap-3 rounded-lg border p-3 text-left transition-colors",
                       active
-                        ? "border-[#1B4D45]/40 bg-[#EAF1EF]"
-                        : "border-[#E8E6E0] bg-white hover:bg-[#F7F6F3]",
+                        ? "border-brand/40 bg-brand-soft"
+                        : "border-line bg-white hover:bg-bg",
                     )}
                   >
                     <div
                       className={cn(
                         "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
-                        active ? "bg-[#1B4D45] text-white" : "bg-[#F2F1ED] text-[#1B4D45]",
+                        active ? "bg-brand text-white" : "bg-surface-2 text-brand",
                       )}
                     >
                       <Icon className="h-4 w-4" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[13px] font-medium text-[#2C2C2A]">{report.title}</span>
-                        <span className="rounded bg-[#F2F1ED] px-1.5 py-0.5 text-[10px] font-medium text-[#6B6963]">
+                        <span className="text-[13px] font-medium text-ink">{report.title}</span>
+                        <span className="rounded bg-surface-2 px-1.5 py-0.5 text-[10px] font-medium text-ink-2">
                           {report.defaultCadence}
                         </span>
                       </div>
-                      <p className="mt-0.5 text-[11px] leading-snug text-[#6B6963]">{report.description}</p>
+                      <p className="mt-0.5 text-[11px] leading-snug text-ink-2">{report.description}</p>
                     </div>
                   </button>
                 )
@@ -171,26 +171,26 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
                 className={cn(
                   "flex items-center gap-3 rounded-lg border p-3 text-left transition-colors",
                   selectedReport === "custom"
-                    ? "border-[#1B4D45]/40 bg-[#EAF1EF]"
-                    : "border-dashed border-[#D8D6CE] bg-white hover:bg-[#F7F6F3]",
+                    ? "border-brand/40 bg-brand-soft"
+                    : "border-dashed border-line-strong bg-white hover:bg-bg",
                 )}
               >
                 <div
                   className={cn(
                     "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
-                    selectedReport === "custom" ? "bg-[#1B4D45] text-white" : "bg-[#F2F1ED] text-[#1B4D45]",
+                    selectedReport === "custom" ? "bg-brand text-white" : "bg-surface-2 text-brand",
                   )}
                 >
                   <Plus className="h-4 w-4" />
                 </div>
-                <span className="text-[13px] font-medium text-[#2C2C2A]">Custom request</span>
+                <span className="text-[13px] font-medium text-ink">Custom request</span>
               </button>
             </div>
 
-            <div className="my-5 h-px bg-[#E8E6E0]" />
+            <div className="my-5 h-px bg-line" />
 
             <label className="block">
-              <span className="text-[13px] font-medium text-[#2C2C2A]">Request title</span>
+              <span className="text-[13px] font-medium text-ink">Request title</span>
               <input
                 value={title}
                 onChange={(e) => {
@@ -198,21 +198,21 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
                   setSelectedReport("custom")
                 }}
                 placeholder="e.g. Q2 working capital bridge"
-                className="mt-1.5 w-full rounded-lg border border-[#E8E6E0] bg-white px-3 py-2 text-[13px] text-[#2C2C2A] outline-none transition-colors focus:border-[#1B4D45]"
+                className="mt-1.5 w-full rounded-lg border border-line bg-white px-3 py-2 text-[13px] text-ink outline-none transition-colors focus:border-brand"
               />
             </label>
 
             {/* Frequency */}
             <div className="mt-4">
-              <span className="text-[13px] font-medium text-[#2C2C2A]">Frequency</span>
-              <div className="mt-1.5 inline-flex rounded-lg border border-[#E8E6E0] bg-[#F7F6F3] p-1">
+              <span className="text-[13px] font-medium text-ink">Frequency</span>
+              <div className="mt-1.5 inline-flex rounded-lg border border-line bg-bg p-1">
                 {cadences.map((c) => (
                   <button
                     key={c}
                     onClick={() => setCadence(c)}
                     className={cn(
                       "rounded-md px-3 py-1.5 text-[12px] font-medium transition-colors",
-                      cadence === c ? "bg-white text-[#1B4D45] shadow-sm" : "text-[#6B6963] hover:text-[#2C2C2A]",
+                      cadence === c ? "bg-white text-brand shadow-sm" : "text-ink-2 hover:text-ink",
                     )}
                   >
                     {c}
@@ -222,11 +222,11 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
             </div>
 
             <label className="mt-4 block">
-              <span className="text-[13px] font-medium text-[#2C2C2A]">Expected format</span>
+              <span className="text-[13px] font-medium text-ink">Expected format</span>
               <select
                 value={format}
                 onChange={(e) => setFormat(e.target.value as (typeof formats)[number])}
-                className="mt-1.5 w-full rounded-lg border border-[#E8E6E0] bg-white px-3 py-2 text-[13px] text-[#2C2C2A] outline-none focus:border-[#1B4D45]"
+                className="mt-1.5 w-full rounded-lg border border-line bg-white px-3 py-2 text-[13px] text-ink outline-none focus:border-brand"
               >
                 {formats.map((f) => (
                   <option key={f}>{f}</option>
@@ -235,30 +235,30 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
             </label>
 
             <label className="mt-4 block">
-              <span className="text-[13px] font-medium text-[#2C2C2A]">
+              <span className="text-[13px] font-medium text-ink">
                 {cadence === "One-off" ? "Deadline" : "First deadline"}
               </span>
               <input
                 type="date"
                 value={deadline}
                 onChange={(e) => setDeadline(e.target.value)}
-                className="mt-1.5 w-full rounded-lg border border-[#E8E6E0] bg-white px-3 py-2 text-[13px] text-[#2C2C2A] outline-none transition-colors focus:border-[#1B4D45]"
+                className="mt-1.5 w-full rounded-lg border border-line bg-white px-3 py-2 text-[13px] text-ink outline-none transition-colors focus:border-brand"
               />
               {cadence !== "One-off" && (
-                <span className="mt-1 block text-[11px] text-[#9A988F]">
+                <span className="mt-1 block text-[11px] text-ink-3">
                   Recurs {cadence.toLowerCase()} — a new submission is requested each period from this date.
                 </span>
               )}
             </label>
 
             <label className="mt-4 block">
-              <span className="text-[13px] font-medium text-[#2C2C2A]">Instructions</span>
+              <span className="text-[13px] font-medium text-ink">Instructions</span>
               <textarea
                 value={instructions}
                 onChange={(e) => setInstructions(e.target.value)}
                 rows={4}
                 placeholder="Describe exactly what you need and any definitions the CFO should follow…"
-                className="mt-1.5 w-full resize-none rounded-lg border border-[#E8E6E0] bg-white px-3 py-2 text-[13px] leading-relaxed text-[#2C2C2A] outline-none transition-colors focus:border-[#1B4D45]"
+                className="mt-1.5 w-full resize-none rounded-lg border border-line bg-white px-3 py-2 text-[13px] leading-relaxed text-ink outline-none transition-colors focus:border-brand"
               />
             </label>
           </div>
@@ -266,12 +266,12 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
 
         {/* Recipients */}
         <div>
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-5">
+          <div className="rounded-[10px] border border-line bg-white p-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-[13px] font-semibold text-[#2C2C2A]">Recipients</h2>
+              <h2 className="text-[13px] font-semibold text-ink">Recipients</h2>
               <button
                 onClick={() => setRecipients(allSelected ? [] : [...companies])}
-                className="text-[12px] font-medium text-[#1B4D45] hover:underline"
+                className="text-[12px] font-medium text-brand hover:underline"
               >
                 {allSelected ? "Clear all" : "Select all"}
               </button>
@@ -286,15 +286,15 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
                     className={cn(
                       "flex items-center justify-between rounded-lg border px-3 py-2 text-left text-[13px] transition-colors",
                       checked
-                        ? "border-[#1B4D45]/30 bg-[#EAF1EF] text-[#1B4D45]"
-                        : "border-[#E8E6E0] bg-white text-[#6B6963] hover:bg-[#F7F6F3]",
+                        ? "border-brand/30 bg-brand-soft text-brand"
+                        : "border-line bg-white text-ink-2 hover:bg-bg",
                     )}
                   >
                     <span className="font-medium">{company}</span>
                     <span
                       className={cn(
                         "flex h-5 w-5 items-center justify-center rounded-full border",
-                        checked ? "border-[#1B4D45] bg-[#1B4D45] text-white" : "border-[#D8D6CE] text-transparent",
+                        checked ? "border-brand bg-brand text-white" : "border-line-strong text-transparent",
                       )}
                     >
                       {checked ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Plus className="h-3 w-3" />}
@@ -311,8 +311,8 @@ export function PortalDataRequest({ onBack }: { onBack: () => void }) {
             className={cn(
               "mt-4 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-medium transition-colors",
               canSend
-                ? "bg-[#1B4D45] text-white hover:bg-[#164039]"
-                : "cursor-not-allowed bg-[#E8E6E0] text-[#9A988F]",
+                ? "bg-brand text-white hover:bg-action-hover"
+                : "cursor-not-allowed bg-line text-ink-3",
             )}
           >
             <Send className="h-4 w-4" />

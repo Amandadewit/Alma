@@ -5,7 +5,7 @@
 import type { Company } from "./mock-data"
 
 export const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-export const LAST_ACTUAL = 6
+export const LAST_ACTUAL = 7
 
 const ANCHOR_REVENUE_LTM = 41.7
 const ANCHOR_MARGIN_LE = 0.19
@@ -69,6 +69,9 @@ function buildMonth(marginArr: number[], i: number, own: number[], oth: number[]
   const norm = tx + rs + on
   const cap = (0.04 + (i % 2) * 0.01) * revScale
   const ne = e + norm, ce = ne + cap
+  // net working capital (month-end balance)
+  const recv = r * 1.35, orec = r * (0.28 + 0.01 * (i % 3)), pay = -r * 0.8, dfr = -r * (0.55 + 0.01 * (i % 4))
+  const nwc = recv + orec + pay + dfr
   const ocf = ce * 0.88 - 0.015 * (i % 3) * revScale
   const icf = -(0.05 + (i % 4) * 0.012) * revScale
   return {
@@ -82,6 +85,7 @@ function buildMonth(marginArr: number[], i: number, own: number[], oth: number[]
     Normalization: norm, "N. EBITDA": ne,
     "Capitalized dev. cost": cap, "Cash EBITDA": ce,
     Total: r,
+    "Trade receivables": recv, "Other receivables": orec, "Trade payables": pay, "Deferred revenue & accruals": dfr, NWC: nwc,
   }
 }
 

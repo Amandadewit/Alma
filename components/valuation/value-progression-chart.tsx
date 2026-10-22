@@ -9,9 +9,9 @@ export interface ProgressionPeriod {
 }
 
 // App valuation palette (matches the sibling Portfolio Valuation chart).
-const COLOR_INVESTED = "#C4B5D8" // lavender
-const COLOR_REALISED = "#4B3D8F" // deep purple
-const COLOR_FAIR = "#B8E8C8" // mint
+const COLOR_INVESTED = "var(--ai-soft)" // lavender
+const COLOR_REALISED = "var(--ai-text)" // deep purple
+const COLOR_FAIR = "var(--ok-soft)" // mint
 
 // SVG layout constants (uniform coordinate space, scaled responsively via viewBox).
 const PW = 150 // period width
@@ -29,8 +29,8 @@ export function ValueProgressionChart({ periods }: { periods: ProgressionPeriod[
   const h = (value: number) => value * scale
 
   return (
-    <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
-      <h3 className="text-[13px] font-semibold text-[#2C2C2A]">Value progression of portfolio companies</h3>
+    <div className="rounded-[10px] border border-line bg-white p-4">
+      <h3 className="text-[13px] font-semibold text-ink">Value progression of portfolio companies</h3>
 
       {/* Legend */}
       <div className="mt-2 flex flex-wrap items-center gap-4">
@@ -48,7 +48,7 @@ export function ValueProgressionChart({ periods }: { periods: ProgressionPeriod[
         aria-label="Bar chart comparing invested capital against realised proceeds plus fair market value for each quarter, with the money multiple above each period."
       >
         {/* Baseline */}
-        <line x1={0} y1={BASELINE} x2={width} y2={BASELINE} stroke="#D8D6CE" strokeWidth={1} />
+        <line x1={0} y1={BASELINE} x2={width} y2={BASELINE} stroke="var(--line-strong)" strokeWidth={1} />
 
         {periods.map((p, i) => {
           const ox = i * PW
@@ -75,7 +75,7 @@ export function ValueProgressionChart({ periods }: { periods: ProgressionPeriod[
             <g key={`${p.quarter}-${p.year}`}>
               {/* Invested bar */}
               <rect x={investedX} y={topInvested} width={BAR_W} height={investedH} fill={COLOR_INVESTED} />
-              <text x={investedCenter} y={topInvested - 6} textAnchor="middle" fontSize={11} fill="#6B6963" fontWeight={600}>
+              <text x={investedCenter} y={topInvested - 6} textAnchor="middle" fontSize={11} fill="var(--ink-2)" fontWeight={600}>
                 {Math.round(p.invested)}
               </text>
 
@@ -85,16 +85,16 @@ export function ValueProgressionChart({ periods }: { periods: ProgressionPeriod[
               )}
               <rect x={stackedX} y={topStacked} width={BAR_W} height={fairH} fill={COLOR_FAIR} />
               {realisedH > 16 && (
-                <text x={stackedCenter} y={BASELINE - realisedH / 2 + 4} textAnchor="middle" fontSize={11} fill="#FFFFFF" fontWeight={600}>
+                <text x={stackedCenter} y={BASELINE - realisedH / 2 + 4} textAnchor="middle" fontSize={11} fill="var(--surface)" fontWeight={600}>
                   {Math.round(p.realised)}
                 </text>
               )}
               {fairH > 14 && (
-                <text x={stackedCenter} y={topStacked + fairH / 2 + 4} textAnchor="middle" fontSize={11} fill="#2C2C2A" fontWeight={600}>
+                <text x={stackedCenter} y={topStacked + fairH / 2 + 4} textAnchor="middle" fontSize={11} fill="var(--ink)" fontWeight={600}>
                   {Math.round(p.fair)}
                 </text>
               )}
-              <text x={stackedCenter} y={topStacked - 6} textAnchor="middle" fontSize={11} fill="#2C2C2A" fontWeight={600}>
+              <text x={stackedCenter} y={topStacked - 6} textAnchor="middle" fontSize={11} fill="var(--ink)" fontWeight={600}>
                 {Math.round(total)}
               </text>
 
@@ -102,21 +102,21 @@ export function ValueProgressionChart({ periods }: { periods: ProgressionPeriod[
               <path
                 d={`M ${investedCenter} ${topInvested - 12} V ${bracketY} H ${stackedCenter} V ${arrowEndY}`}
                 fill="none"
-                stroke="#B8975A"
+                stroke="var(--ai)"
                 strokeWidth={1.2}
               />
-              <path d={`M ${stackedCenter} ${arrowEndY + 1} l -3.5 -6 l 7 0 z`} fill="#B8975A" />
+              <path d={`M ${stackedCenter} ${arrowEndY + 1} l -3.5 -6 l 7 0 z`} fill="var(--ai)" />
               {/* MOI pill */}
-              <rect x={midX - 22} y={bracketY - 9} width={44} height={18} rx={9} fill="#FFFFFF" stroke="#B8975A" strokeWidth={1} />
-              <text x={midX} y={bracketY + 4} textAnchor="middle" fontSize={10} fill="#B8975A" fontWeight={600}>
+              <rect x={midX - 22} y={bracketY - 9} width={44} height={18} rx={9} fill="var(--surface)" stroke="var(--ai)" strokeWidth={1} />
+              <text x={midX} y={bracketY + 4} textAnchor="middle" fontSize={10} fill="var(--ai)" fontWeight={600}>
                 {moi.toFixed(2)}x
               </text>
 
               {/* Axis labels */}
-              <text x={investedCenter} y={BASELINE + 17} textAnchor="middle" fontSize={10} fill="#6B6963">
+              <text x={investedCenter} y={BASELINE + 17} textAnchor="middle" fontSize={10} fill="var(--ink-2)">
                 {p.quarter}
               </text>
-              <text x={stackedCenter} y={BASELINE + 17} textAnchor="middle" fontSize={10} fill="#2C2C2A" fontWeight={600}>
+              <text x={stackedCenter} y={BASELINE + 17} textAnchor="middle" fontSize={10} fill="var(--ink)" fontWeight={600}>
                 {p.year}
               </text>
             </g>
@@ -131,7 +131,7 @@ function LegendItem({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex items-center gap-2">
       <span className="h-3 w-3 rounded-[2px]" style={{ backgroundColor: color }} />
-      <span className="text-[12px] text-[#2C2C2A]">{label}</span>
+      <span className="text-[12px] text-ink">{label}</span>
     </div>
   )
 }

@@ -153,29 +153,29 @@ export function PeriodsTable() {
     setPeriods((prev) => prev.map((x) => (x.id === p.id ? { ...x, valuationFinal: !x.valuationFinal } : x)))
 
   return (
-    <Card className="border-[#E5E4E0]">
+    <Card className="border-line">
       <CardHeader className="pb-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <CardTitle className="flex items-center gap-2 text-base font-medium text-[#2C2C2A]">
-              <CalendarDays className="h-4 w-4 text-[#1B4D45]" />
+            <CardTitle className="flex items-center gap-2 text-base font-medium text-ink">
+              <CalendarDays className="h-4 w-4 text-brand" />
               Reporting periods
             </CardTitle>
-            <p className="mt-1 text-[13px] text-[#6B6963]">
+            <p className="mt-1 text-[13px] text-ink-2">
               Closing a period locks all reported figures. The valuation stays adjustable until you mark it final.
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-[12px] text-[#6B6963]">
-              <span className="font-medium text-[#2C2C2A]">{totalClosed}</span> of {periods.length} closed
+            <span className="text-[12px] text-ink-2">
+              <span className="font-medium text-ink">{totalClosed}</span> of {periods.length} closed
             </span>
-            <div className="inline-flex rounded-lg border border-[#E5E4E0] bg-[#F5F5F3] p-0.5">
+            <div className="inline-flex rounded-lg border border-line bg-bg p-0.5">
               {(["month", "quarter"] as const).map((t) => (
                 <button
                   key={t}
                   onClick={() => setType(t)}
                   className={`rounded-md px-3 py-1 text-[12px] font-medium transition-colors ${
-                    type === t ? "bg-white text-[#2C2C2A] shadow-sm" : "text-[#6B6963] hover:text-[#2C2C2A]"
+                    type === t ? "bg-white text-ink shadow-sm" : "text-ink-2 hover:text-ink"
                   }`}
                 >
                   {t === "month" ? "Months" : "Quarters"}
@@ -190,7 +190,7 @@ export function PeriodsTable() {
           <button
             onClick={() => gotoYear(-1)}
             disabled={yearIdx === 0}
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[#E5E4E0] text-[#6B6963] transition-colors hover:bg-[#F5F5F3] disabled:opacity-40 disabled:hover:bg-transparent"
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-line text-ink-2 transition-colors hover:bg-bg disabled:opacity-40 disabled:hover:bg-transparent"
             aria-label="Previous year"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -201,18 +201,18 @@ export function PeriodsTable() {
               const active = year === selectedYear
               const dot =
                 s.state === "complete"
-                  ? "bg-[#1B4D45]"
+                  ? "bg-brand"
                   : s.state === "in-progress"
-                    ? "bg-[#B8975A]"
-                    : "bg-[#C9C7C0]"
+                    ? "bg-ai"
+                    : "bg-line-strong"
               return (
                 <button
                   key={year}
                   onClick={() => setSelectedYear(year)}
                   className={`flex shrink-0 items-center gap-1.5 rounded-md border px-2.5 py-1 text-[12px] font-medium transition-colors ${
                     active
-                      ? "border-[#1B4D45] bg-[#1B4D45] text-white"
-                      : "border-[#E5E4E0] bg-white text-[#2C2C2A] hover:bg-[#F5F5F3]"
+                      ? "border-brand bg-brand text-white"
+                      : "border-line bg-white text-ink hover:bg-bg"
                   }`}
                   title={`${s.closed} of ${s.total} closed`}
                 >
@@ -220,7 +220,7 @@ export function PeriodsTable() {
                   {year}
                   {s.hasCurrent && (
                     <span
-                      className={`h-1 w-1 rounded-full ${active ? "bg-[#B8975A]" : "bg-[#B8975A]"}`}
+                      className={`h-1 w-1 rounded-full ${active ? "bg-ai" : "bg-ai"}`}
                       aria-hidden
                     />
                   )}
@@ -231,22 +231,22 @@ export function PeriodsTable() {
           <button
             onClick={() => gotoYear(1)}
             disabled={yearIdx === YEARS.length - 1}
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[#E5E4E0] text-[#6B6963] transition-colors hover:bg-[#F5F5F3] disabled:opacity-40 disabled:hover:bg-transparent"
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-line text-ink-2 transition-colors hover:bg-bg disabled:opacity-40 disabled:hover:bg-transparent"
             aria-label="Next year"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
         </div>
         {/* Legend */}
-        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-[#6B6963]">
+        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-ink-2">
           <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#1B4D45]" /> All closed
+            <span className="h-1.5 w-1.5 rounded-full bg-brand" /> All closed
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#B8975A]" /> In progress
+            <span className="h-1.5 w-1.5 rounded-full bg-ai" /> In progress
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#C9C7C0]" /> Not started
+            <span className="h-1.5 w-1.5 rounded-full bg-line-strong" /> Not started
           </span>
         </div>
       </CardHeader>
@@ -254,12 +254,12 @@ export function PeriodsTable() {
       <CardContent className="p-0">
         <Table>
           <TableHeader>
-            <TableRow className="border-y border-[#E5E4E0] bg-[#F5F5F3]">
-              <TableHead className="text-[11px] font-medium text-[#6B6963]">Period</TableHead>
-              <TableHead className="text-[11px] font-medium text-[#6B6963]">Date range</TableHead>
-              <TableHead className="text-[11px] font-medium text-[#6B6963]">Status</TableHead>
-              <TableHead className="text-[11px] font-medium text-[#6B6963]">Valuation</TableHead>
-              <TableHead className="text-right text-[11px] font-medium text-[#6B6963]">Action</TableHead>
+            <TableRow className="border-y border-line bg-bg">
+              <TableHead className="text-[11px] font-medium text-ink-2">Period</TableHead>
+              <TableHead className="text-[11px] font-medium text-ink-2">Date range</TableHead>
+              <TableHead className="text-[11px] font-medium text-ink-2">Status</TableHead>
+              <TableHead className="text-[11px] font-medium text-ink-2">Valuation</TableHead>
+              <TableHead className="text-right text-[11px] font-medium text-ink-2">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -270,27 +270,27 @@ export function PeriodsTable() {
                   <TableRow className="border-0 hover:bg-transparent">
                     <TableCell colSpan={5} className="py-0">
                       <div className="flex items-center gap-2 py-1.5">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#1B4D45]" />
-                        <span className="text-[10px] font-semibold uppercase tracking-wide text-[#1B4D45]">
+                        <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+                        <span className="text-[10px] font-semibold uppercase tracking-wide text-brand">
                           Today · {TODAY_LABEL}
                         </span>
-                        <span className="h-px flex-1 bg-[#1B4D45]/20" />
+                        <span className="h-px flex-1 bg-brand/20" />
                       </div>
                     </TableCell>
                   </TableRow>
                 )}
                 <TableRow
-                  className={`border-b border-[#E5E4E0] ${
-                    p.temporal === "current" ? "bg-[#1B4D45]/[0.04]" : "hover:bg-[#FAFAF8]"
+                  className={`border-b border-line ${
+                    p.temporal === "current" ? "bg-brand/[0.04]" : "hover:bg-surface-2"
                   }`}
                 >
                   {/* Period */}
-                  <TableCell className="text-sm font-medium text-[#2C2C2A]">
+                  <TableCell className="text-sm font-medium text-ink">
                     <span className="flex items-center gap-2">
-                      {p.temporal === "current" && <span className="h-4 w-0.5 rounded bg-[#1B4D45]" />}
+                      {p.temporal === "current" && <span className="h-4 w-0.5 rounded bg-brand" />}
                       {p.label}
                       {p.temporal === "current" && (
-                        <span className="rounded-full bg-[#B8975A]/15 px-2 py-0.5 text-[10px] font-medium text-[#8A6D2F]">
+                        <span className="rounded-full bg-ai/15 px-2 py-0.5 text-[10px] font-medium text-ai-text">
                           Current
                         </span>
                       )}
@@ -298,13 +298,13 @@ export function PeriodsTable() {
                   </TableCell>
 
                   {/* Date range */}
-                  <TableCell className="whitespace-nowrap text-sm text-[#6B6963]">{p.range}</TableCell>
+                  <TableCell className="whitespace-nowrap text-sm text-ink-2">{p.range}</TableCell>
 
                   {/* Status */}
                   <TableCell>
                     {p.closed ? (
                       <span
-                        className="inline-flex h-6 items-center gap-1 rounded-full bg-[#1B4D45]/10 px-2 text-[11px] font-medium text-[#1B4D45]"
+                        className="inline-flex h-6 items-center gap-1 rounded-full bg-brand/10 px-2 text-[11px] font-medium text-brand"
                         title={`Closed${p.closedBy ? ` by ${p.closedBy}` : ""}${p.closedOn ? ` on ${p.closedOn}` : ""}`}
                       >
                         <Lock className="h-3 w-3" />
@@ -321,14 +321,14 @@ export function PeriodsTable() {
                   {/* Valuation */}
                   <TableCell>
                     {!p.closed ? (
-                      <span className="text-[12px] text-[#B0AEA6]" title="Valuation edits happen while the period is open">
+                      <span className="text-[12px] text-ink-3" title="Valuation edits happen while the period is open">
                         —
                       </span>
                     ) : p.valuationFinal ? (
                       <button
                         onClick={() => toggleValuation(p)}
                         title="Valuation is final · click to reopen for adjustments"
-                        className="inline-flex h-6 items-center gap-1 rounded-full bg-[#1B4D45]/10 px-2 text-[11px] font-medium text-[#1B4D45] transition-colors hover:bg-[#1B4D45]/20"
+                        className="inline-flex h-6 items-center gap-1 rounded-full bg-brand/10 px-2 text-[11px] font-medium text-brand transition-colors hover:bg-brand/20"
                       >
                         <Check className="h-3 w-3" />
                         Final
@@ -337,7 +337,7 @@ export function PeriodsTable() {
                       <button
                         onClick={() => toggleValuation(p)}
                         title="Valuation still adjustable · click to mark final"
-                        className="inline-flex h-6 items-center gap-1 rounded-full border border-[#B8975A]/40 bg-[#B8975A]/10 px-2 text-[11px] font-medium text-[#8A6D2F] transition-colors hover:bg-[#B8975A]/20"
+                        className="inline-flex h-6 items-center gap-1 rounded-full border border-ai/40 bg-ai/10 px-2 text-[11px] font-medium text-ai-text transition-colors hover:bg-ai/20"
                       >
                         <Pencil className="h-3 w-3" />
                         Adjustable
@@ -350,14 +350,14 @@ export function PeriodsTable() {
                     {p.closed ? (
                       <button
                         onClick={() => reopenPeriod(p)}
-                        className="text-[12px] font-medium text-[#6B6963] underline-offset-2 transition-colors hover:text-[#2C2C2A] hover:underline"
+                        className="text-[12px] font-medium text-ink-2 underline-offset-2 transition-colors hover:text-ink hover:underline"
                       >
                         Reopen period
                       </button>
                     ) : (
                       <button
                         onClick={() => setPending(p)}
-                        className="inline-flex h-7 items-center gap-1.5 rounded-md bg-[#1B4D45] px-3 text-[12px] font-medium text-white transition-colors hover:bg-[#163d38]"
+                        className="inline-flex h-7 items-center gap-1.5 rounded-md bg-brand px-3 text-[12px] font-medium text-white transition-colors hover:bg-action-hover"
                       >
                         <Lock className="h-3 w-3" />
                         Close period
@@ -382,7 +382,7 @@ export function PeriodsTable() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmClose} className="bg-[#1B4D45] hover:bg-[#163d38]">
+            <AlertDialogAction onClick={confirmClose} className="bg-brand hover:bg-action-hover">
               Close period
             </AlertDialogAction>
           </AlertDialogFooter>

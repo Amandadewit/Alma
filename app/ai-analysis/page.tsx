@@ -111,9 +111,9 @@ export default function AIAnalysisPage() {
   ]
 
   const statusColor: Record<string, string> = {
-    "on-track": "bg-[#3B6D11]",
-    watch: "bg-[#EF9F27]",
-    alert: "bg-[#A32D2D]",
+    "on-track": "bg-ok",
+    watch: "bg-watch",
+    alert: "bg-alert",
   }
 
   const suggestionGroups: SuggestionGroup[] = [
@@ -186,20 +186,20 @@ export default function AIAnalysisPage() {
         {/* Header */}
         <div className="flex items-start justify-between px-8 pt-6 pb-4">
           <div>
-            <h1 className="text-2xl font-medium text-[#2C2C2A]">Alma Intelligence</h1>
-            <p className="mt-1 text-[13px] text-[#6B6963]">
+            <h1 className="text-2xl font-medium text-ink">Alma Intelligence</h1>
+            <p className="mt-1 text-[13px] text-ink-2">
               Ask questions across your portfolio, funds, and documents
             </p>
           </div>
-          <div className="flex items-center gap-1.5 rounded-full border border-[#E8E6E0] bg-white px-3 py-1.5 text-[11px] font-medium text-[#3B6D11]">
-            <div className="h-1.5 w-1.5 rounded-full bg-[#3B6D11]" />
+          <div className="flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1.5 text-[11px] font-medium text-ok">
+            <div className="h-1.5 w-1.5 rounded-full bg-ok" />
             Live session
           </div>
         </div>
 
         {/* Scope filters */}
-        <div className="flex items-center gap-2 border-b border-[#E8E6E0] px-8 pb-4">
-          <span className="text-[12px] text-[#6B6963]">Scope</span>
+        <div className="flex items-center gap-2 border-b border-line px-8 pb-4">
+          <span className="text-[12px] text-ink-2">Scope</span>
           {scopeOptions.map((opt) => (
             <button
               key={opt.id}
@@ -207,8 +207,8 @@ export default function AIAnalysisPage() {
               className={cn(
                 "rounded-full border px-3.5 py-1.5 text-[12px] font-medium transition-colors",
                 scope === opt.id
-                  ? "border-[#1B4D45] bg-[#E1F5EE] text-[#1B4D45]"
-                  : "border-[#E8E6E0] bg-white text-[#6B6963] hover:border-[#D4C5A9]"
+                  ? "border-brand bg-brand-soft text-brand"
+                  : "border-line bg-white text-ink-2 hover:border-ai-soft"
               )}
             >
               {opt.label}
@@ -223,17 +223,17 @@ export default function AIAnalysisPage() {
               {messages.map((msg) =>
                 msg.role === "user" ? (
                   <div key={msg.id} className="flex justify-end">
-                    <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-[#1B4D45] px-4 py-3 text-[14px] text-white">
+                    <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-brand px-4 py-3 text-[14px] text-white">
                       {msg.content}
                     </div>
                   </div>
                 ) : (
                   <div key={msg.id} className="flex items-start gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#E1F5EE]">
-                      <Bot className="h-4 w-4 text-[#1B4D45]" />
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-soft">
+                      <Bot className="h-4 w-4 text-brand" />
                     </div>
                     <div className="max-w-[80%]">
-                      <div className="rounded-2xl rounded-tl-sm bg-[#F7F6F3] px-4 py-3 text-[14px] leading-relaxed text-[#2C2C2A]">
+                      <div className="rounded-2xl rounded-tl-sm bg-bg px-4 py-3 text-[14px] leading-relaxed text-ink">
                         {msg.content}
                       </div>
                       {msg.sources && msg.sources.length > 0 && (
@@ -241,9 +241,9 @@ export default function AIAnalysisPage() {
                           {msg.sources.map((src) => (
                             <span
                               key={src}
-                              className="inline-flex items-center gap-1.5 rounded-full border border-[#E8E6E0] bg-white px-2.5 py-1 text-[11px] text-[#6B6963]"
+                              className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-2.5 py-1 text-[11px] text-ink-2"
                             >
-                              <FileText className="h-3 w-3 text-[#1B4D45]" />
+                              <FileText className="h-3 w-3 text-brand" />
                               {src}
                             </span>
                           ))}
@@ -258,13 +258,13 @@ export default function AIAnalysisPage() {
           </div>
         ) : (
           <div className="flex flex-1 flex-col items-center overflow-y-auto px-8 py-10">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#E1F5EE]">
-              <MessageSquare className="h-6 w-6 text-[#1B4D45]" />
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-soft">
+              <MessageSquare className="h-6 w-6 text-brand" />
             </div>
-            <h2 className="mt-6 text-center text-3xl font-medium text-[#2C2C2A] text-balance">
+            <h2 className="mt-6 text-center text-3xl font-medium text-ink text-balance">
               What would you like to know?
             </h2>
-            <p className="mt-3 max-w-xl text-center text-[14px] text-[#6B6963] text-pretty">
+            <p className="mt-3 max-w-xl text-center text-[14px] text-ink-2 text-pretty">
               Alma analyses your reports, IC memos and credit agreements to answer in seconds.
             </p>
 
@@ -275,8 +275,8 @@ export default function AIAnalysisPage() {
                 return (
                   <div key={group.id}>
                     <div className="mb-3 flex items-center gap-2">
-                      <Icon className="h-4 w-4 text-[#1B4D45]" />
-                      <span className="text-[11px] font-semibold uppercase tracking-wider text-[#6B6963]">
+                      <Icon className="h-4 w-4 text-brand" />
+                      <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-2">
                         {group.label}
                       </span>
                     </div>
@@ -285,7 +285,7 @@ export default function AIAnalysisPage() {
                         <button
                           key={q}
                           onClick={() => submitQuestion(q)}
-                          className="rounded-xl border border-[#E8E6E0] bg-white px-4 py-3 text-left text-[13px] text-[#2C2C2A] transition-colors hover:border-[#1B4D45] hover:bg-[#F7F6F3]"
+                          className="rounded-xl border border-line bg-white px-4 py-3 text-left text-[13px] text-ink transition-colors hover:border-brand hover:bg-bg"
                         >
                           {q}
                         </button>
@@ -299,9 +299,9 @@ export default function AIAnalysisPage() {
         )}
 
         {/* Input */}
-        <div className="border-t border-[#E8E6E0] px-8 py-4">
-          <div className="mx-auto flex max-w-3xl items-center gap-2 rounded-xl border border-[#1B4D45] bg-white px-3 py-2 shadow-sm">
-            <button className="text-[#6B6963] transition-colors hover:text-[#1B4D45]">
+        <div className="border-t border-line px-8 py-4">
+          <div className="mx-auto flex max-w-3xl items-center gap-2 rounded-xl border border-brand bg-white px-3 py-2 shadow-sm">
+            <button className="text-ink-2 transition-colors hover:text-brand">
               <Paperclip className="h-4 w-4" />
             </button>
             <input
@@ -310,33 +310,33 @@ export default function AIAnalysisPage() {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask anything about your portfolio..."
-              className="flex-1 bg-transparent text-[14px] text-[#2C2C2A] placeholder:text-[#6B6963] focus:outline-none"
+              className="flex-1 bg-transparent text-[14px] text-ink placeholder:text-ink-2 focus:outline-none"
             />
             <button
               onClick={() => submitQuestion(inputValue)}
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1B4D45] text-white transition-colors hover:bg-[#164039]"
+              className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-white transition-colors hover:bg-action-hover"
             >
               <Send className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-3 text-center text-[11px] text-[#D4C5A9]">
+          <p className="mt-3 text-center text-[11px] text-ai-soft">
             Alma can make mistakes. Verify figures against source documents before acting.
           </p>
         </div>
       </div>
 
       {/* Right context panel */}
-      <aside className="flex w-[300px] shrink-0 flex-col overflow-y-auto border-l border-[#E8E6E0] bg-[#FAFAF7] px-5 py-6">
+      <aside className="flex w-[300px] shrink-0 flex-col overflow-y-auto border-l border-line bg-surface-2 px-5 py-6">
         {/* Companies in scope */}
         <div>
-          <h3 className="text-[11px] font-semibold uppercase tracking-wider text-[#6B6963]">
+          <h3 className="text-[11px] font-semibold uppercase tracking-wider text-ink-2">
             Companies in scope
           </h3>
           <div className="mt-4 space-y-3">
             {companies.map((c) => (
               <div key={c.id} className="flex items-center gap-2.5">
                 <div className={cn("h-2 w-2 shrink-0 rounded-full", statusColor[c.status])} />
-                <span className="text-[13px] text-[#2C2C2A]">{c.name}</span>
+                <span className="text-[13px] text-ink">{c.name}</span>
               </div>
             ))}
           </div>
@@ -344,7 +344,7 @@ export default function AIAnalysisPage() {
 
         {/* Loaded documents */}
         <div className="mt-8">
-          <h3 className="text-[11px] font-semibold uppercase tracking-wider text-[#6B6963]">
+          <h3 className="text-[11px] font-semibold uppercase tracking-wider text-ink-2">
             Loaded documents
           </h3>
           <div className="mt-4 space-y-4">
@@ -352,19 +352,19 @@ export default function AIAnalysisPage() {
               const Icon = doc.icon
               return (
                 <div key={doc.id} className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#E8E6E0] bg-white">
-                    <Icon className="h-4 w-4 text-[#6B6963]" />
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-line bg-white">
+                    <Icon className="h-4 w-4 text-ink-2" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[13px] font-medium text-[#2C2C2A]">{doc.title}</div>
-                    <div className="truncate text-[11px] text-[#6B6963]">{doc.subtitle}</div>
+                    <div className="text-[13px] font-medium text-ink">{doc.title}</div>
+                    <div className="truncate text-[11px] text-ink-2">{doc.subtitle}</div>
                   </div>
-                  <span className="text-[12px] tabular-nums text-[#6B6963]">{doc.count}</span>
+                  <span className="text-[12px] tabular-nums text-ink-2">{doc.count}</span>
                 </div>
               )
             })}
           </div>
-          <button className="mt-4 flex items-center gap-2 text-[13px] font-medium text-[#1B4D45] transition-colors hover:text-[#164039]">
+          <button className="mt-4 flex items-center gap-2 text-[13px] font-medium text-brand transition-colors hover:text-action-hover">
             <Plus className="h-4 w-4" />
             Add document
           </button>
@@ -372,30 +372,30 @@ export default function AIAnalysisPage() {
 
         {/* Settings */}
         <div className="mt-8">
-          <h3 className="text-[11px] font-semibold uppercase tracking-wider text-[#6B6963]">
+          <h3 className="text-[11px] font-semibold uppercase tracking-wider text-ink-2">
             Settings
           </h3>
           <div className="mt-4 space-y-5">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-[13px] font-medium text-[#2C2C2A]">Cite sources</div>
-                <div className="text-[11px] text-[#6B6963]">Show document tags</div>
+                <div className="text-[13px] font-medium text-ink">Cite sources</div>
+                <div className="text-[11px] text-ink-2">Show document tags</div>
               </div>
               <Switch
                 checked={citeSources}
                 onCheckedChange={setCiteSources}
-                className="data-[state=checked]:bg-[#1B4D45]"
+                className="data-[state=checked]:bg-brand"
               />
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-[13px] font-medium text-[#2C2C2A]">Show reasoning</div>
-                <div className="text-[11px] text-[#6B6963]">Display how Alma answers</div>
+                <div className="text-[13px] font-medium text-ink">Show reasoning</div>
+                <div className="text-[11px] text-ink-2">Display how Alma answers</div>
               </div>
               <Switch
                 checked={showReasoning}
                 onCheckedChange={setShowReasoning}
-                className="data-[state=checked]:bg-[#1B4D45]"
+                className="data-[state=checked]:bg-brand"
               />
             </div>
           </div>

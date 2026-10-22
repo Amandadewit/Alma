@@ -53,16 +53,16 @@ export default function ExportPage() {
   return (
     <div className="flex min-h-screen flex-col font-sans">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-[#E8E6E0] px-6 py-4">
+      <div className="flex items-center justify-between border-b border-line px-6 py-4">
         <div>
-          <h1 className="text-xl font-medium text-[#2C2C2A]">Export</h1>
-          <p className="text-[13px] text-[#6B6963]">Export portfolio data in various formats</p>
+          <h1 className="text-xl font-medium text-ink">Export</h1>
+          <p className="text-[13px] text-ink-2">Export portfolio data in various formats</p>
         </div>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
-            className="gap-2 border-[#E8E6E0] bg-white text-[#2C2C2A] hover:bg-[#F7F6F3]"
+            className="gap-2 border-line bg-white text-ink hover:bg-bg"
           >
             <Settings2 className="h-4 w-4" />
             Export Templates
@@ -71,8 +71,8 @@ export default function ExportPage() {
       </div>
 
       {/* Fund Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#E8E6E0] px-6 py-3">
-        <span className="text-[13px] text-[#6B6963]">Fund:</span>
+      <div className="flex items-center gap-2 border-b border-line px-6 py-3">
+        <span className="text-[13px] text-ink-2">Fund:</span>
         {funds.map((fund) => (
           <button
             key={fund.id}
@@ -80,8 +80,8 @@ export default function ExportPage() {
             className={cn(
               "rounded-lg px-4 py-2 text-[13px] font-medium transition-colors",
               selectedFund.id === fund.id
-                ? "bg-[#1B4D45] text-white"
-                : "bg-[#F7F6F3] text-[#6B6963] hover:bg-[#E8E6E0]"
+                ? "bg-brand text-white"
+                : "bg-bg text-ink-2 hover:bg-line"
             )}
           >
             {fund.shortName}
@@ -94,12 +94,12 @@ export default function ExportPage() {
         {/* Left Column - Selection */}
         <div className="flex-1 space-y-6">
           {/* Companies */}
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white">
-            <div className="flex items-center justify-between border-b border-[#E8E6E0] px-4 py-3">
-              <h2 className="text-[13px] font-medium text-[#2C2C2A]">Select Companies</h2>
+          <div className="rounded-[10px] border border-line bg-white">
+            <div className="flex items-center justify-between border-b border-line px-4 py-3">
+              <h2 className="text-[13px] font-medium text-ink">Select Companies</h2>
               <button
                 onClick={selectAllCompanies}
-                className="text-[11px] text-[#1B4D45] hover:underline"
+                className="text-[11px] text-brand hover:underline"
               >
                 Select all
               </button>
@@ -111,18 +111,18 @@ export default function ExportPage() {
                   className={cn(
                     "flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors",
                     selectedCompanies.includes(company.id)
-                      ? "border-[#1B4D45] bg-[#E1F5EE]"
-                      : "border-[#E8E6E0] hover:border-[#D4C5A9]"
+                      ? "border-brand bg-brand-soft"
+                      : "border-line hover:border-ai-soft"
                   )}
                 >
                   <Checkbox
                     checked={selectedCompanies.includes(company.id)}
                     onCheckedChange={() => toggleCompany(company.id)}
-                    className="border-[#E8E6E0] data-[state=checked]:border-[#1B4D45] data-[state=checked]:bg-[#1B4D45]"
+                    className="border-line data-[state=checked]:border-brand data-[state=checked]:bg-brand"
                   />
                   <div>
-                    <div className="text-[12px] font-medium text-[#2C2C2A]">{company.name}</div>
-                    <div className="text-[10px] text-[#6B6963]">Entry: {company.entryDate}</div>
+                    <div className="text-[12px] font-medium text-ink">{company.name}</div>
+                    <div className="text-[10px] text-ink-2">Entry: {company.entryDate}</div>
                   </div>
                 </label>
               ))}
@@ -130,9 +130,9 @@ export default function ExportPage() {
           </div>
 
           {/* Sections */}
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white">
-            <div className="border-b border-[#E8E6E0] px-4 py-3">
-              <h2 className="text-[13px] font-medium text-[#2C2C2A]">Select Data Sections</h2>
+          <div className="rounded-[10px] border border-line bg-white">
+            <div className="border-b border-line px-4 py-3">
+              <h2 className="text-[13px] font-medium text-ink">Select Data Sections</h2>
             </div>
             <div className="grid grid-cols-2 gap-2 p-4">
               {sections.map((section) => (
@@ -141,18 +141,18 @@ export default function ExportPage() {
                   className={cn(
                     "flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors",
                     selectedSections.includes(section.id)
-                      ? "border-[#1B4D45] bg-[#E1F5EE]"
-                      : "border-[#E8E6E0] hover:border-[#D4C5A9]"
+                      ? "border-brand bg-brand-soft"
+                      : "border-line hover:border-ai-soft"
                   )}
                 >
                   <Checkbox
                     checked={selectedSections.includes(section.id)}
                     onCheckedChange={() => toggleSection(section.id)}
-                    className="border-[#E8E6E0] data-[state=checked]:border-[#1B4D45] data-[state=checked]:bg-[#1B4D45]"
+                    className="border-line data-[state=checked]:border-brand data-[state=checked]:bg-brand"
                   />
                   <div>
-                    <div className="text-[12px] font-medium text-[#2C2C2A]">{section.name}</div>
-                    <div className="text-[10px] text-[#6B6963]">{section.description}</div>
+                    <div className="text-[12px] font-medium text-ink">{section.name}</div>
+                    <div className="text-[10px] text-ink-2">{section.description}</div>
                   </div>
                 </label>
               ))}
@@ -163,9 +163,9 @@ export default function ExportPage() {
         {/* Right Column - Format & Export */}
         <div className="w-80 space-y-4">
           {/* Format Selection */}
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white">
-            <div className="border-b border-[#E8E6E0] px-4 py-3">
-              <h2 className="text-[13px] font-medium text-[#2C2C2A]">Export Format</h2>
+          <div className="rounded-[10px] border border-line bg-white">
+            <div className="border-b border-line px-4 py-3">
+              <h2 className="text-[13px] font-medium text-ink">Export Format</h2>
             </div>
             <div className="space-y-2 p-3">
               {formats.map((format) => (
@@ -174,8 +174,8 @@ export default function ExportPage() {
                   className={cn(
                     "flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors",
                     exportFormat === format.id
-                      ? "border-[#1B4D45] bg-[#E1F5EE]"
-                      : "border-[#E8E6E0] hover:border-[#D4C5A9]"
+                      ? "border-brand bg-brand-soft"
+                      : "border-line hover:border-ai-soft"
                   )}
                 >
                   <input
@@ -188,16 +188,16 @@ export default function ExportPage() {
                   />
                   <div className={cn(
                     "flex h-8 w-8 items-center justify-center rounded-lg",
-                    exportFormat === format.id ? "bg-[#1B4D45]" : "bg-[#F7F6F3]"
+                    exportFormat === format.id ? "bg-brand" : "bg-bg"
                   )}>
                     <format.icon className={cn(
                       "h-4 w-4",
-                      exportFormat === format.id ? "text-white" : "text-[#6B6963]"
+                      exportFormat === format.id ? "text-white" : "text-ink-2"
                     )} />
                   </div>
                   <div>
-                    <div className="text-[12px] font-medium text-[#2C2C2A]">{format.name}</div>
-                    <div className="text-[10px] text-[#6B6963]">{format.description}</div>
+                    <div className="text-[12px] font-medium text-ink">{format.name}</div>
+                    <div className="text-[10px] text-ink-2">{format.description}</div>
                   </div>
                 </label>
               ))}
@@ -205,29 +205,29 @@ export default function ExportPage() {
           </div>
 
           {/* Export Summary */}
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white p-4">
-            <h3 className="text-[13px] font-medium text-[#2C2C2A]">Export Summary</h3>
+          <div className="rounded-[10px] border border-line bg-white p-4">
+            <h3 className="text-[13px] font-medium text-ink">Export Summary</h3>
             <div className="mt-3 space-y-2 text-[12px]">
               <div className="flex justify-between">
-                <span className="text-[#6B6963]">Fund</span>
-                <span className="font-medium text-[#2C2C2A]">{selectedFund.shortName}</span>
+                <span className="text-ink-2">Fund</span>
+                <span className="font-medium text-ink">{selectedFund.shortName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#6B6963]">Companies</span>
-                <span className="font-medium text-[#2C2C2A]">{selectedCompanies.length} selected</span>
+                <span className="text-ink-2">Companies</span>
+                <span className="font-medium text-ink">{selectedCompanies.length} selected</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#6B6963]">Sections</span>
-                <span className="font-medium text-[#2C2C2A]">{selectedSections.length} selected</span>
+                <span className="text-ink-2">Sections</span>
+                <span className="font-medium text-ink">{selectedSections.length} selected</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#6B6963]">Format</span>
-                <span className="font-medium text-[#2C2C2A]">{exportFormat.toUpperCase()}</span>
+                <span className="text-ink-2">Format</span>
+                <span className="font-medium text-ink">{exportFormat.toUpperCase()}</span>
               </div>
             </div>
             
             <Button
-              className="mt-4 w-full gap-2 bg-[#1B4D45] text-white hover:bg-[#164039]"
+              className="mt-4 w-full gap-2 bg-brand text-white hover:bg-action-hover"
               disabled={selectedCompanies.length === 0 || selectedSections.length === 0}
             >
               <Download className="h-4 w-4" />
@@ -236,9 +236,9 @@ export default function ExportPage() {
           </div>
 
           {/* Recent Exports */}
-          <div className="rounded-[10px] border border-[#E8E6E0] bg-white">
-            <div className="border-b border-[#E8E6E0] px-4 py-3">
-              <h3 className="text-[13px] font-medium text-[#2C2C2A]">Recent Exports</h3>
+          <div className="rounded-[10px] border border-line bg-white">
+            <div className="border-b border-line px-4 py-3">
+              <h3 className="text-[13px] font-medium text-ink">Recent Exports</h3>
             </div>
             <div className="space-y-1 p-2">
               {[
@@ -248,13 +248,13 @@ export default function ExportPage() {
               ].map((file, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between rounded-lg px-3 py-2 hover:bg-[#F7F6F3]"
+                  className="flex items-center justify-between rounded-lg px-3 py-2 hover:bg-bg"
                 >
                   <div>
-                    <div className="text-[11px] font-medium text-[#2C2C2A]">{file.name}</div>
-                    <div className="text-[10px] text-[#6B6963]">{file.date}</div>
+                    <div className="text-[11px] font-medium text-ink">{file.name}</div>
+                    <div className="text-[10px] text-ink-2">{file.date}</div>
                   </div>
-                  <Download className="h-3.5 w-3.5 text-[#6B6963]" />
+                  <Download className="h-3.5 w-3.5 text-ink-2" />
                 </div>
               ))}
             </div>

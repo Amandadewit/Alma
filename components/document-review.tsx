@@ -19,7 +19,7 @@ import {
   Link2,
 } from "lucide-react"
 
-type Confidence = "hoog" | "middel" | "laag"
+type Confidence = "high" | "medium" | "low"
 
 interface ExtractField {
   label: string
@@ -68,55 +68,55 @@ interface DocConfig {
 const documentTypeLabels: Record<string, string> = {
   "ic-memo": "IC memo",
   "credit-agreement": "Credit agreement",
-  "annual-accounts": "Jaarrekening",
-  "monthly-report": "Monthly report",
+  "annual-accounts": "Annual accounts",
+  "monthly-report": "Performance sheet",
   spa: "SPA",
   other: "Other",
 }
 
 const badgeColors: Record<string, string> = {
-  "ic-memo": "bg-[#F1ECF7] text-[#7B5EA7]",
-  "credit-agreement": "bg-[#F1ECF7] text-[#7B5EA7]",
-  "annual-accounts": "bg-[#F1ECF7] text-[#7B5EA7]",
-  "monthly-report": "bg-[#F1ECF7] text-[#7B5EA7]",
-  spa: "bg-[#F1ECF7] text-[#7B5EA7]",
-  other: "bg-[#F1ECF7] text-[#7B5EA7]",
+  "ic-memo": "bg-ai-soft text-ai-text",
+  "credit-agreement": "bg-ai-soft text-ai-text",
+  "annual-accounts": "bg-ai-soft text-ai-text",
+  "monthly-report": "bg-ai-soft text-ai-text",
+  spa: "bg-ai-soft text-ai-text",
+  other: "bg-ai-soft text-ai-text",
 }
 
 const confidenceLabel: Record<Confidence, string> = {
-  hoog: "Hoog",
-  middel: "Middel",
-  laag: "Laag",
+  high: "High",
+  medium: "Medium",
+  low: "Low",
 }
 
 // ---- Per-document extraction configs ----
 const docConfigs: Record<string, DocConfig> = {
   "ic-memo": {
-    detection: { docType: "IC memo", company: "FreshBox Logistics", period: "Dec 2022", confidence: "hoog" },
+    detection: { docType: "IC memo", company: "FreshBox Logistics", period: "Dec 2022", confidence: "high" },
     groups: [
       {
-        title: "Bedrijfsprofiel",
+        title: "Company profile",
         fields: [
-          { label: "Sector", value: "B2B SaaS", confidence: "hoog" },
-          { label: "FTE", value: "~120", confidence: "middel", note: "Niet eenduidig gevonden in document — controleer" },
-          { label: "ARR", value: "€8M", confidence: "hoog" },
+          { label: "Sector", value: "B2B SaaS", confidence: "high" },
+          { label: "FTE", value: "~120", confidence: "medium", note: "Not found unambiguously in the document — please check" },
+          { label: "ARR", value: "€8M", confidence: "high" },
         ],
       },
       {
         title: "Value creation",
         fields: [
-          { label: "Lever 1", value: "Internationalisatie DACH", confidence: "hoog" },
-          { label: "Lever 2", value: "Cross-sell", confidence: "hoog" },
-          { label: "Lever 3", value: "Pricing enterprise", confidence: "middel", note: "Niet eenduidig gevonden in document — controleer" },
+          { label: "Lever 1", value: "International expansion DACH", confidence: "high" },
+          { label: "Lever 2", value: "Cross-sell", confidence: "high" },
+          { label: "Lever 3", value: "Pricing enterprise", confidence: "medium", note: "Not found unambiguously in the document — please check" },
         ],
       },
       {
         title: "Exit case",
         fields: [
-          { label: "Type", value: "Trade sale / PE", confidence: "hoog" },
-          { label: "EV range", value: "€120–156M", confidence: "hoog" },
-          { label: "Multiple", value: "10–13x", confidence: "hoog" },
-          { label: "Jaar", value: "2029", confidence: "hoog" },
+          { label: "Type", value: "Trade sale / PE", confidence: "high" },
+          { label: "EV range", value: "€120–156M", confidence: "high" },
+          { label: "Multiple", value: "10–13x", confidence: "high" },
+          { label: "Year", value: "2029", confidence: "high" },
         ],
       },
     ],
@@ -126,10 +126,10 @@ const docConfigs: Record<string, DocConfig> = {
         kind: "audit",
         title: "METRIC / FreshBox Logistics / IC Case",
         meta: "Revenue €8.0M · EBITDA €2.0M · Net Debt €18.0M · Valuation €120M",
-        detail: "Dimensie: IC Case · Bron: FreshBox_IC_Memo.pdf",
+        detail: "Dimension: IC Case · Source: FreshBox_IC_Memo.pdf",
         source: "FreshBox_IC_Memo.pdf",
         fields: [
-          { label: "Dimensie", value: "IC Case" },
+          { label: "Dimension", value: "IC Case" },
           { label: "Revenue", value: "€8.0M" },
           { label: "EBITDA", value: "€2.0M" },
           { label: "Net Debt", value: "€18.0M" },
@@ -140,43 +140,43 @@ const docConfigs: Record<string, DocConfig> = {
         id: "r2",
         kind: "comment",
         title: "Comment / FreshBox Logistics / Dec 2022 / value creation",
-        meta: "'Drie waardecreatie-hefbomen: DACH-expansie, cross-sell, enterprise pricing.'",
-        detail: "Bron: FreshBox_IC_Memo.pdf",
+        meta: "'Three value creation levers: DACH expansion, cross-sell, enterprise pricing.'",
+        detail: "Source: FreshBox_IC_Memo.pdf",
         fields: [
-          { label: "Categorie", value: "Value creation" },
-          { label: "Tekst", value: "DACH-expansie, cross-sell, enterprise pricing." },
+          { label: "Category", value: "Value creation" },
+          { label: "Text", value: "DACH expansion, cross-sell, enterprise pricing." },
         ],
       },
     ],
     filing: {
       folder: ["FreshBox Logistics", "Investment", "IC memos"],
       dataPoint: "IC Case — FreshBox Logistics",
-      dataPointDetail: "Koppelt aan datapunt 'IC Case' (Dec 2022) onder Fund Valuation",
-      confidence: "hoog",
+      dataPointDetail: "Linked to data point 'IC Case' (Dec 2022) under Fund Valuation",
+      confidence: "high",
     },
   },
   "annual-accounts": {
-    detection: { docType: "Jaarrekening", company: "FreshBox Logistics", period: "FY2025", confidence: "hoog" },
+    detection: { docType: "Annual accounts", company: "FreshBox Logistics", period: "FY2025", confidence: "high" },
     groups: [
       {
         title: "Audit records",
         fields: [
-          { label: "Revenue", value: "€36.5M", confidence: "hoog" },
-          { label: "EBITDA", value: "€5.85M", confidence: "hoog" },
-          { label: "Net Debt", value: "€13.7M", confidence: "hoog" },
-          { label: "Equity", value: "€11.2M", confidence: "hoog" },
-          { label: "Auditor", value: "Mazars", confidence: "hoog" },
-          { label: "Sign-off date", value: "2026-04-28", confidence: "hoog" },
+          { label: "Revenue", value: "€36.5M", confidence: "high" },
+          { label: "EBITDA", value: "€5.85M", confidence: "high" },
+          { label: "Net Debt", value: "€13.7M", confidence: "high" },
+          { label: "Equity", value: "€11.2M", confidence: "high" },
+          { label: "Auditor", value: "Mazars", confidence: "high" },
+          { label: "Sign-off date", value: "2026-04-28", confidence: "high" },
         ],
       },
       {
-        title: "Toelichting",
+        title: "Notes",
         toComment: true,
         fields: [
           {
-            label: "Accountantsverklaring",
-            value: "Goedgekeurd zonder voorbehoud. Goodwill afschrijving €1.4M (noot 12).",
-            confidence: "hoog",
+            label: "Auditor's report",
+            value: "Unqualified opinion. Goodwill amortisation €1.4M (note 12).",
+            confidence: "high",
           },
         ],
       },
@@ -200,61 +200,61 @@ const docConfigs: Record<string, DocConfig> = {
       {
         id: "r2",
         kind: "comment",
-        title: "Comment / FreshBox Logistics / FY2025 / algemeen",
-        meta: "'Goedgekeurd zonder voorbehoud. Goodwill afschrijving €1.4M.'",
-        detail: "Bron: FreshBox_Jaarrekening_2025.pdf",
+        title: "Comment / FreshBox Logistics / FY2025 / general",
+        meta: "'Unqualified opinion. Goodwill amortisation €1.4M.'",
+        detail: "Source: FreshBox_Annual_Accounts_2025.pdf",
         fields: [
-          { label: "Categorie", value: "Algemeen" },
-          { label: "Tekst", value: "Goedgekeurd zonder voorbehoud. Goodwill afschrijving €1.4M." },
+          { label: "Category", value: "General" },
+          { label: "Text", value: "Unqualified opinion. Goodwill amortisation €1.4M." },
         ],
       },
       {
         id: "r3",
         kind: "context",
         title: "Context document / FreshBox Logistics",
-        meta: "'Jaarrekening FY2025' — samenvatting + full text (RAG-indexed)",
-        detail: "Auto-meegestuurd bij analyses op FreshBox",
-        source: "FreshBox_Jaarrekening_2025.pdf",
+        meta: "'Annual accounts FY2025' — summary + full text (RAG-indexed)",
+        detail: "Automatically included in analyses on FreshBox",
+        source: "FreshBox_Annual_Accounts_2025.pdf",
         fields: [
-          { label: "Titel", value: "Jaarrekening FY2025" },
+          { label: "Title", value: "Annual accounts FY2025" },
         ],
       },
     ],
     filing: {
-      folder: ["FreshBox Logistics", "Financials", "Jaarrekeningen"],
+      folder: ["FreshBox Logistics", "Financials", "Annual accounts"],
       dataPoint: "Audit record — FreshBox Logistics FY2025",
-      dataPointDetail: "Koppelt aan audit-datapunt (Revenue, EBITDA, Net Debt) FY2025",
-      confidence: "hoog",
+      dataPointDetail: "Linked to audit data point (Revenue, EBITDA, Net Debt) FY2025",
+      confidence: "high",
     },
   },
   "credit-agreement": {
-    detection: { docType: "Credit agreement", company: "Nordic Health Group", period: "Mar 2023", confidence: "middel" },
+    detection: { docType: "Credit agreement", company: "Nordic Health Group", period: "Mar 2023", confidence: "medium" },
     groups: [
       {
-        title: "Bank faciliteit",
+        title: "Bank facility",
         fields: [
-          { label: "Type", value: "TLA", confidence: "hoog" },
-          { label: "Bedrag", value: "€14.6M", confidence: "hoog" },
-          { label: "Marge", value: "EURIBOR+2.75%", confidence: "middel", note: "Niet eenduidig gevonden in document — controleer" },
-          { label: "Looptijd", value: "2028-03", confidence: "hoog" },
+          { label: "Type", value: "TLA", confidence: "high" },
+          { label: "Amount", value: "€14.6M", confidence: "high" },
+          { label: "Margin", value: "EURIBOR+2.75%", confidence: "medium", note: "Not found unambiguously in the document — please check" },
+          { label: "Maturity", value: "2028-03", confidence: "high" },
         ],
       },
       {
-        title: "Covenanten",
+        title: "Covenants",
         fields: [
-          { label: "Leverage", value: "Net Debt/EBITDA ≤4.50x (Q)", confidence: "hoog" },
-          { label: "Interest cover", value: "EBITDA/fin. charges ≥3.00x", confidence: "hoog" },
+          { label: "Leverage", value: "Net Debt/EBITDA ≤4.50x (Q)", confidence: "high" },
+          { label: "Interest cover", value: "EBITDA/fin. charges ≥3.00x", confidence: "high" },
         ],
       },
       {
-        title: "EBITDA-definitie",
+        title: "EBITDA definition",
         toComment: true,
         fields: [
           {
-            label: "Definitie",
-            value: "Excl. one-offs >€250k en mgmt fees...",
-            confidence: "middel",
-            note: "Niet eenduidig gevonden in document — controleer",
+            label: "Definition",
+            value: "Excl. one-offs >€250k and mgmt fees...",
+            confidence: "medium",
+            note: "Not found unambiguously in the document — please check",
           },
         ],
       },
@@ -265,12 +265,12 @@ const docConfigs: Record<string, DocConfig> = {
         kind: "audit",
         title: "COVENANT / Nordic Health Group / Mar 2023",
         meta: "Leverage ≤4.50x (Q) · Interest cover ≥3.00x",
-        detail: "Faciliteit: TLA €14.6M · EURIBOR+2.75% · 2028-03",
+        detail: "Facility: TLA €14.6M · EURIBOR+2.75% · 2028-03",
         fields: [
           { label: "Type", value: "TLA" },
-          { label: "Bedrag", value: "€14.6M" },
-          { label: "Marge", value: "EURIBOR+2.75%" },
-          { label: "Looptijd", value: "2028-03" },
+          { label: "Amount", value: "€14.6M" },
+          { label: "Margin", value: "EURIBOR+2.75%" },
+          { label: "Maturity", value: "2028-03" },
           { label: "Leverage", value: "Net Debt/EBITDA ≤4.50x" },
           { label: "Interest cover", value: "EBITDA/fin. charges ≥3.00x" },
         ],
@@ -278,50 +278,50 @@ const docConfigs: Record<string, DocConfig> = {
       {
         id: "r2",
         kind: "comment",
-        title: "Comment / Nordic Health Group / Mar 2023 / EBITDA-definitie",
-        meta: "'Excl. one-offs >€250k en mgmt fees...'",
-        detail: "Bron: NordicHealth_Krediet.pdf",
+        title: "Comment / Nordic Health Group / Mar 2023 / EBITDA definition",
+        meta: "'Excl. one-offs >€250k and mgmt fees...'",
+        detail: "Source: NordicHealth_Credit_Agreement.pdf",
         fields: [
-          { label: "Categorie", value: "EBITDA-definitie" },
-          { label: "Tekst", value: "Excl. one-offs >€250k en mgmt fees..." },
+          { label: "Category", value: "EBITDA definition" },
+          { label: "Text", value: "Excl. one-offs >€250k and mgmt fees..." },
         ],
       },
       {
         id: "r3",
         kind: "context",
         title: "Context document / Nordic Health Group",
-        meta: "'Credit agreement Mar 2023' — samenvatting + full text (RAG-indexed)",
-        detail: "Auto-meegestuurd bij analyses op Nordic Health Group",
-        source: "NordicHealth_Krediet.pdf",
-        fields: [{ label: "Titel", value: "Credit agreement Mar 2023" }],
+        meta: "'Credit agreement Mar 2023' — summary + full text (RAG-indexed)",
+        detail: "Automatically included in analyses on Nordic Health Group",
+        source: "NordicHealth_Credit_Agreement.pdf",
+        fields: [{ label: "Title", value: "Credit agreement Mar 2023" }],
       },
     ],
     filing: {
       folder: ["Nordic Health Group", "Financing", "Credit agreements"],
       dataPoint: "Covenant set — Nordic Health Group Mar 2023",
-      dataPointDetail: "Koppelt aan covenant-datapunt (Leverage, Interest cover)",
-      confidence: "middel",
+      dataPointDetail: "Linked to covenant data point (Leverage, Interest cover)",
+      confidence: "medium",
     },
   },
 }
 
 function ConfidenceDots({ level }: { level: Confidence }) {
-  const filled = level === "hoog" ? 3 : level === "middel" ? 2 : 1
-  const color = level === "hoog" ? "bg-[#3B6D11]" : level === "middel" ? "bg-[#B8975A]" : "bg-[#A32D2D]"
+  const filled = level === "high" ? 3 : level === "medium" ? 2 : 1
+  const color = level === "high" ? "bg-ok" : level === "medium" ? "bg-ai" : "bg-alert"
   return (
     <span className="flex items-center gap-1.5">
       <span className="flex gap-0.5">
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            className={cn("h-1.5 w-1.5 rounded-full", i < filled ? color : "bg-[#E8E6E0]")}
+            className={cn("h-1.5 w-1.5 rounded-full", i < filled ? color : "bg-line")}
           />
         ))}
       </span>
       <span
         className={cn(
           "text-[11px]",
-          level === "hoog" ? "text-[#3B6D11]" : level === "middel" ? "text-[#B8975A]" : "text-[#A32D2D]"
+          level === "high" ? "text-ok" : level === "medium" ? "text-ai" : "text-alert"
         )}
       >
         {confidenceLabel[level]}
@@ -332,17 +332,17 @@ function ConfidenceDots({ level }: { level: Confidence }) {
 
 function StepBadge({ status }: { status: "done" | "verify" | "pending" }) {
   const map = {
-    done: { label: "Done", cls: "bg-[#E1F5EE] text-[#3B6D11]" },
-    verify: { label: "Verify", cls: "bg-[#FDF8F0] text-[#B8975A]" },
-    pending: { label: "Pending", cls: "bg-[#F7F6F3] text-[#9A988F]" },
+    done: { label: "Done", cls: "bg-brand-soft text-ok" },
+    verify: { label: "Verify", cls: "bg-ai-soft text-ai" },
+    pending: { label: "Pending", cls: "bg-bg text-ink-3" },
   }[status]
   return <span className={cn("rounded px-2 py-0.5 text-[10px] font-medium", map.cls)}>{map.label}</span>
 }
 
 const recordIcon = {
-  audit: { Icon: BarChart3, tint: "bg-[#E1F5EE]", color: "text-[#1B4D45]" },
-  comment: { Icon: MessageSquare, tint: "bg-[#E6EEF5]", color: "text-[#3A6391]" },
-  context: { Icon: FileText, tint: "bg-[#F1ECF7]", color: "text-[#7B5EA7]" },
+  audit: { Icon: BarChart3, tint: "bg-brand-soft", color: "text-brand" },
+  comment: { Icon: MessageSquare, tint: "bg-surface-2", color: "text-data-3" },
+  context: { Icon: FileText, tint: "bg-ai-soft", color: "text-ai-text" },
 }
 
 interface DocumentReviewProps {
@@ -370,12 +370,12 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
 
-  // editable detection (for "Aanpassen")
+  // editable detection (for "Edit")
   const [detType, setDetType] = useState(config.detection.docType)
   const [detCompany, setDetCompany] = useState(config.detection.company)
   const [detPeriod, setDetPeriod] = useState(config.detection.period)
 
-  // editable filing (Stap 4)
+  // editable filing (Step 4)
   const [filingEditing, setFilingEditing] = useState(false)
   const [folderPath, setFolderPath] = useState(config.filing.folder.join(" / "))
   const [dataPoint, setDataPoint] = useState(config.filing.dataPoint)
@@ -402,10 +402,10 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
   const step4Status: "done" | "verify" | "pending" = !step2Reviewed ? "pending" : step4Confirmed ? "done" : "verify"
 
   const chip = saved
-    ? { label: "Geïmporteerd", cls: "bg-[#E1F5EE] text-[#3B6D11]" }
+    ? { label: "Imported", cls: "bg-brand-soft text-ok" }
     : processing
-    ? { label: "Processing…", cls: "bg-[#FDF8F0] text-[#B8975A]" }
-    : { label: "Awaiting approval", cls: "bg-[#FDF8F0] text-[#B8975A]" }
+    ? { label: "Processing…", cls: "bg-ai-soft text-ai" }
+    : { label: "Awaiting approval", cls: "bg-ai-soft text-ai" }
 
   function handleSave() {
     setSaving(true)
@@ -424,21 +424,21 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
   return (
     <div className="flex min-h-screen flex-col font-sans">
       {/* Topbar */}
-      <div className="border-b border-[#E8E6E0] px-6 py-4">
+      <div className="border-b border-line px-6 py-4">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-[12px] font-medium text-[#1B4D45] hover:underline"
+          className="flex items-center gap-1.5 text-[12px] font-medium text-brand hover:underline"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Back to Upload Data
         </button>
         <div className="mt-2 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-[16px] font-semibold text-[#2C2C2A]">{file.name}</span>
+            <span className="text-[16px] font-semibold text-ink">{file.name}</span>
             <span className={cn("rounded px-1.5 py-0.5 text-[9px] font-medium", badgeColors[docType])}>
               {documentTypeLabels[docType]}
             </span>
-            <span className="text-[12px] text-[#6B6963]">
+            <span className="text-[12px] text-ink-2">
               {file.company} · {file.period}
             </span>
           </div>
@@ -449,13 +449,13 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
       {/* document preview (compact) / approval actions (primary) */}
       <div className="flex flex-1">
         {/* LEFT — document viewer (compact preview) */}
-        <div className="relative flex w-[34%] flex-col border-r border-[#E8E6E0] bg-[#F2F1ED]">
+        <div className="relative flex w-[34%] flex-col border-r border-line bg-surface-2">
           <div className="flex-1 overflow-y-auto p-5">
             <div className="mx-auto max-w-[360px] space-y-4">
               <DocumentPage docType={docType} company={file.company} period={file.period} />
             </div>
           </div>
-          <div className="pointer-events-none absolute bottom-4 right-4 rounded-md bg-[#2C2C2A]/80 px-2.5 py-1 text-[11px] font-medium text-white">
+          <div className="pointer-events-none absolute bottom-4 right-4 rounded-md bg-ink/80 px-2.5 py-1 text-[11px] font-medium text-white">
             Page 3 of {file.pages ?? 47}
           </div>
         </div>
@@ -464,30 +464,30 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
         <div className="flex w-[66%] flex-col">
           {processing ? (
             <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-              <Loader2 className="h-8 w-8 animate-spin text-[#1B4D45]" />
-              <div className="text-[14px] font-medium text-[#2C2C2A]">Bezig met verwerken…</div>
-              <div className="text-[12px] text-[#6B6963]">Dit duurt ca. 30 seconden.</div>
-              <div className="text-[11px] text-[#9A988F]">Ververst automatisch elke 5 seconden.</div>
+              <Loader2 className="h-8 w-8 animate-spin text-brand" />
+              <div className="text-[14px] font-medium text-ink">Processing…</div>
+              <div className="text-[12px] text-ink-2">This takes about 30 seconds.</div>
+              <div className="text-[11px] text-ink-3">Refreshes automatically every 5 seconds.</div>
             </div>
           ) : (
             <>
               <div className="grid flex-1 grid-cols-1 content-start gap-5 overflow-y-auto px-6 py-5 lg:grid-cols-2">
-                {/* STEP 1 — Detectie */}
+                {/* STEP 1 — Detection */}
                 <section>
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-medium uppercase tracking-wide text-[#9A988F]">
-                      Stap 1 · Detectie
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-ink-3">
+                      Step 1 · Detection
                     </span>
                     <StepBadge status={step1Status} />
                   </div>
-                  <div className="mt-3 rounded-[10px] border border-[#E8E6E0] bg-white p-4">
+                  <div className="mt-3 rounded-[10px] border border-line bg-white p-4">
                     {!editing ? (
                       <dl className="space-y-2 text-[13px]">
                         <Row label="Document type" value={detType} />
                         <Row label="Company" value={detCompany} />
                         <Row label="Period / date" value={detPeriod} />
                         <div className="flex items-center justify-between">
-                          <dt className="text-[#6B6963]">Confidence</dt>
+                          <dt className="text-ink-2">Confidence</dt>
                           <dd>
                             <ConfidenceDots level={config.detection.confidence} />
                           </dd>
@@ -499,7 +499,7 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
                           <select
                             value={detType}
                             onChange={(e) => setDetType(e.target.value)}
-                            className="w-full rounded-lg border border-[#E8E6E0] bg-white px-2.5 py-1.5 text-[13px] outline-none focus:border-[#1B4D45]"
+                            className="w-full rounded-lg border border-line bg-white px-2.5 py-1.5 text-[13px] outline-none focus:border-brand"
                           >
                             {Object.values(documentTypeLabels).map((l) => (
                               <option key={l}>{l}</option>
@@ -510,7 +510,7 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
                           <select
                             value={detCompany}
                             onChange={(e) => setDetCompany(e.target.value)}
-                            className="w-full rounded-lg border border-[#E8E6E0] bg-white px-2.5 py-1.5 text-[13px] outline-none focus:border-[#1B4D45]"
+                            className="w-full rounded-lg border border-line bg-white px-2.5 py-1.5 text-[13px] outline-none focus:border-brand"
                           >
                             {companies.map((c) => (
                               <option key={c.id}>{c.name}</option>
@@ -521,7 +521,7 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
                           <input
                             value={detPeriod}
                             onChange={(e) => setDetPeriod(e.target.value)}
-                            className="w-full rounded-lg border border-[#E8E6E0] bg-white px-2.5 py-1.5 text-[13px] outline-none focus:border-[#1B4D45]"
+                            className="w-full rounded-lg border border-line bg-white px-2.5 py-1.5 text-[13px] outline-none focus:border-brand"
                           />
                         </EditRow>
                       </div>
@@ -529,46 +529,46 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
 
                     {!step1Confirmed && (
                       <div className="mt-4">
-                        {config.detection.confidence !== "hoog" && !editing && (
-                          <div className="mb-3 flex items-start gap-2 rounded-lg bg-[#FDF8F0] p-2.5">
-                            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#B8975A]" />
-                            <span className="text-[12px] text-[#6B6963]">
-                              Detectie niet zeker. Klopt dit?
+                        {config.detection.confidence !== "high" && !editing && (
+                          <div className="mb-3 flex items-start gap-2 rounded-lg bg-ai-soft p-2.5">
+                            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ai" />
+                            <span className="text-[12px] text-ink-2">
+                              Detection not certain. Is this correct?
                             </span>
                           </div>
                         )}
                         {editing ? (
                           <Button
-                            className="w-full bg-[#1B4D45] text-white hover:bg-[#164039]"
+                            className="w-full bg-brand text-white hover:bg-action-hover"
                             onClick={() => {
                               setEditing(false)
                               setStep1Confirmed(true)
                             }}
                           >
-                            Opslaan & bevestigen →
+                            Save & confirm →
                           </Button>
-                        ) : config.detection.confidence === "hoog" ? (
+                        ) : config.detection.confidence === "high" ? (
                           <Button
                             variant="outline"
-                            className="w-full border-[#1B4D45] text-[#1B4D45] hover:bg-[#E1F5EE]"
+                            className="w-full border-brand text-brand hover:bg-brand-soft"
                             onClick={() => setStep1Confirmed(true)}
                           >
-                            Klopt dit? Bevestigen →
+                            Is this correct? Confirm →
                           </Button>
                         ) : (
                           <div className="flex gap-2">
                             <Button
-                              className="flex-1 bg-[#1B4D45] text-white hover:bg-[#164039]"
+                              className="flex-1 bg-brand text-white hover:bg-action-hover"
                               onClick={() => setStep1Confirmed(true)}
                             >
-                              Ja, klopt
+                              Yes, correct
                             </Button>
                             <Button
                               variant="outline"
-                              className="flex-1 border-[#E8E6E0] text-[#2C2C2A]"
+                              className="flex-1 border-line text-ink"
                               onClick={() => setEditing(true)}
                             >
-                              Aanpassen
+                              Edit
                             </Button>
                           </div>
                         )}
@@ -577,68 +577,68 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
                   </div>
                 </section>
 
-                {/* STEP 2 — Extractie */}
+                {/* STEP 2 — Extraction */}
                 <section>
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-medium uppercase tracking-wide text-[#9A988F]">
-                      Stap 2 · Extractie
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-ink-3">
+                      Step 2 · Extraction
                     </span>
                     <StepBadge status={step2Status} />
                   </div>
                   <div
                     className={cn(
-                      "mt-3 rounded-[10px] border border-[#E8E6E0] bg-white",
+                      "mt-3 rounded-[10px] border border-line bg-white",
                       !step1Confirmed && "pointer-events-none opacity-50"
                     )}
                   >
                     {config.groups.map((group, gi) => (
-                      <div key={group.title} className={cn(gi > 0 && "border-t border-[#E8E6E0]")}>
+                      <div key={group.title} className={cn(gi > 0 && "border-t border-line")}>
                         <div className="flex items-center gap-2 px-4 pt-3">
-                          <span className="text-[11px] font-medium uppercase tracking-wide text-[#9A988F]">
+                          <span className="text-[11px] font-medium uppercase tracking-wide text-ink-3">
                             {group.title}
                           </span>
                           {group.toComment && (
-                            <span className="rounded bg-[#E6EEF5] px-1.5 py-0.5 text-[9px] font-medium text-[#3A6391]">
+                            <span className="rounded bg-surface-2 px-1.5 py-0.5 text-[9px] font-medium text-data-3">
                               → comment
                             </span>
                           )}
                         </div>
                         <div className="px-4 py-2">
                           {group.fields.map((f) => (
-                            <div key={f.label} className="border-b border-[#F2F1ED] py-2 last:border-0">
+                            <div key={f.label} className="border-b border-surface-2 py-2 last:border-0">
                               <div className="flex items-start justify-between gap-3">
-                                <span className="text-[13px] text-[#6B6963]">{f.label}</span>
+                                <span className="text-[13px] text-ink-2">{f.label}</span>
                                 <span className="flex items-center gap-2 text-right">
-                                  <span className="text-[13px] font-medium text-[#2C2C2A]">{f.value}</span>
+                                  <span className="text-[13px] font-medium text-ink">{f.value}</span>
                                   <ConfidenceDots level={f.confidence} />
-                                  {f.note && <AlertTriangle className="h-3.5 w-3.5 text-[#B8975A]" />}
+                                  {f.note && <AlertTriangle className="h-3.5 w-3.5 text-ai" />}
                                 </span>
                               </div>
-                              {f.note && <p className="mt-1 text-[11px] text-[#9A988F]">{f.note}</p>}
+                              {f.note && <p className="mt-1 text-[11px] text-ink-3">{f.note}</p>}
                             </div>
                           ))}
                         </div>
                       </div>
                     ))}
                     {step1Confirmed && !step2Reviewed && (
-                      <div className="border-t border-[#E8E6E0] p-3">
+                      <div className="border-t border-line p-3">
                         <Button
                           variant="outline"
-                          className="w-full border-[#1B4D45] text-[#1B4D45] hover:bg-[#E1F5EE]"
+                          className="w-full border-brand text-brand hover:bg-brand-soft"
                           onClick={() => setStep2Reviewed(true)}
                         >
-                          Gecontroleerd →
+                          Reviewed →
                         </Button>
                       </div>
                     )}
                   </div>
                 </section>
 
-                {/* STEP 3 — Record voorstel */}
+                {/* STEP 3 — Proposed records */}
                 <section>
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-medium uppercase tracking-wide text-[#9A988F]">
-                      Stap 3 · Record voorstel
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-ink-3">
+                      Step 3 · Proposed records
                     </span>
                     <StepBadge status={step3Status} />
                   </div>
@@ -647,13 +647,13 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
                       const { Icon, tint, color } = recordIcon[rec.kind]
                       const isOpen = expanded === rec.id
                       return (
-                        <div key={rec.id} className="rounded-[10px] border border-[#E8E6E0] bg-white">
+                        <div key={rec.id} className="rounded-[10px] border border-line bg-white">
                           <div className="flex items-start gap-3 p-3">
                             <input
                               type="checkbox"
                               checked={checked[rec.id]}
                               onChange={(e) => setChecked({ ...checked, [rec.id]: e.target.checked })}
-                              className="mt-0.5 h-4 w-4 accent-[#1B4D45]"
+                              className="mt-0.5 h-4 w-4 accent-brand"
                             />
                             <div className={cn("flex h-7 w-7 shrink-0 items-center justify-center rounded-lg", tint)}>
                               <Icon className={cn("h-4 w-4", color)} />
@@ -663,24 +663,24 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
                               className="flex-1 text-left"
                             >
                               <div className="flex items-center justify-between">
-                                <span className="text-[12px] font-medium text-[#2C2C2A]">{rec.title}</span>
+                                <span className="text-[12px] font-medium text-ink">{rec.title}</span>
                                 <ChevronDown
-                                  className={cn("h-4 w-4 text-[#9A988F] transition-transform", isOpen && "rotate-180")}
+                                  className={cn("h-4 w-4 text-ink-3 transition-transform", isOpen && "rotate-180")}
                                 />
                               </div>
-                              <p className="mt-0.5 text-[12px] text-[#6B6963]">{rec.meta}</p>
-                              <p className="text-[11px] text-[#9A988F]">{rec.detail}</p>
-                              {rec.source && <p className="text-[11px] text-[#9A988F]">Bron: {rec.source}</p>}
+                              <p className="mt-0.5 text-[12px] text-ink-2">{rec.meta}</p>
+                              <p className="text-[11px] text-ink-3">{rec.detail}</p>
+                              {rec.source && <p className="text-[11px] text-ink-3">Source: {rec.source}</p>}
                             </button>
                           </div>
                           {isOpen && (
-                            <div className="space-y-2 border-t border-[#E8E6E0] p-3">
+                            <div className="space-y-2 border-t border-line p-3">
                               {rec.fields.map((field) => (
                                 <div key={field.label} className="flex items-center gap-3">
-                                  <span className="w-28 shrink-0 text-[12px] text-[#6B6963]">{field.label}</span>
+                                  <span className="w-28 shrink-0 text-[12px] text-ink-2">{field.label}</span>
                                   <input
                                     defaultValue={field.value}
-                                    className="flex-1 rounded-lg border border-[#E8E6E0] bg-white px-2.5 py-1.5 text-[12px] outline-none focus:border-[#1B4D45]"
+                                    className="flex-1 rounded-lg border border-line bg-white px-2.5 py-1.5 text-[12px] outline-none focus:border-brand"
                                   />
                                 </div>
                               ))}
@@ -689,43 +689,43 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
                         </div>
                       )
                     })}
-                    {!saved && <p className="px-1 text-[11px] text-[#9A988F]">Nog geen records opgeslagen</p>}
+                    {!saved && <p className="px-1 text-[11px] text-ink-3">No records saved yet</p>}
                   </div>
                 </section>
 
-                {/* STEP 4 — Archivering & koppeling */}
+                {/* STEP 4 — Filing & linking */}
                 <section>
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-medium uppercase tracking-wide text-[#9A988F]">
-                      Stap 4 · Archivering &amp; koppeling
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-ink-3">
+                      Step 4 · Filing &amp; linking
                     </span>
                     <StepBadge status={step4Status} />
                   </div>
                   <div
                     className={cn(
-                      "mt-3 rounded-[10px] border border-[#E8E6E0] bg-white p-4",
+                      "mt-3 rounded-[10px] border border-line bg-white p-4",
                       !step2Reviewed && "pointer-events-none opacity-50"
                     )}
                   >
                     {/* Folder structure */}
                     <div className="flex items-center gap-2">
-                      <FolderOpen className="h-4 w-4 text-[#1B4D45]" />
-                      <span className="text-[11px] font-medium uppercase tracking-wide text-[#9A988F]">
-                        Opslaglocatie
+                      <FolderOpen className="h-4 w-4 text-brand" />
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-ink-3">
+                        Storage location
                       </span>
                     </div>
                     {!filingEditing ? (
-                      <div className="mt-2 flex flex-wrap items-center gap-1 rounded-lg bg-[#F7F6F3] px-3 py-2.5">
+                      <div className="mt-2 flex flex-wrap items-center gap-1 rounded-lg bg-bg px-3 py-2.5">
                         {folderPath.split(" / ").map((seg, i, arr) => (
                           <span key={i} className="flex items-center gap-1">
-                            <Folder className="h-3.5 w-3.5 text-[#9A988F]" />
-                            <span className="text-[12px] font-medium text-[#2C2C2A]">{seg}</span>
-                            {i < arr.length - 1 && <ChevronRight className="h-3.5 w-3.5 text-[#9A988F]" />}
+                            <Folder className="h-3.5 w-3.5 text-ink-3" />
+                            <span className="text-[12px] font-medium text-ink">{seg}</span>
+                            {i < arr.length - 1 && <ChevronRight className="h-3.5 w-3.5 text-ink-3" />}
                           </span>
                         ))}
-                        <span className="ml-1 flex items-center gap-1 text-[12px] text-[#6B6963]">
-                          <ChevronRight className="h-3.5 w-3.5 text-[#9A988F]" />
-                          <FileText className="h-3.5 w-3.5 text-[#7B5EA7]" />
+                        <span className="ml-1 flex items-center gap-1 text-[12px] text-ink-2">
+                          <ChevronRight className="h-3.5 w-3.5 text-ink-3" />
+                          <FileText className="h-3.5 w-3.5 text-ai-text" />
                           {file.name}
                         </span>
                       </div>
@@ -733,67 +733,67 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
                       <input
                         value={folderPath}
                         onChange={(e) => setFolderPath(e.target.value)}
-                        className="mt-2 w-full rounded-lg border border-[#E8E6E0] bg-white px-2.5 py-1.5 text-[12px] outline-none focus:border-[#1B4D45]"
+                        className="mt-2 w-full rounded-lg border border-line bg-white px-2.5 py-1.5 text-[12px] outline-none focus:border-brand"
                       />
                     )}
 
                     {/* Linked data point */}
                     <div className="mt-4 flex items-center gap-2">
-                      <Link2 className="h-4 w-4 text-[#1B4D45]" />
-                      <span className="text-[11px] font-medium uppercase tracking-wide text-[#9A988F]">
-                        Gekoppeld datapunt
+                      <Link2 className="h-4 w-4 text-brand" />
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-ink-3">
+                        Linked data point
                       </span>
                     </div>
                     {!filingEditing ? (
-                      <div className="mt-2 rounded-lg border border-[#E8E6E0] px-3 py-2.5">
+                      <div className="mt-2 rounded-lg border border-line px-3 py-2.5">
                         <div className="flex items-center justify-between">
-                          <span className="text-[12px] font-medium text-[#2C2C2A]">{dataPoint}</span>
+                          <span className="text-[12px] font-medium text-ink">{dataPoint}</span>
                           <ConfidenceDots level={config.filing.confidence} />
                         </div>
-                        <p className="mt-0.5 text-[11px] text-[#9A988F]">{config.filing.dataPointDetail}</p>
+                        <p className="mt-0.5 text-[11px] text-ink-3">{config.filing.dataPointDetail}</p>
                       </div>
                     ) : (
                       <input
                         value={dataPoint}
                         onChange={(e) => setDataPoint(e.target.value)}
-                        className="mt-2 w-full rounded-lg border border-[#E8E6E0] bg-white px-2.5 py-1.5 text-[12px] outline-none focus:border-[#1B4D45]"
+                        className="mt-2 w-full rounded-lg border border-line bg-white px-2.5 py-1.5 text-[12px] outline-none focus:border-brand"
                       />
                     )}
 
                     {!step4Confirmed && (
                       <div className="mt-4">
-                        {config.filing.confidence !== "hoog" && !filingEditing && (
-                          <div className="mb-3 flex items-start gap-2 rounded-lg bg-[#FDF8F0] p-2.5">
-                            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#B8975A]" />
-                            <span className="text-[12px] text-[#6B6963]">
-                              Map of koppeling niet zeker. Controleer voor je bevestigt.
+                        {config.filing.confidence !== "high" && !filingEditing && (
+                          <div className="mb-3 flex items-start gap-2 rounded-lg bg-ai-soft p-2.5">
+                            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ai" />
+                            <span className="text-[12px] text-ink-2">
+                              Folder or link not certain. Check before you confirm.
                             </span>
                           </div>
                         )}
                         {filingEditing ? (
                           <Button
-                            className="w-full bg-[#1B4D45] text-white hover:bg-[#164039]"
+                            className="w-full bg-brand text-white hover:bg-action-hover"
                             onClick={() => {
                               setFilingEditing(false)
                               setStep4Confirmed(true)
                             }}
                           >
-                            Opslaan &amp; bevestigen →
+                            Save &amp; confirm →
                           </Button>
                         ) : (
                           <div className="flex gap-2">
                             <Button
-                              className="flex-1 bg-[#1B4D45] text-white hover:bg-[#164039]"
+                              className="flex-1 bg-brand text-white hover:bg-action-hover"
                               onClick={() => setStep4Confirmed(true)}
                             >
-                              Bevestig archivering
+                              Confirm filing
                             </Button>
                             <Button
                               variant="outline"
-                              className="flex-1 border-[#E8E6E0] text-[#2C2C2A]"
+                              className="flex-1 border-line text-ink"
                               onClick={() => setFilingEditing(true)}
                             >
-                              Aanpassen
+                              Edit
                             </Button>
                           </div>
                         )}
@@ -804,40 +804,40 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
               </div>
 
               {/* Approve bar */}
-              <div className="border-t border-[#E8E6E0] bg-[#F7F6F3] px-6 py-4">
+              <div className="border-t border-line bg-bg px-6 py-4">
                 {saved ? (
-                  <div className="flex items-start gap-2 rounded-lg bg-[#E1F5EE] px-3 py-2.5">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#3B6D11]" />
-                    <span className="text-[12px] text-[#3B6D11]">
-                      Opgeslagen: {savedCounts.audit} financiële records, {savedCounts.comment} comments,{" "}
-                      {savedCounts.context} context documenten. Document gearchiveerd in {folderPath} en gekoppeld aan{" "}
+                  <div className="flex items-start gap-2 rounded-lg bg-brand-soft px-3 py-2.5">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-ok" />
+                    <span className="text-[12px] text-ok">
+                      Saved: {savedCounts.audit} financial records, {savedCounts.comment} comments,{" "}
+                      {savedCounts.context} context documents. Document filed in {folderPath} and linked to{" "}
                       {dataPoint}.
                     </span>
                   </div>
                 ) : (
                   <>
-                    <p className="mb-2.5 text-[11px] text-[#9A988F]">
-                      Nóóit automatisch opgeslagen — bevestig hieronder.
+                    <p className="mb-2.5 text-[11px] text-ink-3">
+                      Never saved automatically — confirm below.
                     </p>
                     <div className="flex items-center justify-end gap-3">
                       <button
                         onClick={onBack}
-                        className="text-[13px] font-medium text-[#6B6963] hover:text-[#2C2C2A]"
+                        className="text-[13px] font-medium text-ink-2 hover:text-ink"
                       >
-                        Annuleren
+                        Cancel
                       </button>
                       <Button
                         disabled={!canSave || saving}
                         onClick={handleSave}
-                        className="bg-[#1B4D45] text-white hover:bg-[#164039] disabled:opacity-40"
+                        className="bg-brand text-white hover:bg-action-hover disabled:opacity-40"
                       >
                         {saving ? (
                           <>
                             <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
-                            Opslaan…
+                            Saving…
                           </>
                         ) : (
-                          "Opslaan →"
+                          "Save →"
                         )}
                       </Button>
                     </div>
@@ -855,8 +855,8 @@ export function DocumentReview({ file, onBack }: DocumentReviewProps) {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between">
-      <dt className="text-[#6B6963]">{label}</dt>
-      <dd className="font-medium text-[#2C2C2A]">{value}</dd>
+      <dt className="text-ink-2">{label}</dt>
+      <dd className="font-medium text-ink">{value}</dd>
     </div>
   )
 }
@@ -864,7 +864,7 @@ function Row({ label, value }: { label: string; value: string }) {
 function EditRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="mb-1 block text-[11px] font-medium text-[#6B6963]">{label}</label>
+      <label className="mb-1 block text-[11px] font-medium text-ink-2">{label}</label>
       {children}
     </div>
   )
@@ -874,24 +874,24 @@ function EditRow({ label, children }: { label: string; children: React.ReactNode
 function DocumentPage({ docType, company, period }: { docType: string; company: string; period: string }) {
   const title =
     docType === "annual-accounts"
-      ? `Jaarrekening ${period}`
+      ? `Annual accounts ${period}`
       : docType === "credit-agreement"
       ? `Senior Facilities Agreement`
       : `Investment Committee Memo`
   return (
-    <div className="rounded-sm border border-[#E2E0DA] bg-white px-10 py-12 text-[#2C2C2A] shadow-sm">
-      <p className="text-[10px] uppercase tracking-widest text-[#9A988F]">{documentTypeLabels[docType]}</p>
+    <div className="rounded-sm border border-line bg-white px-10 py-12 text-ink shadow-sm">
+      <p className="text-[10px] uppercase tracking-widest text-ink-3">{documentTypeLabels[docType]}</p>
       <h2 className="mt-2 text-[18px] font-semibold">{title}</h2>
-      <p className="mt-1 text-[12px] text-[#6B6963]">
+      <p className="mt-1 text-[12px] text-ink-2">
         {company} · {period}
       </p>
-      <div className="mt-6 space-y-3 text-[11px] leading-relaxed text-[#4A4844]">
+      <div className="mt-6 space-y-3 text-[11px] leading-relaxed text-ink">
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="space-y-1.5">
-            <div className="h-2 w-2/5 rounded bg-[#EDEBE5]" />
-            <div className="h-2 w-full rounded bg-[#F2F1ED]" />
-            <div className="h-2 w-11/12 rounded bg-[#F2F1ED]" />
-            <div className="h-2 w-4/5 rounded bg-[#F2F1ED]" />
+            <div className="h-2 w-2/5 rounded bg-line" />
+            <div className="h-2 w-full rounded bg-surface-2" />
+            <div className="h-2 w-11/12 rounded bg-surface-2" />
+            <div className="h-2 w-4/5 rounded bg-surface-2" />
           </div>
         ))}
       </div>
