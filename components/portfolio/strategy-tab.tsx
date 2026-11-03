@@ -28,6 +28,8 @@ const REV_MC = [0.66, 0.8, 0.97, 1.07, 1.12, 1.2, 1.28]
 const EB_ACT = [0.68, 0.9, 1.0, 0.98]
 const EB_IC = [0.75, 0.85, 1.0, 1.15, 1.3, 1.5, 1.7]
 const EB_MC = [0.72, 0.8, 0.95, 1.05, 1.08, 1.18, 1.25]
+// the add-ons of the company ramp up from 2025 (IC and exit outlook are both shown incl. M&A)
+const MA_RAMP = [0, 0, 0.2, 0.5, 1, 1.1, 1.2]
 const C_ACT = "#323a5f"
 const C_IC = "#7f8189"
 const C_MC = "#b9bccb"
@@ -121,14 +123,16 @@ export function StrategyTab({ company }: StrategyTabProps) {
   // ---------- actual performance vs investment case ----------
   const revBase = company.financials.revenue.fy.ltm
   const ebBase = company.financials.normalizedEbitda.fy.ltm
+  const maRev = addOns.reduce((t, a) => t + a.revenue, 0)
+  const maEb = addOns.reduce((t, a) => t + a.ebitda, 0)
   const baseCase = YEARS.map((y, i) => ({
     year: String(y),
     ebitdaAct: y <= LAST_ACTUAL_YEAR ? ebBase * EB_ACT[i] : null,
-    ebitdaIc: ebBase * EB_IC[i],
-    ebitdaMc: ebBase * EB_MC[i],
+    ebitdaIc: ebBase * EB_IC[i] + maEb * MA_RAMP[i],
+    ebitdaMc: ebBase * EB_MC[i] + maEb * MA_RAMP[i],
     revAct: y <= LAST_ACTUAL_YEAR ? revBase * REV_ACT[i] : null,
-    revIc: revBase * REV_IC[i],
-    revMc: revBase * REV_MC[i],
+    revIc: revBase * REV_IC[i] + maRev * MA_RAMP[i],
+    revMc: revBase * REV_MC[i] + maRev * MA_RAMP[i],
   }))
   const yMax = Math.ceil((Math.max(...baseCase.map((d) => Math.max(d.revIc, d.revMc, d.revAct ?? 0))) * 1.12) / 10) * 10 || 10
   const labelDec = yMax <= 10 ? 1 : 0
@@ -365,12 +369,12 @@ export function StrategyTab({ company }: StrategyTabProps) {
 
         {/* Actual performance vs investment base case */}
         <div className="col-span-7 flex flex-col overflow-hidden rounded-[10px] border border-line bg-white">
-          <CardHeader className="px-4" title="Actual performance vs investment base case" subtitle="mEUR · bars = EBITDA, lines = revenue" />
+          <CardHeader className="px-4" title="Actual performance vs investment base case" subtitle="mEUR · bars = EBITDA, lines = revenue · IC and Exit outlook both incl. M&A" />
           <div className="flex flex-1 items-end gap-4 px-4 pb-4 pt-2">
-            <div className="flex w-[118px] shrink-0 flex-col justify-center gap-1.5 text-[10.5px] text-ink">
+            <div className="flex w-[132px] shrink-0 flex-col justify-center gap-1.5 text-[10.5px] text-ink">
               {([
-                ["EBITDA Actual", C_ACT, "bar"], ["EBITDA IC", C_IC, "bar"], ["EBITDA MC", C_MC, "bar"],
-                ["Revenue actual", C_ACT, "line"], ["Revenue IC", C_IC, "dash"], ["Revenue MC", C_MC, "dash"],
+                ["EBITDA Actual", C_ACT, "bar"], ["EBITDA IC", C_IC, "bar"], ["EBITDA Exit outlook", C_MC, "bar"],
+                ["Revenue actual", C_ACT, "line"], ["Revenue IC", C_IC, "dash"], ["Revenue Exit outlook", C_MC, "dash"],
               ] as [string, string, "bar" | "line" | "dash"][]).map(([label, c, kind]) => (
                 <div key={label} className="flex items-center gap-2 whitespace-nowrap">
                   {kind === "bar" ? (

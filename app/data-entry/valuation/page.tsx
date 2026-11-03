@@ -53,16 +53,31 @@ interface ExitProjection {
   netDebt: number
 }
 
+type ScenarioId = "ic-incl" | "ic-excl" | "exit-incl" | "exit-excl"
+const SCENARIOS: { id: ScenarioId; label: string; ma: boolean }[] = [
+  { id: "ic-incl", label: "IC incl. M&A", ma: true },
+  { id: "ic-excl", label: "IC excl. M&A", ma: false },
+  { id: "exit-incl", label: "Exit outlook incl. M&A", ma: true },
+  { id: "exit-excl", label: "Exit outlook excl. M&A", ma: false },
+]
+const scenarioLabel = (id: ScenarioId) => SCENARIOS.find((x) => x.id === id)?.label ?? id
+const exitKey = (companyId: string, scenario?: ScenarioId) => `${companyId}|${scenario ?? "exit-excl"}`
+
 interface SavedExit {
   id: string
   companyId: string
   companyName: string
+  scenario?: ScenarioId
+  /** Extra invested capital for the incl. M&A scenarios, one amount in €k. */
+  extraInvestedK?: number
   exitYear: string
   multiple: number
   shareholding: number
   ebitdaK: number
   netDebtK: number
   evK: number
+  /** EV / revenue multiple of the exit year. */
+  evRevenue?: number
   equityK: number
   projections: ExitProjection[]
   note: string
@@ -143,6 +158,7 @@ export default function ValuationEntryPage() {
   const [selectedFund, setSelectedFund] = useState(funds[0])
   const [showNewValuation, setShowNewValuation] = useState(false)
   const [showExitScenario, setShowExitScenario] = useState(false)
+  const [tableScenario, setTableScenario] = useState<ScenarioId>("exit-excl")
   const [selectedQuarter, setSelectedQuarter] = useState("Q4")
   const [savedValuations, setSavedValuations] = useState<SavedValuation[]>([])
   const [savedExits, setSavedExits] = useState<SavedExit[]>([])
@@ -159,7 +175,7 @@ export default function ValuationEntryPage() {
   const latestVal: Record<string, SavedValuation> = {}
   for (const v of savedValuations) if (!latestVal[v.companyId]) latestVal[v.companyId] = v
   const latestExit: Record<string, SavedExit> = {}
-  for (const x of savedExits) if (!latestExit[x.companyId]) latestExit[x.companyId] = x
+  for (const x of savedExits) if (!latestExit[exitKey(x.companyId, x.scenario)]) latestExit[exitKey(x.companyId, x.scenario)] = x
 
   // Valuation form state - New Valuation Entry (all values in €m)
   const [valuationForm, setValuationForm] = useState({
@@ -318,6 +334,8 @@ export default function ValuationEntryPage() {
   // Exit scenario form state
   const [exitForm, setExitForm] = useState({
     company: "",
+    scenario: "exit-excl" as ScenarioId,
+    extraInvested: "",
     exitYear: "2027",
     projections: DEFAULT_PROJECTIONS.map((p) => ({ ...p })),
     exitMultiple: 8,
@@ -332,23 +350,30 @@ export default function ValuationEntryPage() {
   const exitRow = exitForm.projections.find((p) => p.year === exitForm.exitYear)
   const exitEbitdaK = exitRow?.ebitda ?? 0
   const exitNetDebtK = exitRow?.netDebt ?? 0
+  const exitRevenueK = exitRow?.revenue ?? 0
   const exitEvK = exitEbitdaK * exitForm.exitMultiple
+  const exitEvRevenue = exitRevenueK ? exitEvK / exitRevenueK : 0
   const exitCumprefK = parseFloat(exitForm.exitCumpref.replace(",", ".")) || 0
   const exitEquityK = exitEvK - exitNetDebtK - exitCumprefK
   const exitFundShareK = (exitEquityK * exitForm.exitShareholding) / 100
+  const exitScenarioMa = SCENARIOS.find((x) => x.id === exitForm.scenario)?.ma ?? false
+  const exitExtraK = exitScenarioMa ? parseFloat(exitForm.extraInvested.replace(",", ".")) || 0 : 0
+  const exitInvestedK = (exitCompany?.valuation.exit.investedValue ?? 0) * 1000 + exitExtraK
   const exitEbitdaChanged = exitForm.projections.some((p, i) => p.ebitda !== exitBaseline[i])
   const exitNoteMissing = exitEbitdaChanged && !exitForm.note.trim()
   const canSaveExit = !!exitCompany && !exitNoteMissing
 
-  const selectExitCompany = (id: string) => {
+  const loadExit = (id: string, scenario: ScenarioId) => {
     const c = companies.find((x) => x.id === id)
     if (!c) return
-    const saved = latestExit[id]
+    const saved = latestExit[exitKey(id, scenario)]
     const projections = saved ? saved.projections.map((p) => ({ ...p })) : DEFAULT_PROJECTIONS.map((p) => ({ ...p }))
     setExitBaseline(projections.map((p) => p.ebitda))
     setExitForm((f) => ({
       ...f,
       company: id,
+      scenario,
+      extraInvested: saved?.extraInvestedK ? String(saved.extraInvestedK) : "",
       exitYear: saved?.exitYear ?? f.exitYear,
       projections,
       exitMultiple: saved?.multiple ?? c.valuation.exit.evEbitda,
@@ -357,18 +382,26 @@ export default function ValuationEntryPage() {
       note: "",
     }))
   }
+  const selectExitCompany = (id: string) => loadExit(id, exitForm.scenario)
+  const selectExitScenario = (scenario: ScenarioId) => {
+    if (exitForm.company) loadExit(exitForm.company, scenario)
+    else setExitForm((f) => ({ ...f, scenario, extraInvested: "" }))
+  }
   const saveExit = () => {
     if (!exitCompany || exitNoteMissing) return
     const rec: SavedExit = {
       id: `${Date.now()}`,
       companyId: exitCompany.id,
       companyName: exitCompany.name,
+      scenario: exitForm.scenario,
+      extraInvestedK: exitExtraK,
       exitYear: exitForm.exitYear,
       multiple: exitForm.exitMultiple,
       shareholding: exitForm.exitShareholding,
       ebitdaK: exitEbitdaK,
       netDebtK: exitNetDebtK,
       evK: exitEvK,
+      evRevenue: exitEvRevenue,
       equityK: exitEquityK,
       projections: exitForm.projections.map((p) => ({ ...p })),
       note: exitForm.note.trim(),
@@ -380,7 +413,7 @@ export default function ValuationEntryPage() {
     setSavedExits(next)
     saveList(EXIT_KEY, next)
     setShowExitScenario(false)
-    setBanner(`EXIT scenario saved for ${exitCompany.name}: total proceeds ${fmtMk(exitEquityK)}.`)
+    setBanner(`${scenarioLabel(exitForm.scenario)} saved for ${exitCompany.name}: total proceeds ${fmtMk(exitEquityK)}${exitExtraK ? `, ${fmtMk(exitExtraK)} extra invested` : ""}.`)
     setTimeout(() => setBanner(""), 6000)
   }
 
@@ -434,23 +467,29 @@ export default function ValuationEntryPage() {
   }
 
   // EXIT scenario data
+  const tableMa = SCENARIOS.find((x) => x.id === tableScenario)?.ma ?? false
   const exitScenarioData = fundCompanies.map((c, i) => {
-    const ex = latestExit[c.id]
-    const investment = c.valuation.exit.investedValue
-    const proceeds = ex ? ex.equityK / 1000 : c.valuation.exit.fairValue
+    const ex = latestExit[exitKey(c.id, tableScenario)]
+    const pendingEquity = (c.addOns ?? []).filter((a) => a.status !== "Closed").reduce((t, a) => t + a.equity, 0)
+    const icFactor = tableScenario.startsWith("ic") ? 0.92 : 1
+    const baseInvested = c.valuation.exit.investedValue
+    const defInvested = baseInvested + (tableMa ? pendingEquity : 0)
+    const defProceeds = (c.valuation.exit.fairValue + (tableMa ? pendingEquity * c.valuation.exit.moi * 1.15 : 0)) * icFactor
+    const investment = ex ? baseInvested + (ex.extraInvestedK ?? 0) / 1000 : defInvested
+    const proceeds = ex ? ex.equityK / 1000 : defProceeds
     return {
       company: c.name,
       status: c.status === "on-track" ? "P" : c.status === "watch" ? "W" : "X",
       exitYear: ex ? Number(ex.exitYear) : 2026 + (i % 3),
       investment,
       totalProceeds: proceeds,
-      moi: ex ? (investment ? proceeds / investment : 0) : c.valuation.exit.moi,
+      moi: investment ? proceeds / investment : 0,
+      evRevenue: ex?.evRevenue ?? c.valuation.exit.evEbitda * (c.financials.normalizedEbitdaPercent.fy.ltm / 100 + 0.03),
       lastUpdated: ex ? fmtStamp(ex.savedAt) : `${15 + i} apr 2026`,
       note: ex?.note ?? "",
       adjusted: !!ex?.ebitdaChanged,
     }
   })
-
   const exitTotals = {
     investment: exitScenarioData.reduce((sum, c) => sum + c.investment, 0),
     totalProceeds: exitScenarioData.reduce((sum, c) => sum + c.totalProceeds, 0),
@@ -783,6 +822,20 @@ export default function ValuationEntryPage() {
               <h2 className="text-[13px] font-medium text-ink">EXIT Outlooks</h2>
               <span className="rounded bg-ai/10 px-2 py-0.5 text-[10px] font-medium text-ai">Projected</span>
             </div>
+            <div className="flex gap-0.5 rounded-lg bg-surface-2 p-[3px]">
+              {SCENARIOS.map((sc) => (
+                <button
+                  key={sc.id}
+                  onClick={() => setTableScenario(sc.id)}
+                  className={cn(
+                    "rounded-md px-2.5 py-1 text-[11px] transition-colors",
+                    tableScenario === sc.id ? "bg-white font-semibold text-ink shadow-sm" : "text-ink-3 hover:text-ink",
+                  )}
+                >
+                  {sc.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="overflow-x-auto">
@@ -795,6 +848,7 @@ export default function ValuationEntryPage() {
                   <th className="px-4 py-2.5 text-right font-medium text-ink-2">Investment</th>
                   <th className="px-4 py-2.5 text-right font-medium text-ink-2">Total Proceeds</th>
                   <th className="px-4 py-2.5 text-right font-medium text-ink-2">MOI</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-ink-2">EV / Revenue</th>
                   <th className="px-4 py-2.5 text-right font-medium text-ink-2">Last Updated</th>
                   <th className="px-4 py-2.5 text-left font-medium text-ink-2">Note</th>
                 </tr>
@@ -816,6 +870,7 @@ export default function ValuationEntryPage() {
                     <td className="px-4 py-2.5 text-right tabular-nums text-ink">{row.investment.toFixed(1)}M</td>
                     <td className="px-4 py-2.5 text-right tabular-nums text-ink">{row.totalProceeds.toFixed(1)}M</td>
                     <td className="px-4 py-2.5 text-right tabular-nums font-medium text-ink">{row.moi.toFixed(2)}x</td>
+                    <td className="px-4 py-2.5 text-right tabular-nums text-ink">{row.evRevenue.toFixed(2)}x</td>
                     <td className="px-4 py-2.5 text-right text-ink-2">{row.lastUpdated}</td>
                     <td className="max-w-[260px] truncate px-4 py-2.5 text-ink-2" title={row.note}>
                       {row.adjusted && <span className="mr-1.5 rounded bg-[#FAEEDA] px-1.5 py-0.5 text-[9px] font-medium text-[#854F0B]">EBITDA adjusted</span>}
@@ -831,6 +886,7 @@ export default function ValuationEntryPage() {
                   <td className="px-4 py-2.5 text-right tabular-nums font-medium text-ai">{exitTotals.investment.toFixed(1)}M</td>
                   <td className="px-4 py-2.5 text-right tabular-nums font-medium text-ai">{exitTotals.totalProceeds.toFixed(1)}M</td>
                   <td className="px-4 py-2.5 text-right tabular-nums font-medium text-ai">{exitTotals.avgMoi.toFixed(2)}x</td>
+                  <td className="px-4 py-2.5" />
                   <td className="px-4 py-2.5"></td>
                   <td className="px-4 py-2.5"></td>
                 </tr>
@@ -1196,7 +1252,7 @@ export default function ValuationEntryPage() {
       <Dialog open={showExitScenario} onOpenChange={setShowExitScenario}>
         <DialogContent className="max-w-[600px] p-0">
           <DialogHeader className="border-b border-line px-6 py-4">
-            <DialogTitle className="text-lg font-medium text-ink">Update EXIT Scenario</DialogTitle>
+            <DialogTitle className="text-lg font-medium text-ink">Update EXIT Scenario · {scenarioLabel(exitForm.scenario)}</DialogTitle>
           </DialogHeader>
           <div className="max-h-[70vh] overflow-y-auto p-6">
             {/* Company & Exit Year */}
@@ -1227,6 +1283,34 @@ export default function ValuationEntryPage() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+
+            {/* Scenario */}
+            <div className="mb-4">
+              <label className="mb-1.5 block text-[11px] font-medium text-ink-2">Scenario</label>
+              <Select value={exitForm.scenario} onValueChange={(v) => selectExitScenario(v as ScenarioId)}>
+                <SelectTrigger className="h-9 border-line text-[12px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {SCENARIOS.map((sc) => (
+                    <SelectItem key={sc.id} value={sc.id}>{sc.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {exitScenarioMa && (
+                <div className="mt-3 rounded-lg border border-line bg-surface-2/60 p-3">
+                  <label className="mb-1.5 block text-[11px] font-medium text-ink-2">Additional invested capital for the M&amp;A (€k, one amount)</label>
+                  <Input
+                    type="text"
+                    placeholder="e.g. 2500"
+                    value={exitForm.extraInvested}
+                    onChange={(e) => setExitForm({ ...exitForm, extraInvested: e.target.value })}
+                    className="h-9 border-line bg-white text-[12px]"
+                  />
+                  <p className="mt-1 text-[10.5px] text-ink-3">Added to the invested capital of this scenario.</p>
+                </div>
+              )}
             </div>
 
             {/* Yearly Projections Table */}
@@ -1310,13 +1394,27 @@ export default function ValuationEntryPage() {
             {/* EXIT Valuation Parameters */}
             <div className="rounded-lg border border-line p-4">
               <div className="mb-3 text-[12px] font-medium text-ink">EXIT Valuation Parameters</div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-4 gap-3">
                 <div>
                   <label className="mb-1.5 block text-[11px] font-medium text-ink-2">EXIT EV/EBITDA Multiple</label>
                   <Input
                     type="number"
                     value={exitForm.exitMultiple}
                     onChange={(e) => setExitForm({ ...exitForm, exitMultiple: parseFloat(e.target.value) || 0 })}
+                    className="h-9 border-line text-[12px]"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-[11px] font-medium text-ink-2">EXIT EV/Revenue Multiple</label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    disabled={!exitEbitdaK || !exitRevenueK}
+                    value={Number(exitEvRevenue.toFixed(2))}
+                    onChange={(e) => {
+                      const v = parseFloat(e.target.value) || 0
+                      if (exitEbitdaK) setExitForm({ ...exitForm, exitMultiple: (v * exitRevenueK) / exitEbitdaK })
+                    }}
                     className="h-9 border-line text-[12px]"
                   />
                 </div>
@@ -1352,6 +1450,10 @@ export default function ValuationEntryPage() {
                   <span className="font-medium text-ink">{fmtMk(exitEvK)}</span>
                 </div>
                 <div className="flex items-center justify-between text-[12px]">
+                  <span className="text-ink-2">EXIT EV / Revenue ({exitForm.exitYear})</span>
+                  <span className="font-medium text-ink">{exitEvRevenue.toFixed(2)}x</span>
+                </div>
+                <div className="flex items-center justify-between text-[12px]">
                   <span className="text-ink-2">EXIT Net Debt ({exitForm.exitYear})</span>
                   <span className="font-medium text-ink">{fmtMk(exitNetDebtK)}</span>
                 </div>
@@ -1362,6 +1464,14 @@ export default function ValuationEntryPage() {
                 <div className="flex items-center justify-between text-[12px]">
                   <span className="text-ink-2">Fund share ({exitForm.exitShareholding}%)</span>
                   <span className="font-medium text-ink">{fmtMk(exitFundShareK)}</span>
+                </div>
+                <div className="flex items-center justify-between text-[12px]">
+                  <span className="text-ink-2">Invested capital{exitScenarioMa ? " (incl. additional)" : ""}</span>
+                  <span className="font-medium text-ink">{fmtMk(exitInvestedK)}</span>
+                </div>
+                <div className="flex items-center justify-between text-[12px]">
+                  <span className="text-ink-2">MOI</span>
+                  <span className="font-medium text-ink">{exitInvestedK ? (exitEquityK / exitInvestedK).toFixed(2) : "0.00"}x</span>
                 </div>
               </div>
             </div>
