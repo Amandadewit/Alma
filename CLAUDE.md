@@ -10,6 +10,7 @@ Demo mock-up of the Alma Insights portfolio-monitoring platform (private equity)
 ## Stack
 Next.js 16 (app router), React 19, TypeScript, Tailwind v4 with CSS tokens in `app/globals.css`, shadcn-style components in `components/ui`, lucide-react icons, recharts.
 Active theme is `goud-light` (set on `<html data-theme>` in `app/layout.tsx`): navy menu, muted gold accent (`--brand`). Change colours only through the tokens in `globals.css`.
+Colour proposals live beside it in `globals.css`: `current` (the live demo.alma-insights.net palette, for comparison), `goud-calm`, `kobalt-calm`, `volt-calm` and `grafiet`. The source of truth is the "Alma Refresh" design system in Claude (https://claude.ai/artifact/Es1A4yi4dpewLue1H5BsqF), which also has the developer handoff table. `components/theme-switcher.tsx` switches themes: visible in development, or on any build with `?theme=<id>` in the URL. Text on `--brand` uses `text-on-brand`, never `text-white`.
 
 ## Where things live
 - `app/portfolio/page.tsx`: Portfolio Performance with tabs Performance / Strategy / Value creation (`components/portfolio/*`). Shared card header: `components/portfolio/card-header.tsx`.
@@ -19,7 +20,7 @@ Active theme is `goud-light` (set on `<html data-theme>` in `app/layout.tsx`): n
 - Excel performance-sheet intake: `components/monthly-report-intake.tsx`, `lib/monthly-report-intake-data.ts`, test cases `lib/intake-case-a.ts` and `lib/intake-case-b.ts`. There is no mapping step: one standard performance sheet; lines outside it are skipped or a new metric code is requested from Alma. Earlier months are "Historical data".
 - CFO portal: `lib/portfolio-portal-config.ts`, `lib/portal-submissions.ts` (demo May upload opens the intake output read-only).
 - Reporting Playbook: `lib/playbook-content.ts` and `components/portfolio-portal/playbook-chapter.tsx` (long chapters split into sub-chapters at level-2 headings).
-- Demo edits are stored in the browser (localStorage): `alma-company-master:<id>`, `alma-valuations`, `alma-exit-scenarios`, `alma-imported-comments`. "Reset demo data" in Key Data clears them.
+- Demo edits are stored in the browser (localStorage): `alma-company-master:<id>`, `alma-valuations`, `alma-exit-scenarios`, `alma-imported-comments`. "Reset demo data" in Key Data clears them. The chosen theme is kept under `alma-theme`.
 
 ## Conventions
 - All UI text is in English.

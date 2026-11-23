@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { AppSidebar } from "@/components/app-sidebar"
 import { ViewModeProvider } from "@/contexts/view-mode-context"
+import { ThemeSwitcher } from "@/components/theme-switcher"
 
 export const metadata: Metadata = {
   title: "Alma Insights - Portfolio Monitoring",
@@ -50,6 +51,7 @@ export default function RootLayout({
             {children}
           </main>
         </ViewModeProvider>
+        <ThemeSwitcher />
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>

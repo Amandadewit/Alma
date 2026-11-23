@@ -151,6 +151,254 @@
   --shadow-glow: 0 10px 30px rgba(140,110,40,0.24);
 }
 
+/* Calm proposals (November 2026), from the "Alma Refresh" design system in Claude.
+   Try them with the theme switcher (bottom right in development, or add ?theme=<id> to the URL). */
+
+/* Current: the live product at demo.alma-insights.net (23 November 2026), for comparison. */
+[data-theme="current"] {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-2: #f9fafb;
+  --line: #e5e7eb;
+  --line-strong: #d1d5db;
+  --ink: #1b2535;
+  --ink-2: #6b7280;
+  --ink-3: #9ca3af;
+  --action: #1b4d45;
+  --on-action: #ffffff;
+  --action-hover: #085041;
+  --brand: #1b4d45;
+  --on-brand: #ffffff;
+  --brand-soft: #e3ece8;
+  --brand-text: #1b4d45;
+  --ai: #b8975a;
+  --on-ai: #1b2535;
+  --ai-soft: #fffbeb;
+  --ai-text: #973c00;
+  --mark: #b8975a;
+  --nav-bg: #1b4d45;
+  --nav-ink: #ffffff;
+  --nav-ink-2: rgba(255,255,255,0.7);
+  --nav-active-bg: rgba(255,255,255,0.15);
+  --nav-active-ink: #ffffff;
+  --nav-line: rgba(255,255,255,0.1);
+  --nav-mark: #d9b978;
+  --data-1: #1b4d45;
+  --data-2: #a7f3d0;
+  --data-3: #374151;
+  --data-4: #6b7280;
+  --data-5: #b8975a;
+  --data-fill: #1b4d45;
+  --data-grid: #e5e7eb;
+  --ok: #2f6f5e;
+  --ok-soft: #e3ece8;
+  --watch: #f0a04b;
+  --watch-soft: #fffbeb;
+  --alert: #a8503f;
+  --alert-soft: #fef2f2;
+  --focus: #2563eb;
+  --glow: rgba(27,77,69,0.14);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-pop: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-glow: none;
+}
+
+/* Goud calm: navy and a softer, less yellow gold; steel-blue AI. */
+[data-theme="goud-calm"] {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-2: #eceef2;
+  --line: #dfe2e8;
+  --line-strong: #7d8595;
+  --ink: #0f1626;
+  --ink-2: #4a5266;
+  --ink-3: #5d6577;
+  --action: #14203a;
+  --on-action: #ffffff;
+  --action-hover: #24314d;
+  --brand: #a68b4c;
+  --on-brand: #0f1626;
+  --brand-soft: #f3eee1;
+  --brand-text: #6a5524;
+  --ai: #b9c7df;
+  --on-ai: #0f1626;
+  --ai-soft: #ebeff6;
+  --ai-text: #3d5a8a;
+  --mark: #a68b4c;
+  --nav-bg: #121a2c;
+  --nav-ink: #f2f4f8;
+  --nav-ink-2: #9ca4b6;
+  --nav-active-bg: rgba(196,170,110,0.14);
+  --nav-active-ink: #dcc58e;
+  --nav-line: rgba(255,255,255,0.07);
+  --nav-mark: #c4aa6e;
+  --data-1: #8c7340;
+  --data-2: #4a6a9c;
+  --data-3: #1f2a40;
+  --data-4: #8a919f;
+  --data-5: #a86450;
+  --data-fill: #a68b4c;
+  --data-grid: #e6e8ed;
+  --ok: #23785a;
+  --ok-soft: #e2f1e9;
+  --watch: #8e5d12;
+  --watch-soft: #faefda;
+  --alert: #b13844;
+  --alert-soft: #f8e4e6;
+  --focus: #3f62b0;
+  --glow: rgba(166,139,76,0.16);
+  --shadow-card: 0 1px 2px rgba(15,22,38,0.06), 0 6px 20px rgba(15,22,38,0.05);
+  --shadow-pop: 0 2px 6px rgba(15,22,38,0.08), 0 16px 40px rgba(15,22,38,0.14);
+  --shadow-glow: 0 10px 30px rgba(140,115,60,0.18);
+}
+
+/* Kobalt calm: a muted cobalt instead of electric blue; copper AI instead of orange. */
+[data-theme="kobalt-calm"] {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-2: #eaeef4;
+  --line: #dbe1ea;
+  --line-strong: #78839a;
+  --ink: #0f1a2e;
+  --ink-2: #475369;
+  --ink-3: #5a6579;
+  --action: #2c4a86;
+  --on-action: #ffffff;
+  --action-hover: #233d70;
+  --brand: #3b5c9e;
+  --on-brand: #ffffff;
+  --brand-soft: #e6ecf6;
+  --brand-text: #2f4f8f;
+  --ai: #d2a27c;
+  --on-ai: #1a140e;
+  --ai-soft: #f6ede4;
+  --ai-text: #87502a;
+  --mark: #3b5c9e;
+  --nav-bg: #142033;
+  --nav-ink: #f1f4f9;
+  --nav-ink-2: #99a4b9;
+  --nav-active-bg: rgba(157,178,219,0.14);
+  --nav-active-ink: #ffffff;
+  --nav-line: rgba(255,255,255,0.07);
+  --nav-mark: #9db2db;
+  --data-1: #3b5c9e;
+  --data-2: #b07a4c;
+  --data-3: #6b93b5;
+  --data-4: #8a93a3;
+  --data-5: #9a7b3e;
+  --data-fill: #3b5c9e;
+  --data-grid: #e4e8ef;
+  --ok: #23785a;
+  --ok-soft: #e2f1e9;
+  --watch: #8e5d12;
+  --watch-soft: #faefda;
+  --alert: #b13844;
+  --alert-soft: #f8e4e6;
+  --focus: #3d63b8;
+  --glow: rgba(59,92,158,0.14);
+  --shadow-card: 0 1px 2px rgba(15,26,46,0.06), 0 6px 20px rgba(15,26,46,0.05);
+  --shadow-pop: 0 2px 6px rgba(15,26,46,0.08), 0 16px 40px rgba(15,26,46,0.14);
+  --shadow-glow: 0 10px 30px rgba(59,92,158,0.18);
+}
+
+/* Volt calm: charcoal with a sage olive instead of lime; muted teal AI. */
+[data-theme="volt-calm"] {
+  --bg: #f5f6f3;
+  --surface: #ffffff;
+  --surface-2: #eceee8;
+  --line: #dfe2d9;
+  --line-strong: #7d8277;
+  --ink: #161a14;
+  --ink-2: #4a5045;
+  --ink-3: #5b6156;
+  --action: #1f241d;
+  --on-action: #ffffff;
+  --action-hover: #31372e;
+  --brand: #8a9a5b;
+  --on-brand: #161a14;
+  --brand-soft: #eef1e3;
+  --brand-text: #4f5d2a;
+  --ai: #8fbcc0;
+  --on-ai: #161a14;
+  --ai-soft: #e4f0f1;
+  --ai-text: #2f6a70;
+  --mark: #6f7f45;
+  --nav-bg: #1b1f19;
+  --nav-ink: #f2f4ee;
+  --nav-ink-2: #a0a697;
+  --nav-active-bg: rgba(168,184,120,0.14);
+  --nav-active-ink: #c5d29a;
+  --nav-line: rgba(255,255,255,0.07);
+  --nav-mark: #b3c27f;
+  --data-1: #5f6f3a;
+  --data-2: #3f7f86;
+  --data-3: #1f241d;
+  --data-4: #8b9085;
+  --data-5: #a8703f;
+  --data-fill: #8a9a5b;
+  --data-grid: #e5e8e0;
+  --ok: #23785a;
+  --ok-soft: #e2f1e9;
+  --watch: #8e5d12;
+  --watch-soft: #faefda;
+  --alert: #b13844;
+  --alert-soft: #f8e4e6;
+  --focus: #2f6a70;
+  --glow: rgba(138,154,91,0.16);
+  --shadow-card: 0 1px 2px rgba(22,26,20,0.06), 0 6px 20px rgba(22,26,20,0.05);
+  --shadow-pop: 0 2px 6px rgba(22,26,20,0.08), 0 16px 40px rgba(22,26,20,0.14);
+  --shadow-glow: 0 10px 30px rgba(111,127,69,0.18);
+}
+
+/* Grafiet: new; near-monochrome graphite with one quiet steel blue for AI. */
+[data-theme="grafiet"] {
+  --bg: #f6f6f7;
+  --surface: #ffffff;
+  --surface-2: #ededef;
+  --line: #e0e0e4;
+  --line-strong: #7c7f88;
+  --ink: #16181d;
+  --ink-2: #4a4d56;
+  --ink-3: #5c6069;
+  --action: #23262d;
+  --on-action: #ffffff;
+  --action-hover: #363a44;
+  --brand: #4b5160;
+  --on-brand: #ffffff;
+  --brand-soft: #e9eaee;
+  --brand-text: #3e4350;
+  --ai: #a9b7d0;
+  --on-ai: #16181d;
+  --ai-soft: #e9edf4;
+  --ai-text: #3f5680;
+  --mark: #4b5160;
+  --nav-bg: #1c1e23;
+  --nav-ink: #f3f3f5;
+  --nav-ink-2: #a0a3ac;
+  --nav-active-bg: rgba(255,255,255,0.10);
+  --nav-active-ink: #ffffff;
+  --nav-line: rgba(255,255,255,0.07);
+  --nav-mark: #c9ccd3;
+  --data-1: #3e4350;
+  --data-2: #6f86ad;
+  --data-3: #9aa0ab;
+  --data-4: #c0c4cc;
+  --data-5: #a3876a;
+  --data-fill: #4b5160;
+  --data-grid: #e7e7ea;
+  --ok: #23785a;
+  --ok-soft: #e2f1e9;
+  --watch: #8e5d12;
+  --watch-soft: #faefda;
+  --alert: #b13844;
+  --alert-soft: #f8e4e6;
+  --focus: #3f5680;
+  --glow: rgba(75,81,96,0.14);
+  --shadow-card: 0 1px 2px rgba(22,24,29,0.06), 0 6px 20px rgba(22,24,29,0.05);
+  --shadow-pop: 0 2px 6px rgba(22,24,29,0.08), 0 16px 40px rgba(22,24,29,0.14);
+  --shadow-glow: 0 10px 30px rgba(75,81,96,0.18);
+}
+
 :root {
   /* shadcn semantic tokens, mapped onto Alma Refresh */
   --background: var(--bg);

@@ -227,7 +227,7 @@ export default function PerformanceOverviewPage() {
                       className={cn(
                         "px-3 py-1 text-[11px] font-medium transition-colors",
                         viewMode === mode
-                          ? "bg-brand text-white"
+                          ? "bg-brand text-on-brand"
                           : "text-ink-2 hover:bg-bg",
                         mode === "FY" && "rounded-l-lg",
                         mode === "Month" && "rounded-r-lg"
