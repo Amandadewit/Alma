@@ -25,16 +25,16 @@ const portfolioEbitdaLTM = activeCompanies.reduce((s, c) => s + c.financials.nor
 const weightedMOI = portfolioInvested > 0 ? (portfolioFairValue + portfolioRealised) / portfolioInvested : 0
 
 const kpiData = {
-  portfolioValue: { value: Math.round(portfolioFairValue), change: 12, label: "PORTFOLIO WAARDE", unit: "M", changeLabel: "vs. IC" },
-  weightedMOI: { value: Math.round(weightedMOI * 10) / 10, change: 0.2, label: "GEWOGEN MOI", unit: "x", changeLabel: "vs. Q4" },
-  totalEbitda: { value: Math.round(portfolioEbitdaLTM * 10) / 10, change: -3, label: "TOTAAL EBITDA LTM", unit: "M", changeLabel: "vs. budget" },
-  companies: { value: activeCompanies.length, active: activeCompanies.length, exited: exitedCount, label: "BEDRIJVEN" },
+  portfolioValue: { value: Math.round(portfolioFairValue), change: 12, label: "PORTFOLIO VALUE", unit: "M", changeLabel: "vs. IC" },
+  weightedMOI: { value: Math.round(weightedMOI * 10) / 10, change: 0.2, label: "WEIGHTED MOI", unit: "x", changeLabel: "vs. Q4" },
+  totalEbitda: { value: Math.round(portfolioEbitdaLTM * 10) / 10, change: -3, label: "TOTAL EBITDA LTM", unit: "M", changeLabel: "vs. budget" },
+  companies: { value: activeCompanies.length, active: activeCompanies.length, exited: exitedCount, label: "COMPANIES" },
 }
 
 // Heatmap data — one row per active company, dimensions derived from status/KPIs
 const heatmapData = activeCompanies.map((c) => ({
   company: c.name,
-  financieel: c.status,
+  financial: c.status,
   management: c.kpis.enps === null ? "watch" : c.kpis.enps >= 45 ? "on-track" : c.kpis.enps >= 30 ? "watch" : "alert",
   vcp: c.status,
   exit: c.holdingPeriod >= 4 ? "watch" : "on-track",
@@ -46,7 +46,7 @@ const performanceSummary = activeCompanies.map((c) => ({
   revenueLTM: c.financials.revenue.fy.ltm,
   ebitdaPct: Math.round(c.financials.normalizedEbitdaPercent.fy.ltm),
   vsBudget: pct(c.financials.revenue.fy.le - c.financials.revenue.fy.budget, c.financials.revenue.fy.budget),
-  status: c.status === "on-track" ? "Actief" : "Watch",
+  status: c.status === "on-track" ? "On track" : "Watch",
 }))
 
 // Financial highlights — every fund with its active companies, from mock-data
@@ -107,7 +107,7 @@ export default function PerformanceOverviewPage() {
   }
 
   const getStatusBadge = (status: string) => {
-    return status === "Actief" 
+    return status === "On track"
       ? "bg-ok-soft text-ok" 
       : "bg-watch-soft text-watch"
   }
@@ -147,7 +147,7 @@ export default function PerformanceOverviewPage() {
     <div className="flex min-h-screen flex-col bg-surface-2 font-sans">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-line bg-white px-6 py-4">
-        <h1 className="text-xl font-medium text-ink">Portfolio overzicht</h1>
+        <h1 className="text-xl font-medium text-ink">Portfolio overview</h1>
         <Select value={selectedFund} onValueChange={setSelectedFund}>
           <SelectTrigger className="w-[220px] border-line">
             <SelectValue placeholder="Select fund" />
@@ -205,7 +205,7 @@ export default function PerformanceOverviewPage() {
               <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.companies.label}</p>
               <p className="mt-1 text-3xl font-semibold text-ink">{kpiData.companies.value}</p>
               <p className="mt-1 text-[12px] text-ink-3">
-                {kpiData.companies.active} actief · {kpiData.companies.exited} geëxit
+                {kpiData.companies.active} active · {kpiData.companies.exited} exited
               </p>
             </CardContent>
           </Card>
@@ -374,7 +374,7 @@ export default function PerformanceOverviewPage() {
                 <thead>
                   <tr className="text-[10px] text-ink-2">
                     <th className="pb-1.5 text-left font-medium">Company</th>
-                    <th className="pb-1.5 text-center font-medium">Financieel</th>
+                    <th className="pb-1.5 text-center font-medium">Financial</th>
                     <th className="pb-1.5 text-center font-medium">Management</th>
                     <th className="pb-1.5 text-center font-medium">Value Creation Plan</th>
                     <th className="pb-1.5 text-center font-medium">EXIT</th>
@@ -385,8 +385,8 @@ export default function PerformanceOverviewPage() {
                     <tr key={idx}>
                       <td className="py-1 text-ink">{row.company}</td>
                       <td className="py-1 text-center">
-                        <span className={cn("inline-block rounded px-2 py-0.5 text-[10px] font-medium", getHeatmapColor(row.financieel))}>
-                          {row.financieel === "on-track" ? "On track" : row.financieel === "watch" ? "Watch" : "Alert"}
+                        <span className={cn("inline-block rounded px-2 py-0.5 text-[10px] font-medium", getHeatmapColor(row.financial))}>
+                          {row.financial === "on-track" ? "On track" : row.financial === "watch" ? "Watch" : "Alert"}
                         </span>
                       </td>
                       <td className="py-1 text-center">
@@ -414,7 +414,7 @@ export default function PerformanceOverviewPage() {
           {/* Performance Summary - takes 2 columns */}
           <Card className="col-span-2 border-line bg-white">
             <CardContent className="p-4">
-              <h3 className="mb-3 text-[13px] font-semibold text-ink">Performance samenvatting</h3>
+              <h3 className="mb-3 text-[13px] font-semibold text-ink">Performance summary</h3>
               <table className="w-full text-[11px]">
                 <thead>
                   <tr className="text-[10px] text-ink-2">
@@ -433,7 +433,7 @@ export default function PerformanceOverviewPage() {
                       <td className="py-1 text-right tabular-nums text-ink">{row.ebitdaPct}%</td>
                       <td className="py-1 text-right tabular-nums">{formatChange(row.vsBudget)}</td>
                       <td className="py-1 text-center">
-                        <span className={cn("inline-block rounded-full px-2 py-0.5 text-[9px] font-medium", getStatusBadge(row.status))}>
+                        <span className={cn("inline-block whitespace-nowrap rounded-full px-2 py-0.5 text-[9px] font-medium", getStatusBadge(row.status))}>
                           {row.status}
                         </span>
                       </td>
