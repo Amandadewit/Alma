@@ -62,9 +62,9 @@ function PortfolioDashboard() {
               ))}
             </select>
           </div>
-          <div className="flex items-center gap-1.5 rounded-full bg-bg px-3 py-1.5">
+          <div className="flex items-center gap-1.5 rounded-full bg-status-chip px-3 py-1.5">
             <StatusDot status={selectedCompany.status} size="lg" />
-            <span className="text-[11px] font-medium text-ink-2">
+            <span className="text-[11px] font-medium text-on-status-chip">
               {selectedCompany.status === "on-track"
                 ? "On track"
                 : selectedCompany.status === "watch"
@@ -83,7 +83,7 @@ function PortfolioDashboard() {
               className={cn(
                 "rounded-md px-4 py-2 text-[12px] font-medium transition-colors",
                 activeTab === tab.id
-                  ? "bg-white text-ink shadow-sm"
+                  ? "bg-tab-active text-on-tab-active shadow-sm"
                   : "text-ink-2 hover:text-ink"
               )}
             >

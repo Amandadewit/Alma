@@ -34,8 +34,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    // Alma Refresh: "kobalt-light" (default), "volt-light" or "goud-light"
-    <html lang="en" data-theme="goud-light" className="bg-bg">
+    // Nachtzee is the chosen scheme. Other themes in globals.css stay for comparison (theme switcher, ?theme=<id>).
+    <html lang="en" data-theme="nachtzee" className="bg-bg">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

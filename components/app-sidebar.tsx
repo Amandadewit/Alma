@@ -57,7 +57,7 @@ export function AlmaMark({ className }: { className?: string }) {
 const itemClass = (active: boolean) =>
   cn(
     "group flex h-10 items-center gap-3 rounded-lg px-2 text-[13.5px] font-medium transition-colors",
-    active ? "bg-nav-active-bg text-nav-active-ink" : "text-nav-ink-2 hover:bg-nav-line hover:text-nav-ink",
+    active ? "bg-nav-active-bg text-nav-active-ink" : "text-nav-ink-2 hover:bg-nav-hover hover:text-nav-ink",
   )
 
 // Rounded icon in a soft tile; lights up with the active item
@@ -94,7 +94,7 @@ export function AppSidebar() {
   return (
     <aside className="group/nav fixed left-0 top-0 z-40 flex h-screen w-[64px] flex-col overflow-hidden border-r border-nav-line bg-nav-bg transition-[width,box-shadow] duration-200 hover:w-[236px] hover:shadow-2xl focus-within:w-[236px]">
       {/* Logo: existing mark, new wordmark in Funnel Display */}
-      <div className="flex items-center gap-2.5 border-b border-nav-line px-[19px] py-5">
+      <div className="flex items-center gap-2.5 border-b border-nav-divider px-[19px] py-5">
         <AlmaMark className="h-[26px] w-[26px]" />
         <div className="whitespace-nowrap font-display text-[20px] font-bold leading-none tracking-[-0.035em] text-nav-ink opacity-0 transition-opacity duration-150 group-hover/nav:opacity-100 group-focus-within/nav:opacity-100">
           Alma <span className="font-normal">Insights</span>
@@ -105,7 +105,7 @@ export function AppSidebar() {
       <div className="px-[10px] pb-1 pt-4">
         <button
           onClick={handleModeSwitch}
-          className="flex h-[40px] w-full items-center justify-between overflow-hidden whitespace-nowrap rounded-lg border border-nav-line bg-nav-line px-[13px] text-[13px] font-medium text-nav-ink transition-colors hover:bg-white/15"
+          className="flex h-[40px] w-full items-center justify-between overflow-hidden whitespace-nowrap rounded-lg border border-nav-line bg-nav-cta px-[13px] text-[13px] font-medium text-on-nav-cta transition-colors hover:bg-nav-cta-hover"
         >
           <span className="flex items-center gap-2.5">
             {viewMode === "data-view" ? (
@@ -120,12 +120,12 @@ export function AppSidebar() {
               </>
             )}
           </span>
-          <ArrowLeftRight className="h-4 w-4 text-nav-ink-2" strokeWidth={1.9} />
+          <ArrowLeftRight className="h-4 w-4 text-on-nav-cta opacity-70" strokeWidth={1.9} />
         </button>
       </div>
 
       {/* Mode label */}
-      <div className="eyebrow whitespace-nowrap px-[22px] pb-2 pt-4 text-nav-ink-2 opacity-0 transition-opacity duration-150 group-hover/nav:opacity-100 group-focus-within/nav:opacity-100">
+      <div className="eyebrow whitespace-nowrap px-[22px] pb-2 pt-4 text-nav-label opacity-0 transition-opacity duration-150 group-hover/nav:opacity-100 group-focus-within/nav:opacity-100">
         {viewMode === "data-view" ? "Data view" : "Data management"}
       </div>
 
@@ -171,7 +171,7 @@ export function AppSidebar() {
 
       {/* User */}
       <div className="flex items-center gap-2.5 border-t border-nav-line px-4 py-4">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-xs font-semibold text-on-brand">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-avatar text-xs font-semibold text-on-avatar">
           {currentUser.initials}
         </div>
         <div className="min-w-0 flex-1 whitespace-nowrap opacity-0 transition-opacity duration-150 group-hover/nav:opacity-100 group-focus-within/nav:opacity-100">

@@ -10,7 +10,7 @@ import { buildCompanySeries, MON, LAST_ACTUAL, ROWS, type MonthMetrics, type Row
 
 const INK = "var(--ink)"
 const MUTE = "var(--ink-3)"
-const POS = "var(--ok)"
+const POS = "var(--positive)"
 const NEG = "var(--alert)"
 
 const nf = (v: number, d = 1) => {
@@ -23,10 +23,10 @@ const tone = (v: number, invert?: boolean) => {
   if (Math.abs(v) < 1) return "var(--ink-2)"
   return (invert ? v < 0 : v >= 0) ? POS : NEG
 }
-// calm blue-grey palette for the column chart
-const C1 = "#55627d"
-const C2 = "#9aa5ba"
-const C3 = "#cdd3df"
+// column-chart colours come from the theme (Nachtzee: N. EBITDA in mist blue, revenue in night blue)
+const C1 = "var(--bar-1)"
+const C2 = "var(--bar-2)"
+const C3 = "var(--bar-3)"
 const BUDGET = "var(--ink-2)"
 const pillClass = (active: boolean) =>
   cn(
@@ -241,7 +241,7 @@ export function PerformanceTab({ company }: PerformanceTabProps) {
           text: p.inner && frac > 9 ? nf(pv, dec) : "",
           style: {
             height: `${frac}%`, background: p.c, display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 9.5, fontWeight: 600, color: "#ffffff", fontVariantNumeric: "tabular-nums", transition: "height .25s",
+            fontSize: 9.5, fontWeight: 600, color: "var(--on-bar-1)", fontVariantNumeric: "tabular-nums", transition: "height .25s",
           } as React.CSSProperties,
         }
       }),
@@ -429,7 +429,7 @@ export function PerformanceTab({ company }: PerformanceTabProps) {
 
       <div className="grid grid-cols-[1.75fr_1fr] items-start gap-2.5">
         {/* Financial summary table */}
-        <div className="flex h-[376px] flex-col overflow-hidden rounded-xl border border-line bg-white">
+        <div className="flex h-[376px] flex-col overflow-hidden rounded-[var(--card-radius)] border border-line bg-white shadow-[var(--card-shadow)]">
           <CardHeader
             title="Financial summary"
             subtitle="Δ = vs budget · click Revenue or Total operational cost to expand · amounts in €m"
@@ -525,7 +525,7 @@ export function PerformanceTab({ company }: PerformanceTabProps) {
         </div>
 
         {/* Comments */}
-        <div className="flex h-[376px] flex-col overflow-hidden rounded-xl border border-line bg-white">
+        <div className="flex h-[376px] flex-col overflow-hidden rounded-[var(--card-radius)] border border-line bg-white shadow-[var(--card-shadow)]">
           <CardHeader title="Comments" subtitle="One CFO comment per month" />
           <div className="grid content-start gap-[5px] overflow-y-auto px-3 pb-2.5">
             {comments.map((c) => {
@@ -546,7 +546,7 @@ export function PerformanceTab({ company }: PerformanceTabProps) {
                   {long && (
                     <button
                       onClick={() => setOpenComments((s) => ({ ...s, [c.id]: !open }))}
-                      className="mt-[3px] border-none bg-transparent p-0 text-[10.5px] font-semibold text-ok underline underline-offset-2"
+                      className="mt-[3px] border-none bg-transparent p-0 text-[10.5px] font-semibold text-brand-text underline underline-offset-2"
                     >
                       {open ? "Show less" : "Read more"}
                     </button>
@@ -560,7 +560,7 @@ export function PerformanceTab({ company }: PerformanceTabProps) {
 
       <div className="grid grid-cols-2 items-start gap-2.5">
         {/* Chart */}
-        <div className="flex h-[336px] flex-col overflow-hidden rounded-xl border border-line bg-white">
+        <div className="flex h-[336px] flex-col overflow-hidden rounded-[var(--card-radius)] border border-line bg-white shadow-[var(--card-shadow)]">
           <CardHeader
             title={metric === "Total" ? `Revenue & N. EBITDA${ltm ? " · LTM" : ""}` : metric === "NWC" ? "NWC · month-end" : `${metric}${ltm ? " · LTM" : ""}`}
             subtitle={
@@ -689,7 +689,7 @@ export function PerformanceTab({ company }: PerformanceTabProps) {
         </div>
 
         {/* ARR bridge */}
-        <div className="flex h-[336px] flex-col overflow-hidden rounded-xl border border-line bg-white">
+        <div className="flex h-[336px] flex-col overflow-hidden rounded-[var(--card-radius)] border border-line bg-white shadow-[var(--card-shadow)]">
           <CardHeader
             title="ARR bridge"
             subtitle={`${periodLabels[arrPeriod]} to ${MON[month]} 2026 · opening ARR to closing ARR · €m · net ${arrNet >= 0 ? "+" : "−"}€${nf(Math.abs(arrNet), 2)}m (${nf((arrNet / (arrOpen || 1)) * 100, 1)}%)`}
@@ -712,7 +712,7 @@ export function PerformanceTab({ company }: PerformanceTabProps) {
             ))}
             <div className="absolute flex" style={{ left: 56, right: 0, bottom: 0, top: 0 }}>
               {arrBars.map((x, i) => {
-                const color = x.total ? "#323a5f" : x.value < 0 ? "var(--alert)" : "#4a6f75"
+                const color = x.total ? "var(--bridge-total)" : x.value < 0 ? "var(--alert)" : "var(--bridge-up)"
                 return (
                   <div key={x.label} className="relative flex-1">
                     {i > 0 && <div className="absolute border-t border-dashed border-line-strong" style={{ bottom: 26 + arrPx(x.start), left: 0, width: "calc(50% - 23px)" }} />}
@@ -744,7 +744,7 @@ export function PerformanceTab({ company }: PerformanceTabProps) {
                 <span className="text-[22px] font-semibold leading-tight tracking-[-0.02em] [font-variant-numeric:tabular-nums]">{t.value}</span>
                 {t.delta && <span className="text-[11px] font-semibold" style={{ color: t.deltaGood ? POS : NEG }}>{t.delta}</span>}
               </div>
-              <div className="mt-2 grid gap-0.5 border-t border-line pt-2">
+              <div className="mt-2 grid gap-0.5 border-t border-line-soft pt-2">
                 {t.lines.map((l) => (
                   <div key={l.k} className="flex justify-between gap-2 text-[11px]">
                     <span className="truncate text-ink-3">{l.k}</span>

@@ -90,7 +90,7 @@ export default function PerformanceOverviewPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "green": return "bg-ok"
+      case "green": return "bg-ok-dot"
       case "orange": return "bg-watch"
       case "red": return "bg-alert"
       default: return "bg-ink-3"
@@ -113,7 +113,7 @@ export default function PerformanceOverviewPage() {
   }
 
   const formatDelta = (value: number) => {
-    const color = value >= 0 ? "text-ok" : "text-alert"
+    const color = value >= 0 ? "text-positive" : "text-alert"
     const prefix = value >= 0 ? "+" : ""
     return <span className={color}>{prefix}{value}%</span>
   }
@@ -121,8 +121,8 @@ export default function PerformanceOverviewPage() {
   const formatChange = (value: number, isPositiveGood = true) => {
     const isPositive = value >= 0
     const color = isPositiveGood 
-      ? (isPositive ? "text-ok" : "text-alert")
-      : (isPositive ? "text-alert" : "text-ok")
+      ? (isPositive ? "text-positive" : "text-alert")
+      : (isPositive ? "text-alert" : "text-positive")
     const prefix = isPositive ? "+" : ""
     return <span className={color}>{prefix}{value}%</span>
   }
@@ -164,31 +164,31 @@ export default function PerformanceOverviewPage() {
       <div className="flex-1 space-y-6 p-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-4 gap-4">
-          <Card className="border-line bg-white">
+          <Card className="rounded-xl border-line bg-white">
             <CardContent className="p-5">
               <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.portfolioValue.label}</p>
               <p className="mt-1 text-3xl font-semibold text-ink">
                 {"€ "}{kpiData.portfolioValue.value}{kpiData.portfolioValue.unit}
               </p>
               <p className="mt-1 text-[12px]">
-                <span className="text-ok">+{kpiData.portfolioValue.change}%</span>
+                <span className="text-positive">+{kpiData.portfolioValue.change}%</span>
                 <span className="text-ink-3"> {kpiData.portfolioValue.changeLabel}</span>
               </p>
             </CardContent>
           </Card>
-          <Card className="border-line bg-white">
+          <Card className="rounded-xl border-line bg-white">
             <CardContent className="p-5">
               <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.weightedMOI.label}</p>
               <p className="mt-1 text-3xl font-semibold text-ink">
                 {kpiData.weightedMOI.value}{kpiData.weightedMOI.unit}
               </p>
               <p className="mt-1 text-[12px]">
-                <span className="text-ok">+{kpiData.weightedMOI.change}x</span>
+                <span className="text-positive">+{kpiData.weightedMOI.change}x</span>
                 <span className="text-ink-3"> {kpiData.weightedMOI.changeLabel}</span>
               </p>
             </CardContent>
           </Card>
-          <Card className="border-line bg-white">
+          <Card className="rounded-xl border-line bg-white">
             <CardContent className="p-5">
               <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.totalEbitda.label}</p>
               <p className="mt-1 text-3xl font-semibold text-ink">
@@ -200,7 +200,7 @@ export default function PerformanceOverviewPage() {
               </p>
             </CardContent>
           </Card>
-          <Card className="border-line bg-white">
+          <Card className="rounded-xl border-line bg-white">
             <CardContent className="p-5">
               <p className="text-[11px] font-medium uppercase tracking-wide text-ink-2">{kpiData.companies.label}</p>
               <p className="mt-1 text-3xl font-semibold text-ink">{kpiData.companies.value}</p>
@@ -214,7 +214,7 @@ export default function PerformanceOverviewPage() {
 
 
         {/* Financial Highlights Table */}
-        <Card className="border-line bg-white">
+        <Card className="rounded-xl border-line bg-white">
           <CardContent className="p-0">
             <div className="flex items-center justify-between border-b border-line px-5 py-4">
               <h3 className="text-[14px] font-semibold text-ink">Financial highlights</h3>

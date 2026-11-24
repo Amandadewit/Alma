@@ -5,8 +5,10 @@ import { Palette } from "lucide-react"
 
 /** Colour schemes from the "Alma Refresh" design system. Ids match the [data-theme] blocks in app/globals.css. */
 const THEMES = [
+  { id: "nachtzee", label: "Nachtzee (chosen)" },
   { id: "current", label: "1 · Current (demo site)" },
-  { id: "goud-light", label: "Goud (mock-up now)" },
+  { id: "current-green", label: "1b · Current, new green" },
+  { id: "goud-light", label: "Goud (previous default)" },
   { id: "goud-calm", label: "Goud calm" },
   { id: "kobalt-calm", label: "Kobalt calm" },
   { id: "volt-calm", label: "Volt calm" },

@@ -3,6 +3,37 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Defaults for the tokens that only Nachtzee sets differently. Every other theme keeps its own look
+   through these fallbacks; a theme block below overrides them where it needs to. */
+:root {
+  --font-body: 'Funnel Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-heading: 'Funnel Display', 'Funnel Sans', system-ui, sans-serif;
+  --font-code: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --positive: var(--ok);
+  --ok-dot: var(--ok);
+  --line-soft: var(--line);
+  --nav-cta: var(--nav-line);
+  --on-nav-cta: var(--nav-ink);
+  --nav-cta-hover: rgba(255,255,255,0.15);
+  --nav-hover: var(--nav-line);
+  --nav-label: var(--nav-ink-2);
+  --nav-divider: var(--nav-line);
+  --avatar: var(--brand);
+  --on-avatar: var(--on-brand);
+  --tab-active: var(--surface);
+  --on-tab-active: var(--ink);
+  --status-chip: var(--bg);
+  --on-status-chip: var(--ink-2);
+  --bar-1: #55627d;
+  --on-bar-1: #ffffff;
+  --bar-2: #9aa5ba;
+  --bar-3: #cdd3df;
+  --bridge-total: #323a5f;
+  --bridge-up: #4a6f75;
+  --card-radius: 12px;
+  --card-shadow: none;
+}
+
 /* Alma Refresh: tokens from the "Alma Refresh" design system.
    Three light directions; Kobalt is the default. Switch with <html data-theme="volt-light"> or "goud-light".
    The design system's "accent" family is called "ai" here (--ai, --ai-soft, --ai-text, --on-ai),
@@ -151,6 +182,84 @@
   --shadow-glow: 0 10px 30px rgba(140,110,40,0.24);
 }
 
+/* Nachtzee (12d), the chosen scheme and the default (see app/layout.tsx). Calm and chic: a deep, muted
+   night blue as the base, the logo yellow as the only accent, light cool neutrals and white cards.
+   Use only these colours. Logo yellow appears on the sidebar's primary button and the avatar only,
+   always with dark text. Positive figures stay in the text colour; green is only the Healthy dot. */
+[data-theme="nachtzee"] {
+  --font-body: 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
+  --font-code: 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
+  --bg: #F6F9FB;
+  --surface: #FFFFFF;
+  --surface-2: #F9FBFD;
+  --line: #E1E6E9;
+  --line-strong: #D5DBDF;
+  --line-soft: #E7EBEE;
+  --ink: #1B2328;
+  --ink-2: #606B72;
+  --ink-3: #959DA2;
+  --action: #123144;
+  --on-action: #FFFFFF;
+  --action-hover: #203D4F;
+  --brand: #123144;
+  --on-brand: #FFFFFF;
+  --brand-soft: #E4F0F8;
+  --brand-text: #123144;
+  --ai: #B8D2E1;
+  --on-ai: #17313E;
+  --ai-soft: #E4F0F8;
+  --ai-text: #123144;
+  --mark: #123144;
+  --nav-bg: #123144;
+  --nav-ink: #FFFFFF;
+  --nav-ink-2: rgba(255,255,255,0.72);
+  --nav-active-bg: rgba(255,255,255,0.15);
+  --nav-active-ink: #FFFFFF;
+  --nav-line: rgba(255,255,255,0.10);
+  --nav-mark: #FFFFFF;
+  --nav-cta: #E1B671;
+  --on-nav-cta: #102430;
+  --nav-cta-hover: #E1B671;
+  --nav-hover: rgba(255,255,255,0.06);
+  --nav-label: rgba(255,255,255,0.40);
+  --nav-divider: rgba(255,255,255,0.22);
+  --avatar: #E1B671;
+  --on-avatar: #102430;
+  --tab-active: #123144;
+  --on-tab-active: #FFFFFF;
+  --status-chip: #E4F0F8;
+  --on-status-chip: #123144;
+  --data-1: #123144;
+  --data-2: #B8D2E1;
+  --data-3: #606B72;
+  --data-4: #959DA2;
+  --data-5: #CFD4D8;
+  --data-fill: #123144;
+  --data-grid: #E1E6E9;
+  --bar-1: #B8D2E1;
+  --on-bar-1: #17313E;
+  --bar-2: #123144;
+  --bar-3: #CFD4D8;
+  --bridge-total: #123144;
+  --bridge-up: #B8D2E1;
+  --positive: #1B2328;
+  --ok: #123144;
+  --ok-dot: #3A9371;
+  --ok-soft: #E4F0F8;
+  --watch: #606B72;
+  --watch-soft: #E4F0F8;
+  --alert: #AF4B53;
+  --alert-soft: #E4F0F8;
+  --focus: #123144;
+  --glow: rgba(18,49,68,0.12);
+  --card-radius: 8px;
+  --card-shadow: 0 1px 3px rgba(16,24,40,0.05);
+  --shadow-card: 0 1px 3px rgba(16,24,40,0.05);
+  --shadow-pop: 0 1px 3px rgba(16,24,40,0.05), 0 8px 24px rgba(16,24,40,0.08);
+  --shadow-glow: none;
+}
+
 /* Calm proposals (November 2026), from the "Alma Refresh" design system in Claude.
    Try them with the theme switcher (bottom right in development, or add ?theme=<id> to the URL). */
 
@@ -203,7 +312,56 @@
   --shadow-glow: none;
 }
 
-/* Goud calm: navy and a softer, less yellow gold; steel-blue AI. */
+/* Current, new green: the live demo palette with only the green replaced: evergreen instead of #1b4d45, sage instead of mint. */
+[data-theme="current-green"] {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-2: #f9fafb;
+  --line: #e5e7eb;
+  --line-strong: #d1d5db;
+  --ink: #1b2535;
+  --ink-2: #6b7280;
+  --ink-3: #9ca3af;
+  --action: #1a5439;
+  --on-action: #ffffff;
+  --action-hover: #0e3f2a;
+  --brand: #1a5439;
+  --on-brand: #ffffff;
+  --brand-soft: #e4f3ea;
+  --brand-text: #1a5439;
+  --ai: #b8975a;
+  --on-ai: #1b2535;
+  --ai-soft: #fffbeb;
+  --ai-text: #973c00;
+  --mark: #b8975a;
+  --nav-bg: #1a5439;
+  --nav-ink: #ffffff;
+  --nav-ink-2: rgba(255,255,255,0.7);
+  --nav-active-bg: rgba(255,255,255,0.15);
+  --nav-active-ink: #ffffff;
+  --nav-line: rgba(255,255,255,0.1);
+  --nav-mark: #d9b978;
+  --data-1: #1a5439;
+  --data-2: #6aa085;
+  --data-3: #374151;
+  --data-4: #6b7280;
+  --data-5: #b8975a;
+  --data-fill: #1a5439;
+  --data-grid: #e5e7eb;
+  --ok: #2d6f50;
+  --ok-soft: #e4f3ea;
+  --watch: #f0a04b;
+  --watch-soft: #fffbeb;
+  --alert: #a8503f;
+  --alert-soft: #fef2f2;
+  --focus: #2563eb;
+  --glow: rgba(26,84,57,0.14);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-pop: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-glow: none;
+}
+
+/* Goud calm: a deeper, bluer navy with a warmer ochre gold; steel-blue AI. */
 [data-theme="goud-calm"] {
   --bg: #f5f6f8;
   --surface: #ffffff;
@@ -213,31 +371,31 @@
   --ink: #0f1626;
   --ink-2: #4a5266;
   --ink-3: #5d6577;
-  --action: #14203a;
+  --action: #1f2f54;
   --on-action: #ffffff;
-  --action-hover: #24314d;
-  --brand: #a68b4c;
+  --action-hover: #2d3e65;
+  --brand: #b1883d;
   --on-brand: #0f1626;
-  --brand-soft: #f3eee1;
-  --brand-text: #6a5524;
+  --brand-soft: #f8efde;
+  --brand-text: #735017;
   --ai: #b9c7df;
   --on-ai: #0f1626;
   --ai-soft: #ebeff6;
   --ai-text: #3d5a8a;
-  --mark: #a68b4c;
-  --nav-bg: #121a2c;
+  --mark: #b1883d;
+  --nav-bg: #192749;
   --nav-ink: #f2f4f8;
   --nav-ink-2: #9ca4b6;
-  --nav-active-bg: rgba(196,170,110,0.14);
-  --nav-active-ink: #dcc58e;
+  --nav-active-bg: rgba(214,174,98,0.14);
+  --nav-active-ink: #e9ce94;
   --nav-line: rgba(255,255,255,0.07);
-  --nav-mark: #c4aa6e;
-  --data-1: #8c7340;
-  --data-2: #4a6a9c;
-  --data-3: #1f2a40;
+  --nav-mark: #d6ae62;
+  --data-1: #8e6a2e;
+  --data-2: #4378ad;
+  --data-3: #1f2d4c;
   --data-4: #8a919f;
   --data-5: #a86450;
-  --data-fill: #a68b4c;
+  --data-fill: #b1883d;
   --data-grid: #e6e8ed;
   --ok: #23785a;
   --ok-soft: #e2f1e9;
@@ -246,13 +404,13 @@
   --alert: #b13844;
   --alert-soft: #f8e4e6;
   --focus: #3f62b0;
-  --glow: rgba(166,139,76,0.16);
+  --glow: rgba(177,136,61,0.16);
   --shadow-card: 0 1px 2px rgba(15,22,38,0.06), 0 6px 20px rgba(15,22,38,0.05);
   --shadow-pop: 0 2px 6px rgba(15,22,38,0.08), 0 16px 40px rgba(15,22,38,0.14);
-  --shadow-glow: 0 10px 30px rgba(140,115,60,0.18);
+  --shadow-glow: 0 10px 30px rgba(142,106,46,0.18);
 }
 
-/* Kobalt calm: a muted cobalt instead of electric blue; copper AI instead of orange. */
+/* Kobalt calm: a muted cobalt instead of electric blue; copper AI instead of orange; a coral-copper logo. */
 [data-theme="kobalt-calm"] {
   --bg: #f5f7fa;
   --surface: #ffffff;
@@ -280,7 +438,7 @@
   --nav-active-bg: rgba(157,178,219,0.14);
   --nav-active-ink: #ffffff;
   --nav-line: rgba(255,255,255,0.07);
-  --nav-mark: #9db2db;
+  --nav-mark: #ea8b60;
   --data-1: #3b5c9e;
   --data-2: #b07a4c;
   --data-3: #6b93b5;
@@ -301,7 +459,7 @@
   --shadow-glow: 0 10px 30px rgba(59,92,158,0.18);
 }
 
-/* Volt calm: charcoal with a sage olive instead of lime; muted teal AI. */
+/* Volt calm: near-black charcoal with a clear olive green instead of lime; muted teal AI. */
 [data-theme="volt-calm"] {
   --bg: #f5f6f3;
   --surface: #ffffff;
@@ -311,31 +469,31 @@
   --ink: #161a14;
   --ink-2: #4a5045;
   --ink-3: #5b6156;
-  --action: #1f241d;
+  --action: #1f201d;
   --on-action: #ffffff;
-  --action-hover: #31372e;
-  --brand: #8a9a5b;
+  --action-hover: #323330;
+  --brand: #98b056;
   --on-brand: #161a14;
-  --brand-soft: #eef1e3;
-  --brand-text: #4f5d2a;
+  --brand-soft: #eff5df;
+  --brand-text: #4a5e20;
   --ai: #8fbcc0;
   --on-ai: #161a14;
   --ai-soft: #e4f0f1;
   --ai-text: #2f6a70;
-  --mark: #6f7f45;
-  --nav-bg: #1b1f19;
+  --mark: #677f39;
+  --nav-bg: #1a1b19;
   --nav-ink: #f2f4ee;
   --nav-ink-2: #a0a697;
-  --nav-active-bg: rgba(168,184,120,0.14);
-  --nav-active-ink: #c5d29a;
+  --nav-active-bg: rgba(165,194,85,0.14);
+  --nav-active-ink: #c7dd81;
   --nav-line: rgba(255,255,255,0.07);
-  --nav-mark: #b3c27f;
-  --data-1: #5f6f3a;
+  --nav-mark: #a5c255;
+  --data-1: #566d27;
   --data-2: #3f7f86;
   --data-3: #1f241d;
   --data-4: #8b9085;
   --data-5: #a8703f;
-  --data-fill: #8a9a5b;
+  --data-fill: #98b056;
   --data-grid: #e5e8e0;
   --ok: #23785a;
   --ok-soft: #e2f1e9;
@@ -344,10 +502,10 @@
   --alert: #b13844;
   --alert-soft: #f8e4e6;
   --focus: #2f6a70;
-  --glow: rgba(138,154,91,0.16);
+  --glow: rgba(152,176,86,0.16);
   --shadow-card: 0 1px 2px rgba(22,26,20,0.06), 0 6px 20px rgba(22,26,20,0.05);
   --shadow-pop: 0 2px 6px rgba(22,26,20,0.08), 0 16px 40px rgba(22,26,20,0.14);
-  --shadow-glow: 0 10px 30px rgba(111,127,69,0.18);
+  --shadow-glow: 0 10px 30px rgba(103,127,57,0.18);
 }
 
 /* Grafiet: new; near-monochrome graphite with one quiet steel blue for AI. */
@@ -458,9 +616,9 @@
 }
 
 @theme inline {
-  --font-sans: 'Funnel Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Funnel Display', 'Funnel Sans', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+  --font-mono: var(--font-code);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -540,6 +698,21 @@
   --color-alert: var(--alert);
   --color-alert-soft: var(--alert-soft);
   --color-focus: var(--focus);
+  --color-positive: var(--positive);
+  --color-ok-dot: var(--ok-dot);
+  --color-line-soft: var(--line-soft);
+  --color-nav-cta: var(--nav-cta);
+  --color-on-nav-cta: var(--on-nav-cta);
+  --color-nav-cta-hover: var(--nav-cta-hover);
+  --color-nav-hover: var(--nav-hover);
+  --color-nav-label: var(--nav-label);
+  --color-nav-divider: var(--nav-divider);
+  --color-avatar: var(--avatar);
+  --color-on-avatar: var(--on-avatar);
+  --color-tab-active: var(--tab-active);
+  --color-on-tab-active: var(--on-tab-active);
+  --color-status-chip: var(--status-chip);
+  --color-on-status-chip: var(--on-status-chip);
 
   /* Legacy utilities */
   --color-alma-teal: var(--alma-teal);

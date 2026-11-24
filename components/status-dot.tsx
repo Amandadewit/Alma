@@ -16,7 +16,7 @@ export function StatusDot({ status, size = "md", className }: StatusDotProps) {
   }
 
   const colorClasses = {
-    "on-track": "bg-ok",
+    "on-track": "bg-ok-dot",
     watch: "bg-watch",
     alert: "bg-alert",
   }
