@@ -31,11 +31,11 @@ const existingFunds = funds.map((fund) => ({
 }))
 
 const lifecycleBadge: Record<Lifecycle, string> = {
-  'Active': 'bg-green-50 text-green-700',
-  'Exited': 'bg-gray-100 text-gray-500',
-  'Reserved capital': 'bg-blue-50 text-blue-700',
-  'Identified': 'bg-gray-100 text-gray-600',
-  'In process': 'bg-amber-50 text-amber-700',
+  'Active': 'bg-ok-soft text-ok',
+  'Exited': 'bg-surface-2 text-ink-2',
+  'Reserved capital': 'bg-brand-soft text-brand-text',
+  'Identified': 'bg-surface-2 text-ink-2',
+  'In process': 'bg-watch-soft text-watch',
 }
 
 const fundShortName: Record<string, string> = Object.fromEntries(funds.map((f) => [f.id, f.shortName]))
@@ -396,9 +396,9 @@ export default function KeyDataPage() {
                       <TableCell className="text-sm text-ink-2">{fund.vintage}</TableCell>
                       <TableCell>
                         <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                          fund.status === 'Active' ? 'bg-green-50 text-green-700' :
-                          fund.status === 'Investing' ? 'bg-blue-50 text-blue-700' :
-                          'bg-amber-50 text-amber-700'
+                          fund.status === 'Active' ? 'bg-ok-soft text-ok' :
+                          fund.status === 'Investing' ? 'bg-brand-soft text-brand-text' :
+                          'bg-watch-soft text-watch'
                         }`}>
                           {fund.status}
                         </span>
@@ -443,7 +443,7 @@ export default function KeyDataPage() {
                       <TableCell className="text-sm text-ink text-right font-medium">€ {company.investment}M</TableCell>
                       <TableCell className="text-sm text-ink text-right font-medium">{company.sharePercent}%</TableCell>
                       <TableCell>
-                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[10px] font-medium text-white">
+                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[10px] font-medium text-on-brand">
                           {company.status}
                         </span>
                       </TableCell>

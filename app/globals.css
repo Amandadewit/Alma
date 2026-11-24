@@ -310,6 +310,13 @@
   --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
   --shadow-pop: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
   --shadow-glow: none;
+  /* chart colours as in the demo */
+  --bar-1: #a7f3d0;
+  --on-bar-1: #1b2535;
+  --bar-2: #1b4d45;
+  --bar-3: #374151;
+  --bridge-total: #1b4d45;
+  --bridge-up: #a7f3d0;
 }
 
 /* Current, new green: the live demo palette with only the green replaced: evergreen instead of #1b4d45, sage instead of mint. */
@@ -359,6 +366,13 @@
   --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
   --shadow-pop: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
   --shadow-glow: none;
+  /* chart colours as in the demo */
+  --bar-1: #6aa085;
+  --on-bar-1: #1b2535;
+  --bar-2: #1a5439;
+  --bar-3: #374151;
+  --bridge-total: #1a5439;
+  --bridge-up: #6aa085;
 }
 
 /* Goud calm: a deeper, bluer navy with a warmer ochre gold; steel-blue AI. */
